@@ -20,7 +20,7 @@ public class Categorie {
     }
 
 
-    public void setIdCategorie(Integer idCategorie) {
+    public void setIdCategorie(long idCategorie) {
         this.idCategorie = idCategorie;
     }
 
