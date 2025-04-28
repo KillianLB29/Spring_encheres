@@ -8,15 +8,11 @@ public interface UtilisateurDAO {
 
     List<Utilisateur> findAll();
 
-    Utilisateur read(Long noUtilisateur);
+    Utilisateur read(long noUtilisateur);
 
-    void insert(Utilisateur utilisateur);
+    void save(Utilisateur utilisateur);
 
-    void delete(Utilisateur utilisateur);
+    void delete(long noUtilisateur);
 
     Utilisateur findByPseudo(String pseudo);
-
-    void debiterCredit(Long noUtilisateur, int montant);
-
-    void crediterCredit(Long noUtilisateur, int montant);
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleVendu {
-    private int noArticle;
+    private long noArticle;
     private String nomArticle;
     private String description;
     private LocalDate dateDebutEncheres;
@@ -16,12 +16,13 @@ public class ArticleVendu {
     private Utilisateur utilisateur;
     private Categorie categorie;
     private Retrait lieuRetrait;
-    private List<Enchere> encheresEnCours=new ArrayList<>();
+    private List<Enchere> encheresEnCours = new ArrayList<>();
+
     public ArticleVendu() {
 
     }
 
-    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, double miseAPrix, double prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
+    public ArticleVendu(long noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, double miseAPrix, double prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -35,11 +36,11 @@ public class ArticleVendu {
         this.lieuRetrait = lieuRetrait;
     }
 
-    public int getNoArticle() {
+    public long getNoArticle() {
         return noArticle;
     }
 
-    public void setNoArticle(int noArticle) {
+    public void setNoArticle(long noArticle) {
         this.noArticle = noArticle;
     }
 
@@ -129,5 +130,23 @@ public class ArticleVendu {
 
     public void setEncheresEnCours(List<Enchere> encheresEnCours) {
         this.encheresEnCours = encheresEnCours;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticleVendu{" +
+                "noArticle=" + noArticle +
+                ", nomArticle='" + nomArticle + '\'' +
+                ", description='" + description + '\'' +
+                ", dateDebutEncheres=" + dateDebutEncheres +
+                ", dateFinEncheres=" + dateFinEncheres +
+                ", miseAPrix=" + miseAPrix +
+                ", prixVente=" + prixVente +
+                ", etatVente='" + etatVente + '\'' +
+                ", utilisateur=" + utilisateur +
+                ", categorie=" + categorie +
+                ", lieuRetrait=" + lieuRetrait +
+                ", encheresEnCours=" + encheresEnCours +
+                '}';
     }
 }
