@@ -29,7 +29,7 @@ public class EnchereDAOImpl implements EnchereDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    private final String SELECT_ALL = "SELECT * FROM ENCHERES";
+    private final String SELECT_ALL = "SELECT no_utilisateur,no_article,date_enchere as date , montant_enchere as montant FROM ENCHERES";
 
     @Override
     public List<Enchere> read(Integer idArticle) {
@@ -48,8 +48,8 @@ public class EnchereDAOImpl implements EnchereDAO {
 
     @Override
     public List<Enchere> findAll() {
-        return List.of();
-
+        List<Enchere> encheres = jdbcTemplate.query(SELECT_ALL, new EnchereRowMapper());
+        return encheres;
     }
 }
 
@@ -60,13 +60,14 @@ class EnchereRowMapper implements RowMapper<Enchere> {
         Enchere enchere = new Enchere();
         Utilisateur utilisateur = new Utilisateur();
         ArticleVendu articleVendu = new ArticleVendu();
-        articleVendu.setNoArticle(rs.findColumn("no_article"));
-        utilisateur.setNoUtilisateur(rs.findColumn("no_utilisateur"));
+        utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
+        articleVendu.setNoArticle(rs.getLong("no_article"));
         enchere.setUtilisateur(utilisateur);
         enchere.setArticleVendu(articleVendu);
-        Date dateEnchere = rs.getDate("date_enchere");
-        enchere.setDateEnchere(dateEnchere);
-        enchere.setMontantEnchere(rs.findColumn("montant_enchere"));
+        Date date = rs.getDate("date");
+        enchere.setDateEnchere(date);
+        int montant = rs.getInt("montant");
+        enchere.setMontantEnchere(montant);
         return enchere;
     }
 }

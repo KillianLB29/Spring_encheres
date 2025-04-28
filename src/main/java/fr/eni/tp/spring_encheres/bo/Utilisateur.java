@@ -148,4 +148,25 @@ public class Utilisateur {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Utilisateur{");
+        sb.append("noUtilisateur=").append(noUtilisateur);
+        sb.append(", pseudo='").append(pseudo).append('\'');
+        sb.append(", nom='").append(nom).append('\'');
+        sb.append(", prenom='").append(prenom).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", telephone='").append(telephone).append('\'');
+        sb.append(", rue='").append(rue).append('\'');
+        sb.append(", codePostal='").append(codePostal).append('\'');
+        sb.append(", ville='").append(ville).append('\'');
+        sb.append(", motDePasse='").append(motDePasse).append('\'');
+        sb.append(", credit=").append(credit);
+        sb.append(", articlesVendus=").append(articlesVendus);
+        sb.append(", articlesAchetes=").append(articlesAchetes);
+        sb.append(", admin=").append(admin);
+        sb.append('}');
+        return sb.toString();
+    }
 }
