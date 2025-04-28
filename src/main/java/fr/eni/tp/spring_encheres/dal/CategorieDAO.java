@@ -8,6 +8,10 @@ public interface CategorieDAO {
 
     List<Categorie> findAll();
 
-    Categorie read(Integer idCategorie);
+    Categorie read(long idCategorie);
+
+    void create(Categorie categorie);
+
+    void delete(long idCategorie);
 
 }
