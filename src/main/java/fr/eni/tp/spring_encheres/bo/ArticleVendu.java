@@ -1,4 +1,5 @@
 package fr.eni.tp.spring_encheres.bo;
 
 public class ArticleVendu {
+    private int id;
 }
