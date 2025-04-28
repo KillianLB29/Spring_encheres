@@ -4,12 +4,14 @@ import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Enchere;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
 
+import java.util.List;
+
 public interface EnchereDAO {
-    Enchere read(Integer idArticle);
+    List<Enchere> read(Integer idArticle);
 
-    void save(Enchere enchere, Integer prixEnchere, ArticleVendu articleVendu, Utilisateur utilisateur);
+    void save(Enchere enchere);
 
-    long readAncienEncherisseur(Integer idArticle);
+    void delete(long id);
 
-    long readAncienOffre(Integer idArticle);
+    void findAll();
 }
