@@ -35,3 +35,16 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Ignorer le fichier .gitattributes
+.gitattributes
+
+# Ignorer les fichiers gradlew et gradlew.bat
+gradlew
+gradlew.bat
+
+# Ignorer le fichier settings.gradle
+settings.gradle
+
+# Ignorer le dossier gradle/wrapper
+gradle/wrapper/
