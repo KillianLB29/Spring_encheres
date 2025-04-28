@@ -13,5 +13,5 @@ public interface EnchereDAO {
 
     void delete(long id);
 
-    void findAll();
+    List<Enchere> findAll();
 }

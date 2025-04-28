@@ -2,14 +2,15 @@ package fr.eni.tp.spring_encheres.bo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ArticleVendu {
     private long noArticle;
     private String nomArticle;
     private String description;
-    private LocalDate dateDebutEncheres;
-    private LocalDate dateFinEncheres;
+    private Date dateDebutEncheres;
+    private Date dateFinEncheres;
     private double miseAPrix;
     private double prixVente;
     private String etatVente;
@@ -22,7 +23,7 @@ public class ArticleVendu {
 
     }
 
-    public ArticleVendu(long noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, double miseAPrix, double prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
+    public ArticleVendu(long noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, double miseAPrix, double prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -60,19 +61,19 @@ public class ArticleVendu {
         this.description = description;
     }
 
-    public LocalDate getDateDebutEncheres() {
+    public Date getDateDebutEncheres() {
         return dateDebutEncheres;
     }
 
-    public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
+    public void setDateDebutEncheres(Date dateDebutEncheres) {
         this.dateDebutEncheres = dateDebutEncheres;
     }
 
-    public LocalDate getDateFinEncheres() {
+    public Date getDateFinEncheres() {
         return dateFinEncheres;
     }
 
-    public void setDateFinEncheres(LocalDate dateFinEncheres) {
+    public void setDateFinEncheres(Date dateFinEncheres) {
         this.dateFinEncheres = dateFinEncheres;
     }
 

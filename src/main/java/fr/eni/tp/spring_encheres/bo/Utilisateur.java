@@ -17,7 +17,6 @@ public class Utilisateur {
     private int credit;
     private List<ArticleVendu> articlesVendus = new ArrayList<>();
     private List<ArticleVendu> articlesAchetes=new ArrayList<>();
-    private List<Enchere> encheresEnCours=new ArrayList<>();
     private boolean admin=false;
 
     public Utilisateur(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit) {
@@ -50,13 +49,6 @@ public class Utilisateur {
         this.articlesAchetes = articlesAchetes;
     }
 
-    public List<Enchere> getEncheresEnCours() {
-        return encheresEnCours;
-    }
-
-    public void setEncheresEnCours(List<Enchere> encheresEnCours) {
-        this.encheresEnCours = encheresEnCours;
-    }
 
     public Utilisateur() {
     }

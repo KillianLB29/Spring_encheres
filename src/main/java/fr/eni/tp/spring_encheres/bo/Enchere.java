@@ -1,71 +1,66 @@
 package fr.eni.tp.spring_encheres.bo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 
 public class Enchere {
-    private LocalDate dateEnchere;
+    private Date dateEnchere;
     private int montantEnchere;
 
-    private long idUtilisateur;
-    private long idArticle;
+    private Utilisateur utilisateur;
+    private ArticleVendu articleVendu;
 
     // Constructeur par défaut
     public Enchere() {
     }
 
-    // Constructeur avec LocalDate au lieu de java.sql.Date
-    public Enchere(Integer idUtilisateur, Integer idArticle, LocalDate dateEnchere, int montantEnchere) {
-        this.idUtilisateur = idUtilisateur;
-        this.idArticle = idArticle;
+    public Enchere(Date dateEnchere, int montantEnchere, Utilisateur utilisateur, ArticleVendu articleVendu) {
         this.dateEnchere = dateEnchere;
         this.montantEnchere = montantEnchere;
+        this.utilisateur = utilisateur;
+        this.articleVendu = articleVendu;
     }
 
-    // Getter pour dateEnchere, qui retourne un java.sql.Date
     public Date getDateEnchere() {
-        return Date.valueOf(dateEnchere);  // Conversion de LocalDate en java.sql.Date
+        return dateEnchere;
     }
 
-    // Setter pour dateEnchere, qui prend un java.sql.Date
     public void setDateEnchere(Date dateEnchere) {
-        this.dateEnchere = dateEnchere.toLocalDate();  // Conversion de java.sql.Date en LocalDate
+        this.dateEnchere = dateEnchere;
     }
 
-    // Getter pour montantEnchere
     public int getMontantEnchere() {
         return montantEnchere;
     }
 
-    // Setter pour montantEnchere
     public void setMontantEnchere(int montantEnchere) {
         this.montantEnchere = montantEnchere;
     }
 
-    // Getter pour idUtilisateur
-    public long getIdUtilisateur() {
-        return idUtilisateur;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    // Setter pour idUtilisateur
-    public void setIdUtilisateur(Integer idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
-    // Getter pour idArticle
-    public long getIdArticle() {
-        return idArticle;
+    public ArticleVendu getArticleVendu() {
+        return articleVendu;
     }
 
-    // Setter pour idArticle
-    public void setIdArticle(Integer idArticle) {
-        this.idArticle = idArticle;
+    public void setArticleVendu(ArticleVendu articleVendu) {
+        this.articleVendu = articleVendu;
     }
 
-    // Méthode toString pour afficher les informations de l'enchère
     @Override
     public String toString() {
-        return "Enchere [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", idUtilisateur="
-                + idUtilisateur + ", idArticle=" + idArticle + "]";
+        final StringBuffer sb = new StringBuffer("Enchere{");
+        sb.append("dateEnchere=").append(dateEnchere);
+        sb.append(", montantEnchere=").append(montantEnchere);
+        sb.append(", utilisateur=").append(utilisateur);
+        sb.append(", articleVendu=").append(articleVendu);
+        sb.append('}');
+        return sb.toString();
     }
 }
