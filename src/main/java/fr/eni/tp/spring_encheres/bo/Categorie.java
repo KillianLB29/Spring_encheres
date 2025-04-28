@@ -1,7 +1,7 @@
 package fr.eni.tp.spring_encheres.bo;
 
 public class Categorie {
-    private Integer idCategorie;
+    private long idCategorie;
     private String libelle;
 
 
@@ -9,13 +9,13 @@ public class Categorie {
 
     }
 
-    public Categorie(Integer idCategorie, String libelle) {
+    public Categorie(long idCategorie, String libelle) {
         this.idCategorie = idCategorie;
         this.libelle = libelle;
     }
 
 
-    public Integer getIdCategorie() {
+    public long getIdCategorie() {
         return idCategorie;
     }
 

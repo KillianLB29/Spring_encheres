@@ -7,8 +7,8 @@ public class Enchere {
     private LocalDate dateEnchere;
     private int montantEnchere;
 
-    private Integer idUtilisateur;
-    private Integer idArticle;
+    private long idUtilisateur;
+    private long idArticle;
 
     // Constructeur par défaut
     public Enchere() {
@@ -43,7 +43,7 @@ public class Enchere {
     }
 
     // Getter pour idUtilisateur
-    public Integer getIdUtilisateur() {
+    public long getIdUtilisateur() {
         return idUtilisateur;
     }
 
@@ -53,7 +53,7 @@ public class Enchere {
     }
 
     // Getter pour idArticle
-    public Integer getIdArticle() {
+    public long getIdArticle() {
         return idArticle;
     }
 
