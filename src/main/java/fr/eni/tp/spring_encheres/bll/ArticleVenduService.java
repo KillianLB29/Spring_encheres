@@ -6,8 +6,8 @@ import java.util.List;
 public interface ArticleVenduService {
     List<ArticleVendu> consulterArticlesVendus();
     ArticleVendu consulterArticleParId(long id);
-    void creerArticle(ArticleVendu article, Utilisateur utilisateur);
-    void supprimerArticle(ArticleVendu article, long noArticle);
+    void creerArticle(ArticleVendu article);
+    void supprimerArticle(long noArticle);
 
 
 }
