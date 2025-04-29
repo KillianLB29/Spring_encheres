@@ -43,25 +43,29 @@
         }
 
         .message {
+            font-size: 30px;
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+            animation: fadeInOut 4s infinite;
+        }
+
+        .error-detail {
             font-size: 20px;
             margin-top: 20px;
-            color: #fff;
-            animation: fadeInOut 4s infinite;
+            color: #FFD700;
+            background-color: #222;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1s ease-out;
         }
 
         .icon {
             font-size: 50px;
             color: #FFD700;
-            margin: 20px;
-            animation: spin 3s infinite linear;
-        }
-
-        .floating-icons {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
+            animation: moveAround 5s infinite linear;
         }
 
         .icon-appear {
@@ -84,9 +88,37 @@
             100% { transform: rotate(360deg); }
         }
 
+        @keyframes slideIn {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
         @keyframes appearDisappear {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
+        }
+
+        @keyframes moveAround {
+            0% {
+                left: 0%;
+                top: 0%;
+            }
+            25% {
+                left: 100%;
+                top: 0%;
+            }
+            50% {
+                left: 100%;
+                top: 100%;
+            }
+            75% {
+                left: 0%;
+                top: 100%;
+            }
+            100% {
+                left: 0%;
+                top: 0%;
+            }
         }
 
     </style>
@@ -96,32 +128,34 @@
     <h1>Oups !</h1>
     <h2>Loooser</h2>
     <p class="message">Tu as fait une erreur, mon ami. Mais t'inquiète, ça arrive aux meilleurs !</p>
-    <div class="icon-container">
-        <i class="fas fa-robot icon"></i>
-        <i class="fas fa-bomb icon"></i>
-        <i class="fas fa-fire icon"></i>
+
+    <!-- Affichage de l'erreur spécifique -->
+    <div class="error-detail">
+        <p><strong>Erreur :</strong> <span id="error-message"></span></p>
     </div>
 </div>
 
-<div class="floating-icons">
-    <i class="fas fa-heart icon-appear"></i>
-    <i class="fas fa-star icon-appear"></i>
-    <i class="fas fa-smile icon-appear"></i>
-    <i class="fas fa-bicycle icon-appear"></i>
-    <i class="fas fa-cloud icon-appear"></i>
+<div class="icon-container">
+    <i class="fas fa-robot icon"></i>
+    <i class="fas fa-bomb icon"></i>
+    <i class="fas fa-fire icon"></i>
 </div>
 
 <script>
-    // Animation des icônes
-    let icons = document.querySelectorAll('.icon-appear');
-    let index = 0;
+    // Animation des icônes en mouvement
+    const icons = document.querySelectorAll('.icon');
 
-    setInterval(() => {
-        icons.forEach((icon, i) => {
-            icon.style.opacity = (i === index) ? 1 : 0;
-        });
-        index = (index + 1) % icons.length;
-    }, 1000);
+    icons.forEach((icon, index) => {
+        const randomDuration = Math.random() * (7 - 4) + 4; // Durée aléatoire entre 4 et 7 secondes
+        const randomDelay = Math.random() * 3; // Délai aléatoire avant de commencer l'animation
+
+        icon.style.animationDuration = `${randomDuration}s`;
+        icon.style.animationDelay = `${randomDelay}s`;
+    });
+
+    // Récupérer l'erreur passée par le modèle (via Spring ou un autre mécanisme)
+    const errorMessage = window.location.pathname.split('/').pop(); // Exemple de récupération d'une erreur via l'URL
+    document.getElementById('error-message').textContent = errorMessage || 'Page non trouvée';
 </script>
 </body>
 </html>

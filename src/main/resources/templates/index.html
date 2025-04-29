@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ENI-Enchères - Accueil</title>
+    <!-- Liens vers les fichiers CSS dans le dossier static/css -->
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/modals.css}">
 </head>
@@ -24,6 +25,7 @@
     <section class="encheres">
         <h2>Enchères en cours</h2>
         <div class="grid">
+            <!-- Liste des enchères -->
             <div th:each="enchere : ${encheres}" class="card">
                 <h3 th:text="${enchere.articleVendu.nomArticle}">Nom article</h3>
                 <p th:text="'Mise à prix : ' + ${enchere.articleVendu.miseAPrix} + ' €'"></p>
@@ -35,6 +37,7 @@
     </section>
 </main>
 
+<!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
 </body>
