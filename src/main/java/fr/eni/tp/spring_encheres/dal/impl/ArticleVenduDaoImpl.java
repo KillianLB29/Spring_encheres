@@ -10,17 +10,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class ArticleVenduDaoImpl implements ArticleVenduDAO {
 
     private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie;";
     private static final String INSERT_INTO = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (:nom_article, :description, :date_debut_encheres, :date_fin_encheres, :prix_initial, :prix_vente, :no_utilisateur, :no_categorie);";
     private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie WHERE no_article = :no_article;";
-    //a changer la requête SQL
     private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
 
 
@@ -78,9 +79,7 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
         mapSqlParameterSource.addValue("long", noArticle);
         namedParameterJdbcTemplate.update(DELETE_BY_ID, mapSqlParameterSource);
     }
-//à faire
-
-    }
+}
 
 
     class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {
@@ -109,6 +108,8 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
             categorie.setIdCategorie(rs.getLong("categorie"));
             categorie.setLibelle(rs.getString("libelle"));
             article.setCategorie(categorie);
+
+
 
             return article;
         }
