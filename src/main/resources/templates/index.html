@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ENI-Enchères - Accueil</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/modals.css}">
+</head>
+<body>
+
+<!-- Inclusion du header -->
+<div th:replace="fragments/header :: header"></div>
+<div th:if="${utilisateur != null}" th:replace="fragments/navbar-connectee :: navbar-connectee"></div>
+<div th:if="${utilisateur == null}" th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/modal-auth :: modals-auth"></div>
+
+<main>
+    <section class="hero">
+        <h1>Bienvenue sur ENI-Enchères</h1>
+        <p>Enchérissez, vendez, gagnez !</p>
+    </section>
+
+    <section class="encheres">
+        <h2>Enchères en cours</h2>
+        <div class="grid">
+            <div th:each="enchere : ${encheres}" class="card">
+                <h3 th:text="${enchere.articleVendu.nomArticle}">Nom article</h3>
+                <p th:text="'Mise à prix : ' + ${enchere.articleVendu.miseAPrix} + ' €'"></p>
+                <p th:text="'Prix actuel : ' + ${enchere.montantEnchere} + ' €'"></p>
+                <p th:text="'Fin : ' + ${#dates.format(enchere.articleVendu.dateFinEncheres, 'dd/MM/yyyy')}"></p>
+                <a th:href="@{'/encheres/' + ${enchere.articleVendu.id}}" class="btn">Voir</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Inclusion du footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
