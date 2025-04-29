@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
+<div th:fragment="header">
+    <header>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
+                <span>ENI-Enchères</span>
+            </a>
+            <nav>
+                <a href="/inscription">S'inscrire</a>
+                <a href="/connexion">Se connecter</a>
+            </nav>
+        </div>
+    </header>
+</div>
+</body>
+</html>

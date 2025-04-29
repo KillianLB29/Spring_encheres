@@ -1,0 +1,16 @@
+<div th:fragment="navbar-connectee">
+    <header>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
+                <span>ENI-Enchères</span>
+            </a>
+            <nav>
+                <span th:text="'Bienvenue, ' + ${utilisateur.pseudo}">Bienvenue, Nom</span>
+                <a href="/encheres">Mes enchères</a>
+                <a href="/profil">Mon profil</a>
+                <a href="/deconnexion">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
+</div>

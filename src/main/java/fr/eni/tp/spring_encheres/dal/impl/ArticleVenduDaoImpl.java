@@ -21,7 +21,8 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
 
     private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie;";
     private static final String INSERT_INTO = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (:nom_article, :description, :date_debut_encheres, :date_fin_encheres, :prix_initial, :prix_vente, :no_utilisateur, :no_categorie);";
-    private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie WHERE no_article = :no_article;";
+    private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
+    //a changer la requête SQL
     private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
 
 
@@ -36,7 +37,7 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
     @Override
     public void create(ArticleVendu article) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("No Article", article.getNoArticle());
+        mapSqlParameterSource.addValue("nom_article", article.getNomArticle());
         mapSqlParameterSource.addValue("Description", article.getDescription());
         mapSqlParameterSource.addValue("Date Debut d'Enchères", article.getDateDebutEncheres());
         mapSqlParameterSource.addValue("Date de fin des Enchères", article.getDateFinEncheres());
@@ -79,7 +80,9 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
         mapSqlParameterSource.addValue("long", noArticle);
         namedParameterJdbcTemplate.update(DELETE_BY_ID, mapSqlParameterSource);
     }
-}
+//à faire
+
+    }
 
 
     class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {
@@ -97,19 +100,13 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
 
 
             Utilisateur utilisateur = new Utilisateur();
-            utilisateur.setNom(rs.getString("nom_utilisateur"));
-            utilisateur.setPrenom(rs.getString("prenom"));
-            utilisateur.setPseudo(rs.getString("pseudo"));
-            utilisateur.setEmail(rs.getString("email"));
+            utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
 
             article.setUtilisateur(utilisateur);
 
             Categorie categorie = new Categorie();
-            categorie.setIdCategorie(rs.getLong("categorie"));
-            categorie.setLibelle(rs.getString("libelle"));
+            categorie.setIdCategorie(rs.getLong("no_categorie"));
             article.setCategorie(categorie);
-
-
 
             return article;
         }
