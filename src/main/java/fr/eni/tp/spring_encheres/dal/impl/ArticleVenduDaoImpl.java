@@ -38,14 +38,13 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
     public void create(ArticleVendu article) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("nom_article", article.getNomArticle());
-        mapSqlParameterSource.addValue("Description", article.getDescription());
-        mapSqlParameterSource.addValue("Date Debut d'Enchères", article.getDateDebutEncheres());
-        mapSqlParameterSource.addValue("Date de fin des Enchères", article.getDateFinEncheres());
-        mapSqlParameterSource.addValue("Prix initial", article.getMiseAPrix());
-        mapSqlParameterSource.addValue("Prix de vente", article.getPrixVente());
-        mapSqlParameterSource.addValue("Etat de vente", article.getEtatVente());
-        mapSqlParameterSource.addValue("Categorie", article.getCategorie());
-        mapSqlParameterSource.addValue("Lieu de retrait", article.getLieuRetrait());
+        mapSqlParameterSource.addValue("description", article.getDescription());
+        mapSqlParameterSource.addValue("date_debut_encheres", article.getDateDebutEncheres());
+        mapSqlParameterSource.addValue("date_fin_encheres", article.getDateFinEncheres());
+        mapSqlParameterSource.addValue("prix_initial", article.getMiseAPrix());
+        mapSqlParameterSource.addValue("prix_vente", article.getPrixVente());
+        mapSqlParameterSource.addValue("no_utilisateur", article.getUtilisateur().getNoUtilisateur());
+        mapSqlParameterSource.addValue("no_categorie", article.getCategorie().getIdCategorie());
 
         namedParameterJdbcTemplate.update(
                 INSERT_INTO,
@@ -68,7 +67,7 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
     @Override
     public ArticleVendu read(long noArticle) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("long", noArticle);
+        mapSqlParameterSource.addValue("no_article", noArticle);
         ArticleVendu article = namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, mapSqlParameterSource, new ArticleVenduRowMapper());
         return article;
     }
@@ -77,10 +76,9 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
     @Override
     public void delete(long noArticle) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("long", noArticle);
+        mapSqlParameterSource.addValue("no_article", noArticle);
         namedParameterJdbcTemplate.update(DELETE_BY_ID, mapSqlParameterSource);
     }
-//à faire
 
     }
 
@@ -94,10 +92,8 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
             article.setDescription(rs.getString("description"));
             article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
             article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
-            article.setMiseAPrix(rs.getDouble("prix_initial"));
-            article.setPrixVente(rs.getDouble("prix_vente"));
-            article.setEtatVente(rs.getString("Etat de vente"));
-
+            article.setMiseAPrix(rs.getLong("prix_initial"));
+            article.setPrixVente(rs.getLong("prix_vente"));
 
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));

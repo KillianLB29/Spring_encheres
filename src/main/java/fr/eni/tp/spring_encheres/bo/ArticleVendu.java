@@ -11,8 +11,8 @@ public class ArticleVendu {
     private String description;
     private Date dateDebutEncheres;
     private Date dateFinEncheres;
-    private double miseAPrix;
-    private double prixVente;
+    private long miseAPrix;
+    private long prixVente;
     private String etatVente;
     private Utilisateur utilisateur;
     private Categorie categorie;
@@ -23,7 +23,7 @@ public class ArticleVendu {
 
     }
 
-    public ArticleVendu(long noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, double miseAPrix, double prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
+    public ArticleVendu(long noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, long miseAPrix, long prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -36,6 +36,7 @@ public class ArticleVendu {
         this.categorie = categorie;
         this.lieuRetrait = lieuRetrait;
     }
+
 
     public long getNoArticle() {
         return noArticle;
@@ -77,19 +78,19 @@ public class ArticleVendu {
         this.dateFinEncheres = dateFinEncheres;
     }
 
-    public double getMiseAPrix() {
+    public long getMiseAPrix() {
         return miseAPrix;
     }
 
-    public void setMiseAPrix(double miseAPrix) {
+    public void setMiseAPrix(long miseAPrix) {
         this.miseAPrix = miseAPrix;
     }
 
-    public double getPrixVente() {
+    public long getPrixVente() {
         return prixVente;
     }
 
-    public void setPrixVente(double prixVente) {
+    public void setPrixVente(long prixVente) {
         this.prixVente = prixVente;
     }
 
