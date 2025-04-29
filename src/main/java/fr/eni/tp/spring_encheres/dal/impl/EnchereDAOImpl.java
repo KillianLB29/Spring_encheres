@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -30,15 +31,26 @@ public class EnchereDAOImpl implements EnchereDAO {
     }
 
     private final String SELECT_ALL = "SELECT no_utilisateur,no_article,date_enchere as date , montant_enchere as montant FROM ENCHERES";
+    private final String SELECT_BY_ID = "SELECT no_utilisateur,no_article,date_enchere as date , montant_enchere as montant FROM ENCHERES WHERE no_article=:no_article";
+    private final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES(:no_utilisateur, :no_article, :date_enchere,:montant_enchere);";
+
 
     @Override
-    public List<Enchere> read(Integer idArticle) {
-        return List.of();
+    public List<Enchere> read(long idArticle) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("no_article", idArticle);
+        return namedParameterJdbcTemplate.query(SELECT_BY_ID, params, new EnchereRowMapper());
     }
 
     @Override
     public void save(Enchere enchere) {
-
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        long idUtil = enchere.getUtilisateur().getNoUtilisateur();
+        params.addValue("no_utilisateur",idUtil);
+        params.addValue("no_article", enchere.getArticleVendu().getNoArticle());
+        params.addValue("date_enchere", enchere.getDateEnchere());
+        params.addValue("montant_enchere",enchere.getMontantEnchere());
+        namedParameterJdbcTemplate.update(INSERT, params);
     }
 
     @Override

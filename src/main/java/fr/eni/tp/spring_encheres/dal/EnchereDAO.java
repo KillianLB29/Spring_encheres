@@ -7,7 +7,7 @@ import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import java.util.List;
 
 public interface EnchereDAO {
-    List<Enchere> read(Integer idArticle);
+    List<Enchere> read(long idArticle);
 
     void save(Enchere enchere);
 
