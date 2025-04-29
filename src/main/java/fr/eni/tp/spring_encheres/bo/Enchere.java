@@ -1,7 +1,6 @@
 package fr.eni.tp.spring_encheres.bo;
 
 import java.util.Date;
-import java.time.LocalDate;
 
 public class Enchere {
     private Date dateEnchere;
