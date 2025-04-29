@@ -17,6 +17,41 @@
             </nav>
         </div>
     </header>
+
+
+
+
+
+    <!DOCTYPE html>
+    <html
+            lang="en"
+            xmlns:th="http://www.thymeleaf.org"
+            data-th-replace="~{layouts/layout :: layout(
+                                                mainContent=~{:: main},
+                                                cssContent=~{:: link},
+                                                title=~{:: title}
+                                            )}"
+    >
+
+    <link rel="stylesheet" data-th-href="@{/css/error.css}">
+
+    <title data-th-text="#{error.title} + ' ' + ${status}"></title>
+
+    <main>
+        <h1 data-th-text="#{error.h1} + ' ' + ${status}"></h1>
+        <ul data-th-switch="${status}">
+            <li data-th-case="403" data-th-text="#{error.li.403}"></li>
+            <li data-th-case="404" data-th-text="#{error.li.404}"></li>
+            <li data-th-case="500" data-th-text="#{error.li.500}"></li>
+            <li data-th-case="*" data-th-text="#{error.li.other}"></li>
+        </ul>
+    </main>
+    </html>
+
+
+
+
+
 </div>
 </body>
 </html>
