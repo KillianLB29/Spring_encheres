@@ -4,5 +4,5 @@ import fr.eni.tp.spring_encheres.bo.Retrait;
 
 public interface RetraitService {
     Retrait findById(long idRetrait);
-    void enregistrerRetrait(Retrait retrait);
+    void enregistrerRetrait(Retrait retrait,long idArticle);
 }

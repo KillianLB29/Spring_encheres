@@ -17,7 +17,7 @@ public class RetraitServiceImpl implements RetraitService {
     }
 
     @Override
-    public void enregistrerRetrait(Retrait retrait) {
-        retraitDAO.save(retrait);
+    public void enregistrerRetrait(Retrait retrait,long idArticle) {
+        retraitDAO.save(retrait,idArticle);
     }
 }
