@@ -2,8 +2,8 @@ package fr.eni.tp.spring_encheres.ihm;
 
 import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Enchere;
-import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
 import fr.eni.tp.spring_encheres.dal.EnchereDAO;
+import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +23,9 @@ public class AccueilController {
         this.articleVenduDAO = articleVenduDAO;
     }
 
-    @GetMapping({"/", "/accueil"})
+    // Mapping pour /accueil qui renverra le fichier index.html
+    @GetMapping({"/", "/accueil"})  // L'URL "/accueil" redirige vers la page "index.html"
     public String afficherAccueil(Model model, HttpSession session) {
-        // Récupération de toutes les enchères depuis la base
         List<Enchere> encheres = enchereDAO.findAll();
 
         // Pour chaque enchère, on enrichit l'objet ArticleVendu avec les données complètes
@@ -35,7 +35,7 @@ public class AccueilController {
             // Appel à la méthode read() du DAO pour récupérer l'article complet
             // (et non findById, qui n'existe pas dans l'interface)
             ArticleVendu article = articleVenduDAO.read(idArticle);
-            enchere.setArticleVendu(article);
+            enchere.setArticleVendu(article); // Ajout de l'article complet à l'enchère
         }
 
         // Passage des données au modèle pour affichage dans la vue Thymeleaf
