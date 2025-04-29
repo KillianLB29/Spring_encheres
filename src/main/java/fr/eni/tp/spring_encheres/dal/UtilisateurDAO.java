@@ -12,6 +12,8 @@ public interface UtilisateurDAO {
 
     void save(Utilisateur utilisateur);
 
+    void update(Utilisateur utilisateur);
+
     void delete(long noUtilisateur);
 
     Utilisateur findByPseudo(String pseudo);

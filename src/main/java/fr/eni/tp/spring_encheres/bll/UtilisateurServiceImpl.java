@@ -49,8 +49,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public void retirerPoints(long pointsRequis, long idUtilisateur) {
         Utilisateur utilisateur = utilisateurDAO.read(idUtilisateur);
         if (utilisateur != null) {
-            utilisateur.setCredit(utilisateur.getCredit() - (int) pointsRequis);
-            utilisateurDAO.save(utilisateur);
+            utilisateur.setCredit(utilisateur.getCredit() - pointsRequis);
+            utilisateurDAO.update(utilisateur);
         }
     }
 
@@ -58,8 +58,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public void ajouterPoint(long sommeARecredite, long idAncienEncherisseur) {
         Utilisateur utilisateur = utilisateurDAO.read(idAncienEncherisseur);
         if (utilisateur != null) {
-            utilisateur.setCredit(utilisateur.getCredit() + (int) sommeARecredite);
-            utilisateurDAO.save(utilisateur);
+            utilisateur.setCredit(utilisateur.getCredit() + sommeARecredite);
+            utilisateurDAO.update(utilisateur);
         }
     }
 }

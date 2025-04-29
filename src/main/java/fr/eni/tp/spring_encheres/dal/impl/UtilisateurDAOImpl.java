@@ -55,6 +55,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
     @Override
+    public void update(Utilisateur utilisateur) {
+
+    }
+
+    @Override
     public void delete(long noUtilisateur) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("no_utilisateur", noUtilisateur);

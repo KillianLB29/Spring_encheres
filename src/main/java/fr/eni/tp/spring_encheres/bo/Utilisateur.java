@@ -14,12 +14,12 @@ public class Utilisateur {
     private String codePostal;
     private String ville;
     private String motDePasse;
-    private int credit;
+    private long credit;
     private List<ArticleVendu> articlesVendus = new ArrayList<>();
     private List<ArticleVendu> articlesAchetes=new ArrayList<>();
     private boolean admin=false;
 
-    public Utilisateur(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit) {
+    public Utilisateur(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, long credit) {
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
@@ -133,11 +133,11 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
-    public int getCredit() {
+    public long getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(long credit) {
         this.credit = credit;
     }
 

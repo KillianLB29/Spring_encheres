@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur - Loooser</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 80px;
+            font-weight: 700;
+            color: #FF6347;
+            text-transform: uppercase;
+            animation: bounce 2s infinite alternate;
+        }
+
+        h2 {
+            font-size: 40px;
+            color: #FF4500;
+            margin-top: 10px;
+        }
+
+        .message {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #fff;
+            animation: fadeInOut 4s infinite;
+        }
+
+        .icon {
+            font-size: 50px;
+            color: #FFD700;
+            margin: 20px;
+            animation: spin 3s infinite linear;
+        }
+
+        .floating-icons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .icon-appear {
+            animation: appearDisappear 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes appearDisappear {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Oups !</h1>
+    <h2>Loooser</h2>
+    <p class="message">Tu as fait une erreur, mon ami. Mais t'inquiète, ça arrive aux meilleurs !</p>
+    <div class="icon-container">
+        <i class="fas fa-robot icon"></i>
+        <i class="fas fa-bomb icon"></i>
+        <i class="fas fa-fire icon"></i>
+    </div>
+</div>
+
+<div class="floating-icons">
+    <i class="fas fa-heart icon-appear"></i>
+    <i class="fas fa-star icon-appear"></i>
+    <i class="fas fa-smile icon-appear"></i>
+    <i class="fas fa-bicycle icon-appear"></i>
+    <i class="fas fa-cloud icon-appear"></i>
+</div>
+
+<script>
+    // Animation des icônes
+    let icons = document.querySelectorAll('.icon-appear');
+    let index = 0;
+
+    setInterval(() => {
+        icons.forEach((icon, i) => {
+            icon.style.opacity = (i === index) ? 1 : 0;
+        });
+        index = (index + 1) % icons.length;
+    }, 1000);
+</script>
+</body>
+</html>
