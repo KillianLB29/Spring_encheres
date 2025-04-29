@@ -8,10 +8,11 @@
 </head>
 <body>
 
-<!-- Inclusion du header -->
-<div th:replace="fragments/header :: header"></div>
+<!-- Navbar ou header selon connexion -->
 <div th:if="${utilisateur != null}" th:replace="fragments/navbar-connectee :: navbar-connectee"></div>
 <div th:if="${utilisateur == null}" th:replace="fragments/header :: header"></div>
+
+<!-- Modals pour Connexion/Inscription -->
 <div th:replace="fragments/modal-auth :: modals-auth"></div>
 
 <main>
@@ -34,7 +35,6 @@
     </section>
 </main>
 
-<!-- Inclusion du footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
 </body>
