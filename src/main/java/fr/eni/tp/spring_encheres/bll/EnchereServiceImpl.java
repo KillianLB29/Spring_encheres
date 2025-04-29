@@ -14,7 +14,7 @@ public class EnchereServiceImpl implements EnchereService {
     private EnchereDAO enchereDAO;
 
     @Override
-    public List<Enchere> findByArticleId(Integer idArticle) {
+    public List<Enchere> findByArticleId(long idArticle) {
         return enchereDAO.read(idArticle);
     }
 

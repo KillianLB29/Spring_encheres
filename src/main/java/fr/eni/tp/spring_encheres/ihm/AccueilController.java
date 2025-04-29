@@ -1,48 +1,59 @@
 package fr.eni.tp.spring_encheres.ihm;
 
+import fr.eni.tp.spring_encheres.bll.ArticleVenduService;
+import fr.eni.tp.spring_encheres.bll.EnchereService;
 import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Enchere;
+import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
 import fr.eni.tp.spring_encheres.dal.EnchereDAO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 @Controller
+@SessionAttributes("utilisateurSession")
 public class AccueilController {
 
-    private final EnchereDAO enchereDAO;
-    private final ArticleVenduDAO articleVenduDAO;
+    private ArticleVenduService articleVenduService;
+    private EnchereService enchereService;
 
-    // Injection des DAO nécessaires via le constructeur
-    public AccueilController(EnchereDAO enchereDAO, ArticleVenduDAO articleVenduDAO) {
-        this.enchereDAO = enchereDAO;
-        this.articleVenduDAO = articleVenduDAO;
+
+    public AccueilController(ArticleVenduService articleVenduService, EnchereService enchereService) {
+        this.articleVenduService = articleVenduService;
+        this.enchereService = enchereService;
     }
 
     @GetMapping({"/", "/accueil"})
-    public String afficherAccueil(Model model, HttpSession session) {
+    public String afficherAccueil( @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
         // Récupération de toutes les enchères depuis la base
-        List<Enchere> encheres = enchereDAO.findAll();
+        List<Enchere> encheres = enchereService.findAll();
 
         // Pour chaque enchère, on enrichit l'objet ArticleVendu avec les données complètes
         for (Enchere enchere : encheres) {
             long idArticle = enchere.getArticleVendu().getNoArticle();
 
-            // Appel à la méthode read() du DAO pour récupérer l'article complet
-            // (et non findById, qui n'existe pas dans l'interface)
-            ArticleVendu article = articleVenduDAO.read(idArticle);
+            ArticleVendu article = articleVenduService.consulterArticleParId(idArticle);
             enchere.setArticleVendu(article);
         }
 
         // Passage des données au modèle pour affichage dans la vue Thymeleaf
         model.addAttribute("encheres", encheres);
-        model.addAttribute("utilisateur", session.getAttribute("utilisateur"));
+        model.addAttribute("utilisateur", utilisateurSession);
 
         // Redirection vers le template index.html
         return "index";
     }
+    @ModelAttribute("utilisateurSession")
+    public Utilisateur membreSession() {
+        System.out.println("Création du contexte");
+        Utilisateur util = new Utilisateur();
+        return util;
+    }
+
 }

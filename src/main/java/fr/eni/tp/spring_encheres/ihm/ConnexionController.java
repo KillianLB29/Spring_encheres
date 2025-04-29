@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 @Controller
+@SessionAttributes("utilisateurSession")
 public class ConnexionController {
 
     @Autowired

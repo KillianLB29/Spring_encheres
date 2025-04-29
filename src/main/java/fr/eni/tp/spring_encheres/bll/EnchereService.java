@@ -5,7 +5,7 @@ import fr.eni.tp.spring_encheres.bo.Enchere;
 import java.util.List;
 
 public interface EnchereService {
-    List<Enchere> findByArticleId(Integer idArticle);
+    List<Enchere> findByArticleId(long idArticle);
 
     void enregistrerEnchere(Enchere enchere);
 
