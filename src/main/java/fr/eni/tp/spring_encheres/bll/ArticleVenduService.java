@@ -7,7 +7,7 @@ public interface ArticleVenduService {
     List<ArticleVendu> consulterArticlesVendus();
     ArticleVendu consulterArticleParId(long id);
     void creerArticle(ArticleVendu article, Utilisateur utilisateur);
-    void supprimerArticle(ArticleVendu, long noArticle);
+    void supprimerArticle(ArticleVendu article, long noArticle);
 
 
 }

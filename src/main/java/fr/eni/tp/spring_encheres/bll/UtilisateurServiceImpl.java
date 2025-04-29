@@ -3,7 +3,7 @@ package fr.eni.tp.spring_encheres.bll;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.dal.UtilisateurDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +12,11 @@ import java.util.List;
 public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final UtilisateurDAO utilisateurDAO;
-    private final PasswordEncoder passwordEncoder;
+   // private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO, PasswordEncoder passwordEncoder) {
+    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO ) {
         this.utilisateurDAO = utilisateurDAO;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public void enregistrerUtilisateur(Utilisateur utilisateur) {
-        utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
+        utilisateur.setMotDePasse(utilisateur.getMotDePasse());
         utilisateurDAO.save(utilisateur);
     }
 
