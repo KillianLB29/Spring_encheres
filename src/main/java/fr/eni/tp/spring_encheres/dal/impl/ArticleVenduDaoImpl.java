@@ -7,6 +7,7 @@ import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.bo.Enchere;
 import fr.eni.tp.spring_encheres.bo.Retrait;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -17,10 +18,10 @@ import java.util.List;
 public class ArticleVenduDaoImpl implements ArticleVenduDAO {
 
     private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie;";
-    private static final String INSERT_INTO = "INSERT INTO Articles_vendus (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)VALUES (:no_article, :nom_article, :description, :date_debut_encheres, :date_fin_encheres, :prix_initial, :prix_vente, :no_utilisateur, :no_categorie);";
-    private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie;";
+    private static final String INSERT_INTO = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (:nom_article, :description, :date_debut_encheres, :date_fin_encheres, :prix_initial, :prix_vente, :no_utilisateur, :no_categorie);";
+    private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie WHERE no_article = :no_article;";
     //a changer la requête SQL
-    private static final String DELETE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie;";
+    private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
 
 
     private JdbcTemplate jdbcTemplate;
@@ -51,36 +52,12 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
 
     }
 
-    /*@Override
-    public void create(Film film) {
-        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("titre", film.getTitre());
-        mapSqlParameterSource.addValue("annee", film.getAnnee());
-        mapSqlParameterSource.addValue("duree", film.getDuree());
-        mapSqlParameterSource.addValue("synopsis", film.getSynopsis());
-        mapSqlParameterSource.addValue("id_realisateur", film.getRealisateur().getId());
-        mapSqlParameterSource.addValue("id_genre", film.getGenre().getId());
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-        namedParameterJdbcTemplate.update(
-                INSERT,
-                mapSqlParameterSource,
-                keyHolder,
-                new String[]{"id"}
-        );
-
-        film.setId(keyHolder.getKey().longValue());
-    }*/
-
-
-
 
     @Override
     public List<ArticleVendu> findAll() {
         List<ArticleVendu> articles = jdbcTemplate.query(
                 SELECT_ALL,
-                new FilmRowMapper()
+                new ArticleVenduRowMapper()
         );
         return articles;
     }
@@ -90,19 +67,50 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
     public ArticleVendu read(long noArticle) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("long", noArticle);
-        ArticleVendu article = jdbcTemplate.queryForObject(
-                SELECT_BY_ID,
-                mapSqlParameterSource,
-                new FilmRowMapper()
-        );
+        ArticleVendu article = namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, mapSqlParameterSource, new ArticleVenduRowMapper());
         return article;
     }
 
 
     @Override
     public void delete(long noArticle) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("long", noArticle);
+        namedParameterJdbcTemplate.update(DELETE_BY_ID, mapSqlParameterSource);
+    }
 //à faire
+
     }
 
 
-}
+    class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {
+        @Override
+        public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+            ArticleVendu article = new ArticleVendu();
+            article.setNoArticle(rs.getLong("no_article"));
+            article.setNomArticle(rs.getString("nom_article"));
+            article.setDescription(rs.getString("description"));
+            article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
+            article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+            article.setMiseAPrix(rs.getDouble("prix_initial"));
+            article.setPrixVente(rs.getDouble("prix_vente"));
+            article.setEtatVente(rs.getString("Etat de vente"));
+
+
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setNom(rs.getString("nom_utilisateur"));
+            utilisateur.setPrenom(rs.getString("prenom"));
+            utilisateur.setPseudo(rs.getString("pseudo"));
+            utilisateur.setEmail(rs.getString("email"));
+
+            article.setUtilisateur(utilisateur);
+
+            Categorie categorie = new Categorie();
+            categorie.setIdCategorie(rs.getLong("categorie"));
+            categorie.setLibelle(rs.getString("libelle"));
+            article.setCategorie(categorie);
+
+            return article;
+        }
+    }
+
