@@ -36,23 +36,23 @@
 
     <h2 class="encheres-title">Liste des enchères</h2>
 
-    <section class="encheres" th:each="categorie : ${categories}">
-        <h3 th:text="${categorie.nom}" class="categorie-title">Informatique</h3>
+<!--    <section class="encheres" th:each="categorie : ${categories}">-->
+<!--        <h3 th:text="${categorie.nom}" class="categorie-title">Informatique</h3>-->
         <div class="carousel">
-            <div class="card" th:each="enchere : ${categorie.encheres}">
-                <div class="card-image">
-                    <img th:src="@{/images/articles/__${enchere.articleVendu.image}__}" alt="Image de l'article">
-                </div>
+            <div class="card" th:each="article : ${articles} ">
+<!--                <div class="card-image">-->
+<!--                    <img th:src="@{/images/articles/__${enchere.articleVendu.image}__}" alt="Image de l'article">-->
+<!--                </div>-->
                 <div class="card-content">
-                    <h3 th:text="${enchere.articleVendu.nomArticle}" class="card-title">Nom article</h3>
-                    <p><strong>Prix :</strong> <span th:text="${enchere.montantEnchere} + ' crédits'"></span></p>
-                    <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(enchere.articleVendu.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                    <p><strong>Vendeur :</strong> <span th:text="${enchere.articleVendu.utilisateur.pseudo}"></span></p>
-                    <a th:href="@{'/encheres/' + ${enchere.articleVendu.noArticle}}" class="btn">Voir</a>
+                    <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                    <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                    <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                    <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                    <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
                 </div>
             </div>
         </div>
-    </section>
+<!--    </section>-->
 </main>
 </html>
 
