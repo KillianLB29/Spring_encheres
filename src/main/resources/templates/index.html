@@ -1,20 +1,32 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>ENI-Enchères - Accueil</title>
-    <!-- Liens vers les fichiers CSS dans le dossier static/css -->
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <link rel="stylesheet" th:href="@{/css/modals.css}">
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>ENI-Enchères - Accueil</title>-->
+<!--    &lt;!&ndash; Liens vers les fichiers CSS dans le dossier static/css &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/css/index.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/modal.css}">-->
+<!--</head>-->
+<!--<body>-->
 
-<!-- Navbar ou header selon connexion -->
-<div th:if="${utilisateur != null}" th:replace="fragments/navbar-connectee :: navbar-connectee"></div>
-<div th:if="${utilisateur == null}" th:replace="fragments/header :: header"></div>
+<!--&lt;!&ndash; Navbar ou header selon connexion &ndash;&gt;-->
+<!--<div th:if="${utilisateur != null}" th:replace="fragments/navbar-connectee :: navbar-connectee"></div>-->
+<!--<div th:if="${utilisateur == null}" th:replace="fragments/header :: header"></div>-->
 
-<!-- Modals pour Connexion/Inscription -->
-<div th:replace="fragments/modal-auth :: modals-auth"></div>
+<!--&lt;!&ndash; Modals pour Connexion/Inscription &ndash;&gt;-->
+<!--<div th:replace="fragments/modal-auth :: modals-auth"></div>-->
+
+
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--<div th:replace="fragments/footer :: footer"></div>-->
+
+</body>
+</html>
+
+<html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}" >
+
+<title>Enchères ENI - Acceuil</title>
 
 <main>
     <section class="hero">
@@ -25,20 +37,16 @@
     <section class="encheres">
         <h2>Enchères en cours</h2>
         <div class="grid">
-            <!-- Liste des enchères -->
-            <div th:each="enchere : ${encheres}" class="card">
-                <h3 th:text="${enchere.articleVendu.nomArticle}">Nom article</h3>
-                <p th:text="'Mise à prix : ' + ${enchere.articleVendu.miseAPrix} + ' €'"></p>
-                <p th:text="'Prix actuel : ' + ${enchere.montantEnchere} + ' €'"></p>
-                <p th:text="'Fin : ' + ${#dates.format(enchere.articleVendu.dateFinEncheres, 'dd/MM/yyyy')}"></p>
-                <a th:href="@{'/encheres/' + ${enchere.articleVendu.id}}" class="btn">Voir</a>
-            </div>
+             Liste des enchères
+                        <div th:each="enchere : ${encheres}" class="card">
+                            <h3 th:text="${enchere.articleVendu.nomArticle}">Nom article</h3>
+                            <p th:text="'Mise à prix : ' + ${enchere.articleVendu.miseAPrix} + ' €'"></p>
+                            <p th:text="'Prix actuel : ' + ${enchere.montantEnchere} + ' €'"></p>
+                            <p th:text="'Fin : ' + ${#dates.format(enchere.articleVendu.dateFinEncheres, 'dd/MM/yyyy')}"></p>
+                            <a th:href="@{'/encheres/' + ${enchere.articleVendu.noArticle}}" class="btn">Voir</a>
+                        </div>
         </div>
     </section>
 </main>
 
-<!-- Footer -->
-<div th:replace="fragments/footer :: footer"></div>
-
-</body>
 </html>

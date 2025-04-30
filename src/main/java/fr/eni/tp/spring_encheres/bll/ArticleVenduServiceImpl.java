@@ -11,6 +11,7 @@ import java.util.List;
 @Service("ArticleVenduService")
 public class ArticleVenduServiceImpl implements ArticleVenduService {
 
+    @Autowired
     private ArticleVenduDAO articleVenduDAO;
 
     public ArticleVenduServiceImpl(ArticleVenduDAO articleVenduDAO) {

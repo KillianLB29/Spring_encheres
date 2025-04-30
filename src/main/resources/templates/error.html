@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -129,34 +129,35 @@
     <h1>Oups !</h1>
     <h2>Loooser</h2>
     <p class="message">Tu as fait une erreur, mon ami. Mais t'inquiète, ça arrive aux meilleurs !</p>
-
+-->
     <!-- Affichage de l'erreur spécifique -->
-    <div class="error-detail">
-        <p><strong>Erreur :</strong> <span id="error-message"></span></p>
-    </div>
+<!--  <div class="error-detail">
+      <p><strong>Erreur :</strong> <span id="error-message"></span></p>
+  </div>
 </div>
 
 <div class="icon-container">
-    <i class="fas fa-robot icon"></i>
-    <i class="fas fa-bomb icon"></i>
-    <i class="fas fa-fire icon"></i>
+  <i class="fas fa-robot icon"></i>
+  <i class="fas fa-bomb icon"></i>
+  <i class="fas fa-fire icon"></i>
 </div>
 
 <script>
-    // Animation des icônes en mouvement
-    const icons = document.querySelectorAll('.icon');
+  // Animation des icônes en mouvement
+  const icons = document.querySelectorAll('.icon');
 
-    icons.forEach((icon, index) => {
-        const randomDuration = Math.random() * (7 - 4) + 4; // Durée aléatoire entre 4 et 7 secondes
-        const randomDelay = Math.random() * 3; // Délai aléatoire avant de commencer l'animation
+  icons.forEach((icon, index) => {
+      const randomDuration = Math.random() * (7 - 4) + 4; // Durée aléatoire entre 4 et 7 secondes
+      const randomDelay = Math.random() * 3; // Délai aléatoire avant de commencer l'animation
 
-        icon.style.animationDuration = `${randomDuration}s`;
-        icon.style.animationDelay = `${randomDelay}s`;
-    });
+      icon.style.animationDuration = `${randomDuration}s`;
+      icon.style.animationDelay = `${randomDelay}s`;
+  });
 
-    // Récupérer l'erreur passée par le modèle (via Spring ou un autre mécanisme)
-    const errorMessage = window.location.pathname.split('/').pop(); // Exemple de récupération d'une erreur via l'URL
-    document.getElementById('error-message').textContent = errorMessage || 'Page non trouvée';
+  // Récupérer l'erreur passée par le modèle (via Spring ou un autre mécanisme)
+  const errorMessage = window.location.pathname.split('/').pop(); // Exemple de récupération d'une erreur via l'URL
+  document.getElementById('error-message').textContent = errorMessage || 'Page non trouvée';
 </script>
 </body>
 </html>
+-->
