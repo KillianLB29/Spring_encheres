@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CategorieService {
     List<Categorie> consulterCategories();
-    List<Categorie> consulterCategorieParId(long idCategorie);
+    Categorie consulterCategorieParId(long idCategorie);
     void createCategorie(Categorie categorie);
     void supprimerCategorie(long idCategorie);
 
