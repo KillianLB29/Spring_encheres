@@ -35,18 +35,10 @@ public class AccueilController {
     @GetMapping({"/", "/accueil"})
     public String afficherAccueil( @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
         // Récupération de toutes les enchères depuis la base
-        List<Enchere> encheres = enchereService.findAll();
-
-        // Pour chaque enchère, on enrichit l'objet ArticleVendu avec les données complètes
-        for (Enchere enchere : encheres) {
-            long idArticle = enchere.getArticleVendu().getNoArticle();
-
-            ArticleVendu article = articleVenduService.consulterArticleParId(idArticle);
-            enchere.setArticleVendu(article);
-        }
+        List<ArticleVendu> articles = articleVenduService.consulterArticlesEnCoursDeVente();
 
         // Passage des données au modèle pour affichage dans la vue Thymeleaf
-        model.addAttribute("encheres", encheres);
+        model.addAttribute("articles", articles);
         model.addAttribute("utilisateur", utilisateurSession);
 
         // Redirection vers le template index.html

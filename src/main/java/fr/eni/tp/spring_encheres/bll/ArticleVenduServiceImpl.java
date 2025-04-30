@@ -6,7 +6,12 @@ import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("ArticleVenduService")
 public class ArticleVenduServiceImpl implements ArticleVenduService {
@@ -36,5 +41,17 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     @Override
     public void supprimerArticle(long noArticle) {
         articleVenduDAO.delete(noArticle);
+    }
+    @Override
+    public List<ArticleVendu> consulterArticlesEnCoursDeVente() {
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+
+        List<ArticleVendu> articles = articleVenduDAO.findAll();
+
+        return articles.stream()
+                .filter(article -> article.getDateFinEncheres().after(nowDate))
+                .sorted(Comparator.comparing(a -> a.getDateFinEncheres()))
+                .collect(Collectors.toList());
     }
 }

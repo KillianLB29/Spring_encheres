@@ -8,6 +8,6 @@ public interface ArticleVenduService {
     ArticleVendu consulterArticleParId(long id);
     void creerArticle(ArticleVendu article);
     void supprimerArticle(long noArticle);
-
+    List<ArticleVendu> consulterArticlesEnCoursDeVente();
 
 }
