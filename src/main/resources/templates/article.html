@@ -1,0 +1,62 @@
+<html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
+<title>Vendre un nouvel article</title>
+
+<body>
+<main class="container">
+    <div class="card main-card">
+        <h2 class="floating-title">Vendre un nouvel article</h2>
+        <form th:action="@{/articles/creer}" th:object="${article}" method="post" enctype="multipart/form-data">
+
+            <label for="nomArticle">Article :</label>
+            <input type="text" id="nomArticle" th:field="*{nomArticle}" required>
+
+            <label for="description">Description :</label>
+            <textarea id="description" th:field="*{description}" required></textarea>
+
+            <label for="categorie">Catégorie :</label>
+            <select id="categorie" th:field="*{categorie}">
+                <option value="" disabled selected>Sélectionner une catégorie</option>
+                <option th:value="1">Informatique</option>
+                <option th:value="2">Vêtement</option>
+                <option th:value="3">Mobilier</option>
+            </select>
+
+            <label for="photo">Photo de l'article :</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+
+            <label for="miseAPrix">Mise à prix :</label>
+            <input type="number" id="miseAPrix" th:field="*{miseAPrix}" min="1" max="10000" value="150" required>
+
+            <label for="dateDebutEncheres">Début de l'enchère :</label>
+            <input type="datetime-local" id="dateDebutEncheres" th:field="*{dateDebutEncheres}" required>
+
+            <label for="dateFinEncheres">Fin de l'enchère :</label>
+            <input type="datetime-local" id="dateFinEncheres" th:field="*{dateFinEncheres}" required>
+
+            <div class="card retrait-card">
+                <h3 class="floating-title">Retrait</h3>
+
+                <div class="form-group">
+                    <label for="lieuRetrait.rue">Rue :</label>
+                    <input type="text" id="lieuRetrait.rue" th:field="*{lieuRetrait.rue}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lieuRetrait.code_Postal">Code postal :</label>
+                    <input type="text" id="lieuRetrait.code_Postal" th:field="*{lieuRetrait.code_Postal}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lieuRetrait.ville">Ville :</label>
+                    <input type="text" id="lieuRetrait.ville" th:field="*{lieuRetrait.ville}" required>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit">Enregistrer</button>
+                <button type="reset">Effacer</button>
+            </div>
+        </form>
+    </div>
+</main>
+
