@@ -22,8 +22,8 @@ body {
 /* Permet au titre de flotter au-dessus de la carte */
 .main-card {
     position: relative;
-    padding-top: 3rem; /* espace pour le titre */
-    overflow: visible; /* Permet au titre de déborder sans être coupé */
+    padding-top: 3rem;
+    overflow: visible;
 }
 
 /* Pour la carte retrait, appliquer un effet similaire */
@@ -34,33 +34,33 @@ body {
     z-index: 1;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     transform: translateY(-1rem);
-    overflow: visible; /* Permet au titre de sortir sans être coupé */
+    overflow: visible;
 }
 
 .floating-title {
     position: absolute;
-    top: -2rem; /* Décale le titre au-dessus de la carte */
+    top: -2rem;
     left: 1.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     color: #333;
     background: none;
     padding: 0 1rem;
-    z-index: 10; /* Assure que le titre soit au-dessus de la carte */
-    white-space: nowrap; /* Empêche la coupure du titre */
+    z-index: 10;
+    white-space: nowrap;
 }
 
 /* Pour la carte retrait, appliquer un effet similaire */
 .retrait-card .floating-title {
-    top: -2rem; /* Décale aussi le titre de la carte Retrait au-dessus */
+    top: -2rem;
     left: 1.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     color: #333;
     background: none;
     padding: 0 1rem;
-    z-index: 10; /* Assure que le titre flotte au-dessus */
-    white-space: nowrap; /* Empêche la coupure du titre */
+    z-index: 10;
+    white-space: nowrap;
 }
 
 
@@ -105,12 +105,12 @@ textarea {
 }
 /* Gestion du formulaire Retrait */
 .form-group {
-    margin-bottom: 1.5rem; /* espace entre les champs */
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem; /* espace entre label et input */
+    margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
@@ -159,7 +159,7 @@ button {
     text-align: center;
     cursor: pointer;
     border: 2px solid #2c3e50;
-    background-color: rgba(44, 62, 80, 0.1); /* fond transparent de la couleur principale */
+    background-color: rgba(44, 62, 80, 0.1);
     color: #2c3e50;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -167,7 +167,7 @@ button {
 
 /* Bouton secondaire clair */
 button.secondary {
-    background-color: rgba(236, 240, 241, 0.3); /* gris clair transparent */
+    background-color: rgba(236, 240, 241, 0.3);
     color: #2c3e50;
     border-color: #ecf0f1;
 }
