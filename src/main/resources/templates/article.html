@@ -1,0 +1,74 @@
+<html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
+    <title>Gestion des Articles</title>
+<body>
+<div class="container">
+    <h1>Articles</h1>
+
+    <!-- Formulaire d'ajout d'article -->
+    <div class="form-container">
+        <form action="#" th:action="@{/articles/creer}" th:object="${article}" method="post">
+            <!-- Titre -->
+            <label for="titre">Titre :</label>
+            <input type="text" id="titre" th:field="*{titre}" placeholder="Entrez le titre" required>
+
+            <!-- Description -->
+            <label for="description">Description :</label>
+            <textarea id="description" th:field="*{description}" placeholder="Entrez la description" required></textarea>
+
+            <!-- Prix -->
+            <label for="prix">Prix :</label>
+            <input type="number" id="prix" th:field="*{prix}" placeholder="Entrez le prix" required>
+
+            <!-- Date de début de l'enchère -->
+            <label for="dateDebutEncheres">Date de début :</label>
+            <input type="datetime-local" id="dateDebutEncheres" th:field="*{dateDebutEncheres}" required>
+
+            <!-- Date de fin de l'enchère -->
+            <label for="dateFinEncheres">Date de fin :</label>
+            <input type="datetime-local" id="dateFinEncheres" th:field="*{dateFinEncheres}" required>
+
+            <!-- Catégorie -->
+            <label for="categorie">Catégorie :</label>
+            <select id="categorie" th:field="*{categorie.id}" required>
+                <option value="" disabled selected>Choisir une catégorie</option>
+                <option th:each="categorie : ${categories}"
+                        th:value="${categorie.id}"
+                        th:text="${categorie.libelle}"></option>
+            </select>
+
+            <!-- Lieu de retrait -->
+            <label for="lieuRetrait">Lieu de retrait :</label>
+            <input type="text" id="lieuRetrait" th:field="*{lieuRetrait.rue}" placeholder="Rue" required>
+            <input type="text" th:field="*{lieuRetrait.codePostal}" placeholder="Code Postal" required>
+            <input type="text" th:field="*{lieuRetrait.ville}" placeholder="Ville" required>
+
+            <!-- Bouton de soumission -->
+            <button type="submit">Ajouter l'article</button>
+        </form>
+    </div>
+
+    <!-- Liste des articles -->
+    <h2>Liste des articles</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Catégorie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.titre}"></td>
+            <td th:text="${article.description}"></td>
+            <td th:text="${article.prix}"></td>
+            <td th:text="${#dates.format(article.dateDebutEncheres, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${article.categorie.libelle}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
