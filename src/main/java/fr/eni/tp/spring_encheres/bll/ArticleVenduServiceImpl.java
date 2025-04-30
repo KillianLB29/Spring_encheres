@@ -3,6 +3,9 @@ package fr.eni.tp.spring_encheres.bll;
 import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Enchere;
 import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
+import fr.eni.tp.spring_encheres.dal.CategorieDAO;
+import fr.eni.tp.spring_encheres.dal.RetraitDAO;
+import fr.eni.tp.spring_encheres.dal.UtilisateurDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,12 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
 
     @Autowired
     private ArticleVenduDAO articleVenduDAO;
+    @Autowired
+    private UtilisateurDAO utilisateurDAO;
+    @Autowired
+    private CategorieDAO categorieDAO;
+    @Autowired
+    private RetraitDAO retraitDAO;
 
     public ArticleVenduServiceImpl(ArticleVenduDAO articleVenduDAO) {
         this.articleVenduDAO = articleVenduDAO;
@@ -30,7 +39,11 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
 
     @Override
     public ArticleVendu consulterArticleParId(long id) {
-        return articleVenduDAO.read(id);
+        ArticleVendu article = articleVenduDAO.read(id);
+        article.setUtilisateur(utilisateurDAO.read(article.getUtilisateur().getNoUtilisateur()));
+        article.setCategorie(categorieDAO.read(article.getCategorie().getIdCategorie()));
+        article.setLieuRetrait(retraitDAO.read(id));
+        return article;
     }
 
     @Override
@@ -48,6 +61,8 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
 
         List<ArticleVendu> articles = articleVenduDAO.findAll();
+
+        articles.forEach(articleVendu -> articleVendu.setUtilisateur(utilisateurDAO.read(articleVendu.getUtilisateur().getNoUtilisateur())));
 
         return articles.stream()
                 .filter(article -> article.getDateFinEncheres().after(nowDate))

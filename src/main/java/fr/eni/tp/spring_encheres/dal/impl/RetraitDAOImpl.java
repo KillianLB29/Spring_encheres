@@ -22,9 +22,9 @@ public class RetraitDAOImpl implements RetraitDAO {
     }
 
     @Override
-    public Retrait read(long idRetrait) {
+    public Retrait read(long idArticle) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("no_article", idRetrait);
+        mapSqlParameterSource.addValue("no_article", idArticle);
         Retrait retrait = namedParameterJdbcTemplate.queryForObject(FIND_BY_ID,mapSqlParameterSource,new RetraitRowMapper());
         return retrait;
         }

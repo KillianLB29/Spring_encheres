@@ -5,6 +5,7 @@ import fr.eni.tp.spring_encheres.dal.EnchereDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service("enchereService")
@@ -31,5 +32,20 @@ public class EnchereServiceImpl implements EnchereService {
     @Override
     public List<Enchere> findAll() {
         return enchereDAO.findAll();
+    }
+
+    @Override
+    public Enchere meilleurEnchere(long idArticle) {
+        List<Enchere> encheres = enchereDAO.read(idArticle);
+        if(encheres.size() == 0)
+        {
+            return new Enchere();
+        }
+        else{
+            Enchere meilleureEnchere = encheres.stream()
+                    .max(Comparator.comparing(Enchere::getMontantEnchere))
+                    .orElse(null);
+            return meilleureEnchere;
+        }
     }
 }

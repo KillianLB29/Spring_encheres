@@ -12,4 +12,6 @@ public interface EnchereService {
     void supprimerEnchere(long id);
 
     List<Enchere> findAll();
+
+    Enchere meilleurEnchere(long idArticle);
 }

@@ -8,20 +8,18 @@ import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Categorie;
 import fr.eni.tp.spring_encheres.bo.Enchere;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
-import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
-import fr.eni.tp.spring_encheres.dal.EnchereDAO;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 @Controller
 @SessionAttributes("utilisateurSession")
-public class AccueilController {
+public class EnchereController {
 
     private ArticleVenduService articleVenduService;
     private EnchereService enchereService;
@@ -29,7 +27,7 @@ public class AccueilController {
     private CategorieService categorieService;
 
 
-    public AccueilController(ArticleVenduService articleVenduService, EnchereService enchereService, UtilisateurService utilisateurService, CategorieService categorieService) {
+    public EnchereController(ArticleVenduService articleVenduService, EnchereService enchereService, UtilisateurService utilisateurService, CategorieService categorieService) {
         this.articleVenduService = articleVenduService;
         this.enchereService = enchereService;
         this.utilisateurService = utilisateurService;
@@ -50,6 +48,15 @@ public class AccueilController {
 
         // Redirection vers le template index.html
         return "index";
+    }
+    @GetMapping("/encheres/{id}")
+    public String afficherEnchere(@PathVariable long id, @ModelAttribute("utilisateurSession")Utilisateur utilisateurSession, Model model) {
+        Enchere enchere = enchereService.meilleurEnchere(id);
+        ArticleVendu articleVendu = articleVenduService.consulterArticleParId(id);
+        model.addAttribute("article", articleVendu);
+        model.addAttribute("enchere", enchere);
+        model.addAttribute("utilisateur", utilisateurSession);
+        return "enchere";
     }
     @ModelAttribute("utilisateurSession")
     public Utilisateur membreSession() {
