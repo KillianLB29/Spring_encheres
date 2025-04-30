@@ -5,7 +5,6 @@
 <!--&lt;!&ndash; Modals pour Connexion/Inscription &ndash;&gt;-->
 <!--<div th:replace="fragments/modal-auth :: modals-auth"></div>-->
 
-
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Accueil</title>
 <main>
@@ -26,7 +25,9 @@
                 <label for="categorie">Catégorie :</label>
                 <select id="categorie">
                     <option>Toutes</option>
-                    <option data-th-each="categorie :${categories}" data-th-text="${categorie.libelle}"></option>
+                    <option>Informatique</option>
+                    <option>Vêtements</option>
+                    <option>Maison</option>
                 </select>
             </div>
         </div>
@@ -34,13 +35,18 @@
 
     <h2 class="encheres-title">Liste des enchères</h2>
 
-<!--    <section class="encheres" th:each="categorie : ${categories}">-->
-<!--        <h3 th:text="${categorie.nom}" class="categorie-title">Informatique</h3>-->
-        <div class="carousel">
-            <div class="card" th:each="article : ${articles} ">
-<!--                <div class="card-image">-->
-<!--                    <img th:src="@{/images/articles/__${enchere.articleVendu.image}__}" alt="Image de l'article">-->
-<!--                </div>-->
+    <section class="encheres">
+        <div class="card-container">
+            <div class="card" th:each="article : ${articles}">
+                <div class="card-image">
+                    <img th:src="@{
+                ${article.categorie.nom.equals('Informatique')} ? '/img/informatique-default.jpg' :
+                ${article.categorie.nom.equals('Vêtements')} ? '/img/vetement-default.jpg' :
+                ${article.categorie.nom.equals('Maison')} ? '/img/maison-default.jpg' :
+                '/img/logoENI.jpg'
+            }" alt="Image de l'article">
+                </div>
+
                 <div class="card-content">
                     <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
                     <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
@@ -50,7 +56,6 @@
                 </div>
             </div>
         </div>
-<!--    </section>-->
+    </section>
 </main>
 </html>
-
