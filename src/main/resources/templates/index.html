@@ -7,6 +7,7 @@
 
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Accueil</title>
+
 <main>
     <section class="filtres">
         <p class="filtre-title">Filtres :</p>
@@ -39,12 +40,7 @@
         <div class="card-container">
             <div class="card" th:each="article : ${articles}">
                 <div class="card-image">
-                    <img th:src="@{
-                ${article.categorie.nom.equals('Informatique')} ? '/img/informatique-default.jpg' :
-                ${article.categorie.nom.equals('Vêtements')} ? '/img/vetement-default.jpg' :
-                ${article.categorie.nom.equals('Maison')} ? '/img/maison-default.jpg' :
-                '/img/logoENI.jpg'
-            }" alt="Image de l'article">
+                    <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
                 </div>
 
                 <div class="card-content">
@@ -59,3 +55,4 @@
     </section>
 </main>
 </html>
+
