@@ -2,6 +2,7 @@ package fr.eni.tp.spring_encheres.ihm;
 
 import fr.eni.tp.spring_encheres.bll.ArticleVenduService;
 import fr.eni.tp.spring_encheres.bll.EnchereService;
+import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Enchere;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
@@ -22,11 +23,13 @@ public class AccueilController {
 
     private ArticleVenduService articleVenduService;
     private EnchereService enchereService;
+    private UtilisateurService utilisateurService;
 
 
-    public AccueilController(ArticleVenduService articleVenduService, EnchereService enchereService) {
+    public AccueilController(ArticleVenduService articleVenduService, EnchereService enchereService, UtilisateurService utilisateurService) {
         this.articleVenduService = articleVenduService;
         this.enchereService = enchereService;
+        this.utilisateurService = utilisateurService;
     }
 
     @GetMapping({"/", "/accueil"})
@@ -53,6 +56,7 @@ public class AccueilController {
     public Utilisateur membreSession() {
         System.out.println("Création du contexte");
         Utilisateur util = new Utilisateur();
+        util= utilisateurService.findById(1);
         return util;
     }
 

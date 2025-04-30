@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-</head>
-<body>
 <div th:fragment="header">
-    <header>
+    <header data-th-if="${utilisateur.noUtilisateur <1}">
         <div class="nav-container">
             <a href="/" class="logo">
                 <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
@@ -17,6 +11,21 @@
             </nav>
         </div>
     </header>
+    <header data-th-if="${utilisateur.noUtilisateur >0}">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
+                <span>ENI-Enchères</span>
+            </a>
+            <nav>
+                <a href="/profil" class="profile-link">
+                    <!--                    <img th:src="@{'/img/profils/' + ${utilisateur.photo}}" alt="Photo de profil" class="profile-pic">-->
+                    <span th:text="${utilisateur.pseudo}">Pseudo</span>
+                </a>
+                <a href="/encheres">Mes enchères</a>
+                <a href="/deconnexion">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
 </div>
-</body>
-</html>
+
