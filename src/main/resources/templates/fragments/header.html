@@ -1,13 +1,19 @@
 <div th:fragment="header">
-    <header data-th-if="${utilisateur.noUtilisateur <1}">
+   <header data-th-if="${utilisateur.noUtilisateur <1}">
         <div class="nav-container">
             <a href="/" class="logo">
                 <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
                 <span>ENI-Enchères</span>
             </a>
-            <nav>
-                <a href="/inscription">S'inscrire</a>
-                <a href="/connexion">Se connecter</a>
+            <nav class="nav_bar">
+                <ul>
+                    <li>
+                        <a href="/inscription"><i class="fa-solid fa-user-plus"></i><span class="nav_titre">S'inscrire</span></a>
+                    </li>
+                    <li>
+                <a href="/connexion"><i class="fa-solid fa-right-to-bracket"></i><span class="nav_titre">Se connecter</span></a>
+                    </li>
+                </ul>
             </nav>
         </div>
     </header>
@@ -17,13 +23,25 @@
                 <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
                 <span>ENI-Enchères</span>
             </a>
-            <nav>
-                <a href="/profil" class="profile-link">
+            <nav class="nav_bar">
+                <ul>
+                    <li>
+                        <a href="/monProfil" class="profile-link">
                     <!--                    <img th:src="@{'/img/profils/' + ${utilisateur.photo}}" alt="Photo de profil" class="profile-pic">-->
-                    <span th:text="${utilisateur.pseudo}">Pseudo</span>
-                </a>
-                <a href="/encheres">Mes enchères</a>
-                <a href="/deconnexion">Déconnexion</a>
+                            <span th:text="${utilisateur.pseudo}">Pseudo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/encheres">Mes enchères</a>
+                    </li>
+                    <li><a href="/deconnexion"><i class="fa-regular fa-circle-xmark"></i><span class="nav_titre">Déconnexion</span></a>
+                    </li>
+                </ul>
             </nav>
         </div>
     </header>
+
+    <!--<script src="https://kit.fontawesome.com/0dfb43c94e.js" crossorigin="anonymous"></script>
+    <i class="fa-regular fa-house"></i>  HOME ICONE
+    <i class="fa-regular fa-user"></i> USER ICONE
+    -->
