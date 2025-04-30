@@ -1,14 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>ENI-Enchères - Accueil</title>-->
-<!--    &lt;!&ndash; Liens vers les fichiers CSS dans le dossier static/css &ndash;&gt;-->
-<!--    <link rel="stylesheet" th:href="@{/css/index.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/modal.css}">-->
-<!--</head>-->
-<!--<body>-->
-
 <!--&lt;!&ndash; Navbar ou header selon connexion &ndash;&gt;-->
 <!--<div th:if="${utilisateur != null}" th:replace="fragments/navbar-connectee :: navbar-connectee"></div>-->
 <!--<div th:if="${utilisateur == null}" th:replace="fragments/header :: header"></div>-->
@@ -17,36 +6,53 @@
 <!--<div th:replace="fragments/modal-auth :: modals-auth"></div>-->
 
 
-
-<!--&lt;!&ndash; Footer &ndash;&gt;-->
-<!--<div th:replace="fragments/footer :: footer"></div>-->
-
-</body>
-</html>
-
-<html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}" >
-
-<title>Enchères ENI - Acceuil</title>
-
+<html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
+<title>Enchères ENI - Accueil</title>
 <main>
-    <section class="hero">
-        <h1>Bienvenue sur ENI-Enchères</h1>
-        <p>Enchérissez, vendez, gagnez !</p>
+    <section class="filtres">
+        <p class="filtre-title">Filtres :</p>
+        <div class="filtre-group">
+            <div class="filtre-input">
+                <label for="searchName"></label>
+                <div class="input-icon">
+                    <i class="icon-search">🔍</i>
+                    <input type="text" id="searchName" placeholder="Le nom de l'article contient">
+                </div>
+            </div>
+            <div class="filtre-button">
+                <input type="submit" value="Rechercher" class="btn">
+            </div>
+            <div class="filtre-categorie">
+                <label for="categorie">Catégorie :</label>
+                <select id="categorie">
+                    <option>Toutes</option>
+                    <option>Informatique</option>
+                    <option>Vêtements</option>
+                    <option>Maison</option>
+                </select>
+            </div>
+        </div>
     </section>
 
-    <section class="encheres">
-        <h2>Enchères en cours</h2>
-        <div class="grid">
-             Liste des enchères
-                        <div th:each="enchere : ${encheres}" class="card">
-                            <h3 th:text="${enchere.articleVendu.nomArticle}">Nom article</h3>
-                            <p th:text="'Mise à prix : ' + ${enchere.articleVendu.miseAPrix} + ' €'"></p>
-                            <p th:text="'Prix actuel : ' + ${enchere.montantEnchere} + ' €'"></p>
-                            <p th:text="'Fin : ' + ${#dates.format(enchere.articleVendu.dateFinEncheres, 'dd/MM/yyyy')}"></p>
-                            <a th:href="@{'/encheres/' + ${enchere.articleVendu.noArticle}}" class="btn">Voir</a>
-                        </div>
+    <h2 class="encheres-title">Liste des enchères</h2>
+
+    <section class="encheres" th:each="categorie : ${categories}">
+        <h3 th:text="${categorie.nom}" class="categorie-title">Informatique</h3>
+        <div class="carousel">
+            <div class="card" th:each="enchere : ${categorie.encheres}">
+                <div class="card-image">
+                    <img th:src="@{/images/articles/__${enchere.articleVendu.image}__}" alt="Image de l'article">
+                </div>
+                <div class="card-content">
+                    <h3 th:text="${enchere.articleVendu.nomArticle}" class="card-title">Nom article</h3>
+                    <p><strong>Prix :</strong> <span th:text="${enchere.montantEnchere} + ' crédits'"></span></p>
+                    <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(enchere.articleVendu.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                    <p><strong>Vendeur :</strong> <span th:text="${enchere.articleVendu.utilisateur.pseudo}"></span></p>
+                    <a th:href="@{'/encheres/' + ${enchere.articleVendu.noArticle}}" class="btn">Voir</a>
+                </div>
+            </div>
         </div>
     </section>
 </main>
-
 </html>
+
