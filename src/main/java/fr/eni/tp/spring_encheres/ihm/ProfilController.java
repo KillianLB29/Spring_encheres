@@ -19,6 +19,10 @@ public class ProfilController {
         this.utilisateurService = utilisateurService;
     }
 
+    /*TODO Modifier monProfil pour afficher un autre formulaire pour modifier le mot de passe etc/Actuellement monProfil affiche en réalité
+    le profil de l'utilisateur du point de vue admin.
+    */
+
     @GetMapping("/monProfil")
     public String afficherProfil(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
         model.addAttribute("utilisateur", utilisateurSession);

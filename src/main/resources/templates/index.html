@@ -26,9 +26,10 @@
                 <label for="categorie">Catégorie :</label>
                 <select id="categorie">
                     <option>Toutes</option>
-                    <option>Informatique</option>
-                    <option>Vêtements</option>
-                    <option>Maison</option>
+                    <option data-th-each="categorie : ${categories}" data-th-text="${categorie.libelle}"></option>
+
+
+
                 </select>
             </div>
         </div>
