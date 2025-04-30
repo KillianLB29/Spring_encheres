@@ -4,8 +4,8 @@ header {
     padding: 1rem 1rem;
     display: flex;
     flex-direction: column;
-    margin:0 auto;
-    width: 100%;
+    margin: 0 auto;
+    width: 99%;
 
 }
 
@@ -22,19 +22,22 @@ header {
     display: flex;
     justify-content: space-between;
 }
-.nav_bar.ul{
-    list-style-type: none;
-
-
-}
-.nav_bar.li{
+.nav_bar ul{
+display: flex;
+    flex-direction: row;
     list-style-type: none;
 }
+.nav_bar li{
+    display: flex;
+    flex-direction: row;
 
-.nav_bar.i{
-    display: none;
 }
-.nav_bar.li{}
+@media screen and (min-width:992px) {
+    .nav_bar i {
+        display: none;
+    }
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -43,7 +46,12 @@ header {
     font-size: 1.5rem;
     font-weight: bold;
 }
+.nav_bar ul li a
+{
+    padding:10px;
+    font-size: 16px;
 
+}
 .logo img {
     height: 40px;
     margin-right: 10px;
@@ -64,33 +72,44 @@ nav a:hover {
 
 /* === MEDIA QUERIES*/
 /*sur les ecrans quand la largeur de la fenêtre fait au max 767 px*/
-@media screen and (min-width:300px) and ( max-width:767px)  {
+@media screen and (min-width:300px) and ( max-width:767px) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding:0;
-    margin-top: 15px;
+    padding: 0;
+    margin-top: 10px;
 
 
-    .nav_bar{
+    .nav_bar {
         display: flex;
     }
-    .nav_titre{
+
+    .nav_titre {
         display: none;
     }
-    }
 
-@media screen and (min-width: 768px) and (max-width: 991px) { {
+    .nav_bar i {
+        display: inline-block;
+        margin-right: 5px;
+        color: white;
+        font-weight: bold;
+    }
+ }
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
     font-family: 'Raleway', sans-serif;
     font-weight: bold;
     font-size: 2rem;
     box-sizing: border-box;
-}
+
     header {
         display: flex;
 
 
+    }
+    .nav_titre {
+        display: none;
     }
 }
 

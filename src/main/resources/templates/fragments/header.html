@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <div th:fragment="header">
    <header data-th-if="${utilisateur.noUtilisateur <1}">
         <div class="nav-container">
@@ -26,21 +27,22 @@
             <nav class="nav_bar">
                 <ul>
                     <li>
-                        <a href="/monProfil" class="profile-link">
+                        <a href="/monProfil" class="profile-link"> <i class="fa-regular fa-user"></i>
                     <!--                    <img th:src="@{'/img/profils/' + ${utilisateur.photo}}" alt="Photo de profil" class="profile-pic">-->
-                            <span th:text="${utilisateur.pseudo}">Pseudo</span>
+                            <span class="nav_titre" th:text="${utilisateur.pseudo}">Pseudo</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/encheres">Mes enchères</a>
+                        <a href="/encheres"><i class="fa-solid fa-gavel"></i><span class="nav_titre">Mes enchères</span></a>
                     </li>
-                    <li><a href="/deconnexion"><i class="fa-regular fa-circle-xmark"></i><span class="nav_titre">Déconnexion</span></a>
+                    <li>
+                        <a href="/deconnexion"><i class="fa-regular fa-circle-xmark"></i><span class="nav_titre">Déconnexion</span></a>
                     </li>
                 </ul>
             </nav>
         </div>
     </header>
-
+</div>
     <!--<script src="https://kit.fontawesome.com/0dfb43c94e.js" crossorigin="anonymous"></script>
     <i class="fa-regular fa-house"></i>  HOME ICONE
     <i class="fa-regular fa-user"></i> USER ICONE
