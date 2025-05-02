@@ -1,17 +1,37 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f7f7f7;
-    margin: 0;
-    padding: 0;
-}
-
 .container {
     width: 80%;
-    margin: auto;
+    max-width: 1200px;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+/* Style des titres */
+.floating-title-article {
+    position: absolute;
+    top: 0; /* ou top: 1.5rem pour ajuster */
+    left: 1.5rem;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    background: white; /* ou transparent selon effet */
+    padding: 0 1rem;
+    z-index: 10;
 }
 
+
+
+/* Pour la carte retrait, appliquer un effet similaire */
+.retrait-card {
+    position: relative;
+    padding-top: 4rem;
+}
+
+
 .card {
+    position: relative;
     background: white;
     padding: 1.5rem;
     margin-top: 1rem;
@@ -19,64 +39,24 @@ body {
     box-shadow: 0 0 10px #ccc;
 }
 
-/* Permet au titre de flotter au-dessus de la carte */
-.main-card {
-    position: relative;
-    padding-top: 3rem;
-    overflow: visible;
-}
-
-/* Pour la carte retrait, appliquer un effet similaire */
-.retrait-card {
-    position: relative;
-    margin: 2rem auto 0 auto;
-    width: 80%;
-    z-index: 1;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    transform: translateY(-1rem);
-    overflow: visible;
-}
-
-.floating-title {
-    position: absolute;
-    top: -2rem;
-    left: 1.5rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #333;
-    background: none;
-    padding: 0 1rem;
-    z-index: 10;
-    white-space: nowrap;
-}
-
-/* Pour la carte retrait, appliquer un effet similaire */
-.retrait-card .floating-title {
-    top: -2rem;
-    left: 1.5rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #333;
-    background: none;
-    padding: 0 1rem;
-    z-index: 10;
-    white-space: nowrap;
-}
-
-
-/* Champs de saisie avec une belle présentation */
 label {
     display: block;
     margin-top: 1rem;
     font-weight: bold;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 0.5rem;
 }
 
 input, select, textarea {
-    width: 100%;
-    padding: 0.5rem;
+    width: 80%;
+    max-width: 400px;
+    padding: 0.75rem;
     margin-top: 0.25rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 textarea {
@@ -88,6 +68,7 @@ textarea {
 .input-dates {
     display: flex;
     gap: 1rem;
+    justify-content: center;
 }
 
 .input-dates input {
@@ -103,6 +84,7 @@ textarea {
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
+
 /* Gestion du formulaire Retrait */
 .form-group {
     margin-bottom: 1.5rem;
@@ -115,12 +97,15 @@ textarea {
 }
 
 .form-group input {
-    width: 100%;
-    padding: 0.5rem;
+    width: 80%;
+    max-width: 400px;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 
 /* Responsive: empile les champs en colonne sur les petits écrans */
 @media (max-width: 768px) {
@@ -132,7 +117,7 @@ textarea {
         width: 100%;
     }
 
-    .floating-title {
+    .floating-title-article {
         font-size: 1.25rem;
     }
 
@@ -141,7 +126,7 @@ textarea {
         transform: none;
     }
 }
-/* Style des boutons */
+
 .form-buttons {
     margin-top: 2rem;
     display: flex;
@@ -197,5 +182,3 @@ button.secondary:hover {
         max-width: 250px;
     }
 }
-
-

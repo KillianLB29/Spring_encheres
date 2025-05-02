@@ -4,7 +4,7 @@
 <body>
 <main class="container">
     <div class="card main-card">
-        <h2 class="floating-title">Vendre un nouvel article</h2>
+        <h2 class="floating-title-article">Vendre un nouvel article</h2>
         <form th:action="@{/articles/creer}" th:object="${article}" method="post" enctype="multipart/form-data">
 
             <label for="nomArticle">Article :</label>
@@ -34,7 +34,7 @@
             <input type="datetime-local" id="dateFinEncheres" th:field="*{dateFinEncheres}" required>
 
             <div class="card retrait-card">
-                <h3 class="floating-title">Retrait</h3>
+                <h3 class="floating-title-article">Retrait</h3>
 
                 <div class="form-group">
                     <label for="lieuRetrait.rue">Rue :</label>

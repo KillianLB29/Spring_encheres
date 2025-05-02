@@ -87,6 +87,7 @@ public class EnchereController {
 
         model.addAttribute("article", article);
         model.addAttribute("categories", categorieService.consulterCategories());
+        model.addAttribute("utilisateur", utilisateurSession);
 
         return "article"; // retourne vers le template "article.html"
     }
