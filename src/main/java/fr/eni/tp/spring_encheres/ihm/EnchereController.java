@@ -60,9 +60,12 @@ public class EnchereController {
     ) {
         Enchere enchere = enchereService.meilleurEnchere(id);
         ArticleVendu article = articleVenduService.consulterArticleParId(id);
+        Boolean enCours = articleVenduService.isEnchereEnCours(id);
+        System.out.println(enCours ? "enchere" : "affichage");
 
         model.addAttribute("article", article);
         model.addAttribute("enchere", enchere);
+        model.addAttribute("mode", enCours ? "enchere" : "affichage");
         model.addAttribute("utilisateur", utilisateurSession);
 
         return "enchere";
@@ -130,6 +133,20 @@ public class EnchereController {
         model.addAttribute("encheresParticipe", enchereParticipe);
         model.addAttribute("utilisateur", utilisateurSession);
         return "mesEncheres";
+    }
+    // === CREATION D'UNE ENCHERE ===
+    @PostMapping("/encherir/{id}")
+    public String nouvelleEnchere(@ModelAttribute("utilisateurSession")Utilisateur utilisateurSession, @PathVariable int id, @RequestParam("proposition") int proposition)
+    {
+        Enchere enchere = new Enchere();
+        enchere.setUtilisateur(utilisateurSession);
+        enchere.setDateEnchere(new Date(System.currentTimeMillis()));
+        ArticleVendu article = new ArticleVendu();
+        article.setNoArticle(id);
+        enchere.setArticleVendu(article);
+        enchere.setMontantEnchere(proposition);
+        enchereService.enregistrerEnchere(enchere);
+        return "redirect:/encheres/" + id;
     }
 
     // === GESTION SESSION UTILISATEUR (EXEMPLE FIXE TEMPORAIRE) ===
