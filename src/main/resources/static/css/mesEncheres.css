@@ -18,12 +18,16 @@
 .card-container {
     display: flex;
     transition: transform 0.5s ease;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 .card {
-    flex: 0 0 25%; /* Chaque carte occupe 25% de la largeur, donc 4 cartes par slide */
+    flex: 0 0 25%;
     box-sizing: border-box;
     padding: 10px;
+    scroll-snap-align: start;
+    height: 100%;
 }
 
 .card-image img {
@@ -49,9 +53,6 @@
 
 .carousel-btn:hover {
     opacity: 1;
-}
-.h2{
-    color: red;
 }
 
 /* Positionnement des flèches */
