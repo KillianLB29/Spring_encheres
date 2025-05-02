@@ -1,0 +1,63 @@
+.encheres {
+    margin: 2rem 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    scroll-snap-align: start;
+    padding: 1rem;
+    min-width: 100%;
+}
+
+.card {
+    flex: 0 0 calc(25% - 1rem); /* 4 cartes par ligne */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    padding: 1.5rem;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card-image img {
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+}
+
+.card-content {
+    margin-top: 1rem;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 0.25rem;
+    display: inline-block;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #1a242f;
+}

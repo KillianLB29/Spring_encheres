@@ -2,63 +2,78 @@
 <title>Enchères ENI - Mes enchères</title>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Mes enchères</title>
+    <div id="extraCss">
+        <link rel="stylesheet" th:href="@{/css/mes-encheres.css}">
+    </div>
 </head>
 <main>
-<h2>Mes objets mis en enchère terminés</h2>
-<section class="encheres">
-    <div class="card-container">
-        <div class="card" th:each="article : ${encheresTerminer}">
-            <div class="card-image">
-                <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
-            </div>
 
-            <div class="card-content">
-                <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+    <h2>Mes objets mis en enchère terminés</h2>
+    <section class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="card-container">
+                <div class="card" th:each="article : ${encheresTerminer}">
+                    <div class="card-image">
+                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                    </div>
+                    <div class="card-content">
+                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                        <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                    </div>
+                </div>
             </div>
+            <button class="carousel-btn next">&#10095;</button>
         </div>
-    </div>
+    </section>
+
     <h2>Mes objets actuellement en enchères</h2>
-</section>
     <section class="encheres">
-        <div class="card-container">
-            <div class="card" th:each="article : ${encheresEnCours}">
-                <div class="card-image">
-                    <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
-                </div>
-
-                <div class="card-content">
-                    <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                    <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                    <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                    <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                    <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="card-container">
+                <div class="card" th:each="article : ${encheresEnCours}">
+                    <div class="card-image">
+                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                    </div>
+                    <div class="card-content">
+                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                        <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                    </div>
                 </div>
             </div>
+            <button class="carousel-btn next">&#10095;</button>
         </div>
     </section>
+
     <h2>Les enchères auxquelles je participe</h2>
-    </section>
     <section class="encheres">
-        <div class="card-container">
-            <div class="card" th:each="article : ${encheresParticipe}">
-                <div class="card-image">
-                    <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
-                </div>
-
-                <div class="card-content">
-                    <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                    <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                    <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                    <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                    <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="card-container">
+                <div class="card" th:each="article : ${encheresParticipe}">
+                    <div class="card-image">
+                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                    </div>
+                    <div class="card-content">
+                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                        <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                    </div>
                 </div>
             </div>
+            <button class="carousel-btn next">&#10095;</button>
         </div>
     </section>
+
 </main>
 </html>
