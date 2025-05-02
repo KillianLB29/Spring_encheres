@@ -17,13 +17,13 @@ public class ArticleVendu {
     private Utilisateur utilisateur;
     private Categorie categorie;
     private Retrait lieuRetrait;
-    private List<Enchere> encheresEnCours = new ArrayList<>();
+    private String urlImage;
 
     public ArticleVendu() {
 
     }
 
-    public ArticleVendu(long noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, long miseAPrix, long prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait) {
+    public ArticleVendu(long noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, long miseAPrix, long prixVente, String etatVente, Utilisateur utilisateur, Categorie categorie, Retrait lieuRetrait, String urlImage) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -35,8 +35,16 @@ public class ArticleVendu {
         this.utilisateur = utilisateur;
         this.categorie = categorie;
         this.lieuRetrait = lieuRetrait;
+        this.urlImage = urlImage;
     }
 
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 
     public long getNoArticle() {
         return noArticle;
@@ -126,29 +134,23 @@ public class ArticleVendu {
         this.lieuRetrait = lieuRetrait;
     }
 
-    public List<Enchere> getEncheresEnCours() {
-        return encheresEnCours;
-    }
-
-    public void setEncheresEnCours(List<Enchere> encheresEnCours) {
-        this.encheresEnCours = encheresEnCours;
-    }
 
     @Override
     public String toString() {
-        return "ArticleVendu{" +
-                "noArticle=" + noArticle +
-                ", nomArticle='" + nomArticle + '\'' +
-                ", description='" + description + '\'' +
-                ", dateDebutEncheres=" + dateDebutEncheres +
-                ", dateFinEncheres=" + dateFinEncheres +
-                ", miseAPrix=" + miseAPrix +
-                ", prixVente=" + prixVente +
-                ", etatVente='" + etatVente + '\'' +
-                ", utilisateur=" + utilisateur +
-                ", categorie=" + categorie +
-                ", lieuRetrait=" + lieuRetrait +
-                ", encheresEnCours=" + encheresEnCours +
-                '}';
+        final StringBuffer sb = new StringBuffer("ArticleVendu{");
+        sb.append("noArticle=").append(noArticle);
+        sb.append(", nomArticle='").append(nomArticle).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", dateDebutEncheres=").append(dateDebutEncheres);
+        sb.append(", dateFinEncheres=").append(dateFinEncheres);
+        sb.append(", miseAPrix=").append(miseAPrix);
+        sb.append(", prixVente=").append(prixVente);
+        sb.append(", etatVente='").append(etatVente).append('\'');
+        sb.append(", utilisateur=").append(utilisateur);
+        sb.append(", categorie=").append(categorie);
+        sb.append(", lieuRetrait=").append(lieuRetrait);
+        sb.append(", urlImage='").append(urlImage).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

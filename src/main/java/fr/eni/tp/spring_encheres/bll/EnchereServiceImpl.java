@@ -2,10 +2,12 @@ package fr.eni.tp.spring_encheres.bll;
 
 import fr.eni.tp.spring_encheres.bo.ArticleVendu;
 import fr.eni.tp.spring_encheres.bo.Enchere;
+import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.dal.ArticleVenduDAO;
 import fr.eni.tp.spring_encheres.dal.CategorieDAO;
 import fr.eni.tp.spring_encheres.dal.EnchereDAO;
 import fr.eni.tp.spring_encheres.dal.UtilisateurDAO;
+import fr.eni.tp.spring_encheres.exception.EnchereException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +35,24 @@ public class EnchereServiceImpl implements EnchereService {
 
     @Override
     public void enregistrerEnchere(Enchere enchere) {
-        List<Enchere> encheres = enchereDAO.read(enchere.getArticleVendu().getNoArticle());
-        encheres = encheres.stream()
-                .filter(e -> e.getUtilisateur().getNoUtilisateur()==enchere.getUtilisateur().getNoUtilisateur())
-                .collect(Collectors.toList());
-        if(encheres.size() > 0){
-            enchereDAO.delete(enchere.getArticleVendu().getNoArticle(),enchere.getUtilisateur().getNoUtilisateur());
+        if(!utilisateurHasEnoughPoints(enchere))
+        {
+            System.out.println("L'utilisateur n'a pas assez de crédit pour enchérir!");
         }
-        enchereDAO.save(enchere);
+        else{
+            List<Enchere> encheres = enchereDAO.read(enchere.getArticleVendu().getNoArticle());
+            encheres = encheres.stream()
+                    .filter(e -> e.getUtilisateur().getNoUtilisateur()==enchere.getUtilisateur().getNoUtilisateur())
+                    .collect(Collectors.toList());
+            if(encheres.size() > 0){
+                enchereDAO.delete(enchere.getArticleVendu().getNoArticle(),enchere.getUtilisateur().getNoUtilisateur());
+            }
+            enchereDAO.save(enchere);
+            Utilisateur utilisateur = utilisateurDAO.read(enchere.getUtilisateur().getNoUtilisateur());
+            utilisateur.setCredit(utilisateur.getCredit()-enchere.getMontantEnchere());
+            utilisateurDAO.update(utilisateur);
+        }
+
     }
 
     @Override
@@ -67,6 +79,20 @@ public class EnchereServiceImpl implements EnchereService {
             meilleureEnchere.setUtilisateur(utilisateurDAO.read(meilleureEnchere.getUtilisateur().getNoUtilisateur()));
             return meilleureEnchere;
         }
+    }
+    public boolean isEnchereValid(Enchere enchere, EnchereException enchereException) {
+        boolean valid = true;
+
+        return valid;
+    }
+    public boolean utilisateurHasEnoughPoints(Enchere enchere) {
+        boolean valid = true;
+        Utilisateur utilisateur = utilisateurDAO.read(enchere.getUtilisateur().getNoUtilisateur());
+        if(utilisateur.getCredit()<enchere.getMontantEnchere())
+        {
+            valid = false;
+        }
+        return valid;
     }
 
 //    @Override

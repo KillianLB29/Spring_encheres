@@ -1,18 +1,49 @@
 /*sur les ecrans quand la largeur de la fenêtre fait au max 767 px*/
 
-@media screen and (min-width:300px) and ( max-width:767px) {
-    body {
+@media screen and (min-width:300px) and (max-width:991px) {
+    main{
         width: 100%;
-        margin: 0 auto;
-    }
-
-    .encheres {
-        display: flex;
-        flex-direction: column;
+        display:flex;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
     }
 
-    .titre_mobile_encheres {
-        color: red;
+.encheres{
+    margin:0 auto;
+    display:flex;
+    flex-direction: column;
+}
+   .titre_mobile_encheres {
+
+        margin: 15px 0;
+        padding-left: 20px;
+        font-size: 26px;
     }
+    .card-container{
+        min-width: 300px;
+        max-width: 991px;
+        margin: 0 auto;
+        display:flex;
+        flex-direction: column;
+
+    }
+    .card{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .card-image{
+        min-width: 100%;
+        height: auto;
+    }
+
+
+
+
 }

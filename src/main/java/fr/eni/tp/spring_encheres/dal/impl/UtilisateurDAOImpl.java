@@ -26,7 +26,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit,administrateur) VALUES (:pseudo, :nom, :prenom, :email, :telephone,:rue,:code_postal, :ville, :motdepasse, :credit,0)";
     private static final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur = :no_utilisateur";
     private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = :pseudo";
-    private static final String UPDATE = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :code_postal, ville = :ville, mot_de_passe = :motdepasse, credit = :credit WHERE no_utilisateur = :no_utilisateur";
+    private static final String UPDATE="UPDATE UTILISATEURS SET pseudo=:pseudo , nom=:nom, prenom=:prenom, email=:email, telephone=:telephone, rue=:rue, code_postal=:code_postal, ville=:ville, mot_de_passe=:mot_de_passe, credit=:credit WHERE no_utilisateur = :no_utilisateur";
 
     @Override
     public List<Utilisateur> findAll() {
@@ -55,23 +55,21 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         namedParameterJdbcTemplate.update(INSERT, params);
     }
 
-
     @Override
     public void update(Utilisateur utilisateur) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("pseudo", utilisateur.getPseudo());
         params.addValue("nom", utilisateur.getNom());
         params.addValue("prenom", utilisateur.getPrenom());
-        params.addValue("motdepasse", utilisateur.getMotDePasse());
         params.addValue("email", utilisateur.getEmail());
         params.addValue("telephone", utilisateur.getTelephone());
         params.addValue("rue", utilisateur.getRue());
         params.addValue("code_postal", utilisateur.getCodePostal());
         params.addValue("ville", utilisateur.getVille());
+        params.addValue("mot_de_passe", utilisateur.getMotDePasse());
         params.addValue("credit", utilisateur.getCredit());
         params.addValue("no_utilisateur", utilisateur.getNoUtilisateur());
-
-        namedParameterJdbcTemplate.update(UPDATE, params);
+        namedParameterJdbcTemplate.update(UPDATE,params);
     }
 
     @Override

@@ -43,6 +43,7 @@ public class EnchereController {
     ) {
         List<ArticleVendu> articles = articleVenduService.consulterArticlesEnCoursDeVente();
         List<Categorie> categories = categorieService.consulterCategories();
+        System.out.println(articles);
 
         model.addAttribute("articles", articles);
         model.addAttribute("categories", categories);

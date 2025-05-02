@@ -1,8 +1,16 @@
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Accueil</title>
+<div id="extraCss">
+  <link rel="stylesheet" data-th-href="@{/css/detailVente.css}">
+</div>
 <main>
-  <h2 data-th-if="${mode == 'enchere'}" data-th-text="'Detail de l\'enchere en cours jusqu\'au '+${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></h2>
-  <h2 data-th-if="${mode == 'affichage'}" data-th-text="'Enchere remporté par '+${enchere.utilisateur.pseudo}"></h2>
+  <div class="div-title-detail-vente">
+    <h2 data-th-if="${mode == 'enchere'}" data-th-text="'Detail de l\'enchere en cours jusqu\'au '+${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}" id="h2-title-detail"></h2>
+    <h2 data-th-if="${mode == 'affichage'}" data-th-text="'Enchere remporté par '+${enchere.utilisateur.pseudo}" id="h2-title-detail"></h2>
+    <a data-th-href="@{'/profil/'+${enchere.utilisateur.pseudo}}"><button class="btn">Consulter son profil</button></a>
+  </div>
+
+
 <!--  <img alt="Image du produit" data-th-src="@{/img/enchere/...}">-->
   <div data-th-replace="fragments/detailVente :: detailVente(mode=${mode})"></div>
 

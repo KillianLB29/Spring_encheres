@@ -41,7 +41,7 @@
         <div class="card-container">
             <div class="card" th:each="article : ${articles}">
                 <div class="card-image">
-                    <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                    <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                 </div>
 
                 <div class="card-content">
