@@ -1,0 +1,35 @@
+.display-enchere img{
+    width:25%;
+}
+.display-enchere{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.div-title-detail-vente{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+}
+.div-title-detail-vente h2{
+    margin-right: 5%;
+}
+
+ul{
+    list-style-type:none;
+    padding: 0;
+    margin: 0;
+}
+li{
+    margin-top: 16px;
+    margin-left: 20px;
+    font-size: 1.5rem;
+}
+
+.btn a {
+    color:white;
+    text-decoration:none;
+}

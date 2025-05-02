@@ -14,7 +14,7 @@
             <div class="card-container">
                 <div class="card" th:each="article : ${encheresTerminer}">
                     <div class="card-image">
-                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                     </div>
                     <div class="card-content">
                         <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
@@ -36,7 +36,7 @@
             <div class="card-container">
                 <div class="card" th:each="article : ${encheresEnCours}">
                     <div class="card-image">
-                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                     </div>
                     <div class="card-content">
                         <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
@@ -58,7 +58,7 @@
             <div class="card-container">
                 <div class="card" th:each="article : ${encheresParticipe}">
                     <div class="card-image">
-                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                     </div>
                     <div class="card-content">
                         <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>

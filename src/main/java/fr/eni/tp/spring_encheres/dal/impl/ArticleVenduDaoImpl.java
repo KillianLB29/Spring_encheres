@@ -19,9 +19,9 @@ import java.util.List;
 @Repository
 public class ArticleVenduDaoImpl implements ArticleVenduDAO {
 
-    private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, Articles_vendus.no_utilisateur, Articles_vendus.no_categorie FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON UTILISATEURS.no_utilisateur=ARTICLES_VENDUS.no_utilisateur INNER JOIN CATEGORIES on ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie;";
-    private static final String INSERT_INTO = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (:nom_article, :description, :date_debut_encheres, :date_fin_encheres, :prix_initial, :prix_vente, :no_utilisateur, :no_categorie);";
-    private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
+    private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie,urlimage FROM ARTICLES_VENDUS;";
+    private static final String INSERT_INTO = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie,urlimage) VALUES (:nom_article, :description, :date_debut_encheres, :date_fin_encheres, :prix_initial, :prix_vente, :no_utilisateur, :no_categorie,:urlimage);";
+    private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie,urlimage FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
     //a changer la requête SQL
     private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
 
@@ -45,6 +45,7 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
         mapSqlParameterSource.addValue("prix_vente", article.getPrixVente());
         mapSqlParameterSource.addValue("no_utilisateur", article.getUtilisateur().getNoUtilisateur());
         mapSqlParameterSource.addValue("no_categorie", article.getCategorie().getIdCategorie());
+        mapSqlParameterSource.addValue("urlimage", article.getUrlImage());
 
         namedParameterJdbcTemplate.update(
                 INSERT_INTO,
@@ -94,6 +95,7 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
             article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
             article.setMiseAPrix(rs.getLong("prix_initial"));
             article.setPrixVente(rs.getLong("prix_vente"));
+            article.setUrlImage(rs.getString("urlimage"));
 
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setNoUtilisateur(rs.getLong("no_utilisateur"));
