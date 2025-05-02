@@ -1,12 +1,10 @@
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Mes enchères</title>
-<head>
-    <meta charset="UTF-8">
-    <title>Mes enchères</title>
-    <div id="extraCss">
-        <link rel="stylesheet" th:href="@{/css/mes-encheres.css}">
-    </div>
-</head>
+<title>Mes enchères</title>
+<div id="extraCss">
+    <link rel="stylesheet" data-th-href="@{/css/mesEncheres.css}">
+    <link rel="stylesheet" data-th-href="@{/css/mesEncheres_mobile.css}">
+</div>
 <main>
 
     <h2 class="titre_mobile_encheres">Mes objets mis en enchère terminés</h2>
@@ -31,7 +29,7 @@
         </div>
     </section>
 
-    <h2>Mes objets actuellement en enchères</h2>
+    <h2 class="titre_mobile_encheres">Mes objets actuellement en enchères</h2>
     <section class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
@@ -53,7 +51,7 @@
         </div>
     </section>
 
-    <h2>Les enchères auxquelles je participe</h2>
+    <h2 class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
     <section class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
