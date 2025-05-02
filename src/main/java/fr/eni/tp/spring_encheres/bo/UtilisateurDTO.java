@@ -1,10 +1,6 @@
 package fr.eni.tp.spring_encheres.bo;
 
-import jakarta.persistence.Transient;
-import java.util.ArrayList;
-import java.util.List;
-
-public class Utilisateur {
+public class UtilisateurDTO {
     private long noUtilisateur;
     private String pseudo;
     private String nom;
@@ -16,11 +12,10 @@ public class Utilisateur {
     private String ville;
     private String motDePasse;
     private long credit;
-    private List<ArticleVendu> articlesVendus = new ArrayList<>();
-    private List<ArticleVendu> articlesAchetes=new ArrayList<>();
-    private boolean admin=false;
+    private boolean admin;
 
-    public Utilisateur(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, long credit) {
+    // Constructeur
+    public UtilisateurDTO(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, long credit, boolean admin) {
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
@@ -32,28 +27,10 @@ public class Utilisateur {
         this.ville = ville;
         this.motDePasse = motDePasse;
         this.credit = credit;
+        this.admin = admin;
     }
 
-    public List<ArticleVendu> getArticlesVendus() {
-        return articlesVendus;
-    }
-
-    public void setArticlesVendus(List<ArticleVendu> articlesVendus) {
-        this.articlesVendus = articlesVendus;
-    }
-
-    public List<ArticleVendu> getArticlesAchetes() {
-        return articlesAchetes;
-    }
-
-    public void setArticlesAchetes(List<ArticleVendu> articlesAchetes) {
-        this.articlesAchetes = articlesAchetes;
-    }
-
-
-    public Utilisateur() {
-    }
-
+    // Getters et Setters
     public long getNoUtilisateur() {
         return noUtilisateur;
     }
@@ -149,36 +126,4 @@ public class Utilisateur {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Utilisateur{");
-        sb.append("noUtilisateur=").append(noUtilisateur);
-        sb.append(", pseudo='").append(pseudo).append('\'');
-        sb.append(", nom='").append(nom).append('\'');
-        sb.append(", prenom='").append(prenom).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", telephone='").append(telephone).append('\'');
-        sb.append(", rue='").append(rue).append('\'');
-        sb.append(", codePostal='").append(codePostal).append('\'');
-        sb.append(", ville='").append(ville).append('\'');
-        sb.append(", motDePasse='").append(motDePasse).append('\'');
-        sb.append(", credit=").append(credit);
-        sb.append(", articlesVendus=").append(articlesVendus);
-        sb.append(", articlesAchetes=").append(articlesAchetes);
-        sb.append(", admin=").append(admin);
-        sb.append('}');
-        return sb.toString();
-    }
-    @Transient
-    private String confirmation;
-
-    public String getConfirmation() {
-        return confirmation;
-    }
-
-    public void setConfirmation(String confirmation) {
-        this.confirmation = confirmation;
-    }
-
 }

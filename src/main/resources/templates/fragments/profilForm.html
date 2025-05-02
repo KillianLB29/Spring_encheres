@@ -22,6 +22,17 @@
                        th:readonly="${mode == 'display'}"
                        th:disabled="${mode == 'display'}" required />
             </li>
+            <li th:if="${mode == 'modif'}">
+                <label for="motDePasse">Nouveau mot de passe :</label>
+                <input type="password" id="motDePasse" name="motDePasse"
+                       th:field="*{motDePasse}" />
+            </li>
+            <li th:if="${mode == 'modif'}">
+                <label for="confirmation">Confirmer mot de passe :</label>
+                <input type="password" id="confirmation" name="confirmation"
+                       th:field="*{confirmation}" />
+            </li>
+
             <li>
                 <label for="email">Email :</label>
                 <input type="email" id="email" name="email"

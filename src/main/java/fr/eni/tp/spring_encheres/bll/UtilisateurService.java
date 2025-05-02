@@ -5,6 +5,7 @@ import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import java.util.List;
 
 public interface UtilisateurService {
+
     List<Utilisateur> getUtilisateur();
 
     Utilisateur findById(long idUtilisateur);
@@ -19,4 +20,5 @@ public interface UtilisateurService {
 
     void ajouterPoint(long sommeARecredite, long idAncienEncherisseur);
 
+    void update(Utilisateur utilisateur);
 }
