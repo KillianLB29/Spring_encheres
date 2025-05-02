@@ -74,6 +74,35 @@
             <button class="carousel-btn next">&#10095;</button>
         </div>
     </section>
+<script> document.addEventListener('DOMContentLoaded', function() {
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const cardContainer = document.querySelector('.card-container');
+    const totalCards = document.querySelectorAll('.card').length;
+    const cardsPerView = 4;
+    let currentIndex = 0;
 
+    // Fonction pour mettre à jour l'affichage du carrousel
+    function updateCarousel() {
+        cardContainer.style.transform = `translateX(-${currentIndex * (100 / cardsPerView)}%)`;
+    }
+
+    // Fonction pour aller à la carte suivante
+    nextBtn.addEventListener('click', function() {
+        if (currentIndex < totalCards - cardsPerView) {
+            currentIndex++;
+            updateCarousel();
+        }
+    });
+
+    // Fonction pour aller à la carte précédente
+    prevBtn.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
+    });
+});
+</script>
 </main>
 </html>

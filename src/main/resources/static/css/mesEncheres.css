@@ -5,59 +5,69 @@
     -webkit-overflow-scrolling: touch;
 }
 
+/* Style général du carousel */
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
 .card-container {
     display: flex;
-    gap: 1rem;
-    flex-wrap: nowrap;
-    scroll-snap-align: start;
-    padding: 1rem;
-    min-width: 100%;
+    transition: transform 0.5s ease;
 }
 
 .card {
-    flex: 0 0 calc(25% - 1rem); /* 4 cartes par ligne */
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-    padding: 1.5rem;
-    scroll-snap-align: start;
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: scale(1.02);
+    flex: 0 0 25%; /* Chaque carte occupe 25% de la largeur, donc 4 cartes par slide */
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 .card-image img {
     width: 100%;
-    border-radius: 10px;
     height: auto;
 }
 
-.card-content {
-    margin-top: 1rem;
-}
-
-.card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    border-bottom: 2px solid #2c3e50;
-    padding-bottom: 0.25rem;
-    display: inline-block;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #2c3e50;
+/* Les boutons de navigation (flèches) */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
-.btn:hover {
-    background-color: #1a242f;
+.carousel-btn:hover {
+    opacity: 1;
+}
+
+/* Positionnement des flèches */
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+/* Affichage des flèches au survol du carousel */
+.carousel:hover .carousel-btn {
+    opacity: 1;
+}
+
+/* Pour les petites tailles d'écran (optionnel) */
+@media (max-width: 768px) {
+    .card {
+        flex: 0 0 50%; /* Affiche 2 cartes par ligne sur les petits écrans */
+    }
 }
