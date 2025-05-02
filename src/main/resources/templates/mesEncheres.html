@@ -33,7 +33,7 @@
     <section class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
-            <div class="card-content">
+            <div class="card-container">
                 <div class="card" th:each="article : ${encheresEnCours}">
                     <div class="card-image">
                         <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
@@ -72,46 +72,35 @@
             <button class="carousel-btn next">&#10095;</button>
         </div>
     </section>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const carousels = document.querySelectorAll('.carousel');
+<script> document.addEventListener('DOMContentLoaded', function() {
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const cardContainer = document.querySelector('.card-container');
+    const totalCards = document.querySelectorAll('.card').length;
+    const cardsPerView = 4;
+    let currentIndex = 0;
 
-            carousels.forEach(carousel => {
-                const prevBtn = carousel.querySelector('.carousel-btn.prev');
-                const nextBtn = carousel.querySelector('.carousel-btn.next');
-                const cardContainer = carousel.querySelector('.card-container');
-                const cards = carousel.querySelectorAll('.card');
+    // Fonction pour mettre à jour l'affichage du carrousel
+    function updateCarousel() {
+        cardContainer.style.transform = `translateX(-${currentIndex * (100 / cardsPerView)}%)`;
+    }
 
-                const cardsPerView = 4;
-                const totalCards = cards.length;
-                let currentIndex = 0;
+    // Fonction pour aller à la carte suivante
+    nextBtn.addEventListener('click', function() {
+        if (currentIndex < totalCards - cardsPerView) {
+            currentIndex++;
+            updateCarousel();
+        }
+    });
 
-                // Largeur d'une carte (assumée identique)
-                const cardWidth = cards[0].offsetWidth;
-
-                function updateCarousel() {
-                    const offset = currentIndex * cardWidth;
-                    cardContainer.style.transform = `translateX(-${offset}px)`;
-                }
-
-                nextBtn.addEventListener('click', function() {
-                    if (currentIndex < totalCards - cardsPerView) {
-                        currentIndex++;
-                        updateCarousel();
-                    }
-                });
-
-                prevBtn.addEventListener('click', function() {
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        updateCarousel();
-                    }
-                });
-
-                // Ajuste le container pour éviter retour à la ligne
-                cardContainer.style.width = `${cardWidth * totalCards}px`;
-            });
-        });
-    </script>
+    // Fonction pour aller à la carte précédente
+    prevBtn.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
+    });
+});
+</script>
 </main>
 </html>
