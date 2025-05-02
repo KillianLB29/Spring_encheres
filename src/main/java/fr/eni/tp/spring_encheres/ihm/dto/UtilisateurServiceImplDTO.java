@@ -1,8 +1,7 @@
-package fr.eni.tp.spring_encheres.bll;
+package fr.eni.tp.spring_encheres.ihm.dto;
 
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.dal.UtilisateurDAO;
-import fr.eni.tp.spring_encheres.bo.UtilisateurDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

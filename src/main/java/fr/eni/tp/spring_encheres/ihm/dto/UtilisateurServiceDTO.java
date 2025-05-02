@@ -1,6 +1,5 @@
-package fr.eni.tp.spring_encheres.bll;
+package fr.eni.tp.spring_encheres.ihm.dto;
 
-import fr.eni.tp.spring_encheres.bo.UtilisateurDTO;
 import java.util.List;
 
 public interface UtilisateurServiceDTO {

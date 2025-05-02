@@ -1,4 +1,4 @@
-package fr.eni.tp.spring_encheres.bo;
+package fr.eni.tp.spring_encheres.ihm.dto;
 
 public class UtilisateurDTO {
     private long noUtilisateur;
