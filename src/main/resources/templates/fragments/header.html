@@ -29,7 +29,7 @@
                     <li>
                         <a href="/monProfil" class="profile-link"> <i class="fa-regular fa-user"></i>
                     <!--                    <img th:src="@{'/img/profils/' + ${utilisateur.photo}}" alt="Photo de profil" class="profile-pic">-->
-                            <span class="nav_titre" th:text="${utilisateur.pseudo}">Pseudo</span>
+                            <span class="nav_titre" th:text="${utilisateur.pseudo}+' ('+${utilisateur.credit}+' crédit(s))'">Pseudo</span>
                         </a>
                     </li>
                     <li>
