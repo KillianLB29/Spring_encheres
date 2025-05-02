@@ -1,0 +1,19 @@
+/*sur les ecrans quand la largeur de la fenêtre fait au max 767 px*/
+
+@media screen and (min-width:300px) and ( max-width:767px) {
+   *{
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction:  column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .titre_mobile_encheres h2{
+        text-align: center;
+        margin: 0 auto;
+        padding-left: 20px;
+        color: red;
+    }
+}
