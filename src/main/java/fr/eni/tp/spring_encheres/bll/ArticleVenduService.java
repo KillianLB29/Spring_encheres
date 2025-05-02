@@ -9,5 +9,9 @@ public interface ArticleVenduService {
     void creerArticle(ArticleVendu article);
     void supprimerArticle(long noArticle);
     List<ArticleVendu> consulterArticlesEnCoursDeVente();
+    List<ArticleVendu> consulterEncheresTerminer(long idUtilisateur);
+    List<ArticleVendu> consulterEncheresEnCours(long idUtilisateur);
+    List<ArticleVendu> consulterEncheresParticipe(long idUtilisateur);
+//    List<ArticleVendu> remplirEncheresEnCours(List<Enchere> encheres);
 
 }

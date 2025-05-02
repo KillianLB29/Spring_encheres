@@ -119,6 +119,17 @@ public class EnchereController {
 
         return "redirect:/accueil";
     }
+    @GetMapping("/encheres")
+    public String mesEncheres(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
+        List<ArticleVendu> encheresTerminer = articleVenduService.consulterEncheresTerminer(utilisateurSession.getNoUtilisateur());
+        List<ArticleVendu> encheresEnCours = articleVenduService.consulterEncheresEnCours(utilisateurSession.getNoUtilisateur());
+        List<ArticleVendu> enchereParticipe = articleVenduService.consulterEncheresParticipe(utilisateurSession.getNoUtilisateur());
+        model.addAttribute("encheresTerminer", encheresTerminer);
+        model.addAttribute("encheresEnCours", encheresEnCours);
+        model.addAttribute("encheresParticipe", enchereParticipe);
+        model.addAttribute("utilisateur", utilisateurSession);
+        return "mesEncheres";
+    }
 
     // === GESTION SESSION UTILISATEUR (EXEMPLE FIXE TEMPORAIRE) ===
     @ModelAttribute("utilisateurSession")

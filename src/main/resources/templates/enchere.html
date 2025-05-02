@@ -3,24 +3,10 @@
 <main>
   <h2>Détail de la vente</h2>
 <!--  <img alt="Image du produit" data-th-src="@{/img/enchere/...}">-->
-  <div class="display-enchere">
-    <ul>
-      <li data-th-text="${article.nomArticle}"></li>
-      <li data-th-text="'Description : '+${article.description}"></li>
-      <li data-th-text="'Catégorie : '+${article.categorie.libelle}"></li>
-      <li data-th-if="${enchere.montantEnchere > 0}" data-th-text="'Meilleur offre : '+${enchere.montantEnchere}"></li>
-      <li data-th-if="${enchere.montantEnchere == 0}" data-th-text="'Meilleur offre : Aucune offre actuellement'"></li>
-      <li data-th-text="'Mise à prix : '+ ${article.miseAPrix}"></li>
-      <li data-th-text="'Fin de l\'enchère : ' + ${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></li>
-      <li>  Retrait :
-        <ul>
-          <li data-th-text="${article.lieuRetrait.rue}"></li>
-          <li data-th-text="${article.lieuRetrait.code_Postal} + ' '+ ${article.lieuRetrait.ville}"></li>
-        </ul>
-      </li>
-      <li data-th-text="'Vendeur : ' + ${article.utilisateur.pseudo}"></li>
-    </ul>
+  <div data-th-replace="fragments/detailVente :: detailVente(mode='enchere')">
+
   </div>
+
 </main>
 </html>
 

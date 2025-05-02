@@ -9,6 +9,8 @@ import java.util.List;
 public interface EnchereDAO {
     List<Enchere> read(long idArticle);
 
+    List<Enchere> readByUtilID(long idUtilisateur);
+
     void save(Enchere enchere);
 
     void delete(long id);

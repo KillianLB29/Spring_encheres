@@ -33,13 +33,20 @@ public class EnchereDAOImpl implements EnchereDAO {
     private final String SELECT_ALL = "SELECT no_utilisateur,no_article,date_enchere as date , montant_enchere as montant FROM ENCHERES";
     private final String SELECT_BY_ID = "SELECT no_utilisateur,no_article,date_enchere as date , montant_enchere as montant FROM ENCHERES WHERE no_article=:no_article";
     private final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES(:no_utilisateur, :no_article, :date_enchere,:montant_enchere);";
-
+    private final String SELECT_BY_ID_UTIL = "SELECT no_utilisateur,no_article,date_enchere as date , montant_enchere as montant FROM ENCHERES WHERE no_utilisateur=:no_utilisateur";
 
     @Override
     public List<Enchere> read(long idArticle) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("no_article", idArticle);
         return namedParameterJdbcTemplate.query(SELECT_BY_ID, params, new EnchereRowMapper());
+    }
+
+    @Override
+    public List<Enchere> readByUtilID(long idUtilisateur) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("no_utilisateur", idUtilisateur);
+        return namedParameterJdbcTemplate.query(SELECT_BY_ID_UTIL, params, new EnchereRowMapper());
     }
 
     @Override
