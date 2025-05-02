@@ -1,11 +1,10 @@
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Accueil</title>
 <main>
-  <h2>Détail de la vente</h2>
+  <h2 data-th-if="${mode == 'enchere'}" data-th-text="'Detail de l\'enchere en cours jusqu\'au '+${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></h2>
+  <h2 data-th-if="${mode == 'affichage'}" data-th-text="'Enchere remporté par '+${enchere.utilisateur.pseudo}"></h2>
 <!--  <img alt="Image du produit" data-th-src="@{/img/enchere/...}">-->
-  <div data-th-replace="fragments/detailVente :: detailVente(mode='enchere')">
-
-  </div>
+  <div data-th-replace="fragments/detailVente :: detailVente(mode=${mode})"></div>
 
 </main>
 </html>

@@ -109,10 +109,23 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         articles = articles
                 .stream().filter(a-> a.getDateFinEncheres().after(nowDate)).collect(Collectors.toList())
                 .stream().filter(article -> article.getDateDebutEncheres().before(nowDate)).collect(Collectors.toList());
-        System.out.println(articles);
+        articles.forEach(a-> a.setUtilisateur(utilisateurDAO.read(a.getUtilisateur().getNoUtilisateur())));
         //TODO trier les potentiels article en double si un utilisateur a enchéri plusieurs fois sur un même objet
         // car actuellement on récupère 1 exemplaire de l'article par enchère du client en cours
         return articles;
+    }
+
+    @Override
+    public boolean isEnchereEnCours(long idArticle) {
+        boolean isValid = true;
+        ArticleVendu articleVendu = articleVenduDAO.read(idArticle);
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        if(!articleVendu.getDateDebutEncheres().before(nowDate))
+            isValid=false;
+        if(!articleVendu.getDateFinEncheres().after(nowDate))
+            isValid=false;
+        return isValid;
     }
 
 //    @Override

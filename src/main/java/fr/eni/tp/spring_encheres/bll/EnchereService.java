@@ -10,7 +10,7 @@ public interface EnchereService {
 
     void enregistrerEnchere(Enchere enchere);
 
-    void supprimerEnchere(long id);
+    void supprimerEnchere(long idArticle, long idUtilisateur);
 
     List<Enchere> findAll();
 

@@ -13,7 +13,7 @@ public interface EnchereDAO {
 
     void save(Enchere enchere);
 
-    void delete(long id);
+    void delete(long idArticle,long idUtilisateur);
 
     List<Enchere> findAll();
 }
