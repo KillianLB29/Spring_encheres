@@ -5,12 +5,17 @@ import fr.eni.tp.spring_encheres.bll.CategorieService;
 import fr.eni.tp.spring_encheres.bll.EnchereService;
 import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.*;
+import fr.eni.tp.spring_encheres.ihm.dto.ArticleVenduDTO;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -78,16 +83,11 @@ public class EnchereController {
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
             Model model
     ) {
-        ArticleVendu article = new ArticleVendu();
-        article.setUtilisateur(utilisateurSession); // associer vendeur
-
-        // Préremplir le lieu de retrait
-        Retrait retrait = new Retrait(
-                utilisateurSession.getRue(),
-                utilisateurSession.getCodePostal(),
-                utilisateurSession.getVille()
-        );
-        article.setLieuRetrait(retrait); // lien 1–1 entre ArticleVendu et Retrait
+        ArticleVenduDTO article = new ArticleVenduDTO();
+        article.setRue(utilisateurSession.getRue());
+        article.setCodePostal(utilisateurSession.getCodePostal());
+        article.setVille(utilisateurSession.getVille());
+        article.setDateDebutEncheres(Date.from(Instant.now()));
 
         model.addAttribute("article", article);
         model.addAttribute("categories", categorieService.consulterCategories());
@@ -99,11 +99,11 @@ public class EnchereController {
     // === TRAITEMENT DU FORMULAIRE ===
     @PostMapping("/articles/creer")
     public String enregistrerArticle(
-            @Valid @ModelAttribute("article") ArticleVendu article,
+            @ModelAttribute("article") ArticleVenduDTO article,
             BindingResult result,
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
             Model model
-    ) {
+    ) throws IOException {
         // Validation date fin > début + 24h
         if (article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null ||
                 article.getDateFinEncheres().before(new Date(article.getDateDebutEncheres().getTime() + 86400000))) {
@@ -112,15 +112,36 @@ public class EnchereController {
         }
 
         if (result.hasErrors()) {
+            model.addAttribute("article", article);
             model.addAttribute("categories", categorieService.consulterCategories());
             return "article";
         }
+        ArticleVendu articleVendu = new ArticleVendu();
+        articleVendu.setCategorie(article.getCategorie());
+        articleVendu.setNomArticle(article.getNomArticle());
+        articleVendu.setLieuRetrait(new Retrait(article.getRue(),article.getCodePostal(),article.getVille()));
+        articleVendu.setDateDebutEncheres(article.getDateDebutEncheres());
+        articleVendu.setDateFinEncheres(article.getDateFinEncheres());
+        articleVendu.setDescription(article.getDescription());
+        articleVendu.setMiseAPrix(article.getMiseAPrix());
+        articleVendu.setUtilisateur(utilisateurSession);
+        System.out.println(articleVendu);
 
-        // Associer l’utilisateur connecté
-        article.setUtilisateur(utilisateurSession);
+        //Gestion de l'image
+        String uploadDir = "src/main/resources/static/img/";
 
+        // Nom unique pour éviter les conflits
+        String filename = System.currentTimeMillis() + "_" + article.getImage().getOriginalFilename();
+
+        // Sauvegarde du fichier
+        Path filePath = Paths.get(uploadDir + filename);
+        Files.write(filePath, article.getImage().getBytes());
+
+        // Chemin relatif à utiliser dans les vues HTML
+        articleVendu.setUrlImage("/img/" + filename);
         // Création de l’article + lieu de retrait lié
-        articleVenduService.creerArticle(article);
+        articleVenduService.creerArticle(articleVendu);
+
 
         return "redirect:/accueil";
     }
