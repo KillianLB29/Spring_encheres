@@ -111,15 +111,26 @@ public class ProfilController {
      * Affiche le profil public d’un utilisateur à partir de son pseudo.
      */
     @GetMapping("/profil/{pseudo}")
-    public String afficherProfilParPseudo(@PathVariable("pseudo") String pseudo, Model model) {
+    public String afficherProfilParPseudo(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, @PathVariable("pseudo") String pseudo, Model model) {
         Utilisateur utilisateur = utilisateurService.findByUserName(pseudo);
 
         if (utilisateur == null) {
             model.addAttribute("messageErreur", "Utilisateur non trouvé.");
             return "erreur"; // Redirection vers une page d'erreur ou retour à la recherche
-        }
 
-        model.addAttribute("utilisateur", utilisateur);
-        return "profil/profil"; // Affichage du profil public
+        }
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+
+        utilisateurDTO.setPseudo(utilisateur.getPseudo());
+        utilisateurDTO.setNom(utilisateur.getNom());
+        utilisateurDTO.setPrenom(utilisateur.getPrenom());
+        utilisateurDTO.setEmail(utilisateur.getEmail());
+        utilisateurDTO.setTelephone(utilisateur.getTelephone());
+        utilisateurDTO.setRue(utilisateur.getRue());
+        utilisateurDTO.setCodePostal(utilisateur.getCodePostal());
+        utilisateurDTO.setVille(utilisateur.getVille());
+        model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", utilisateurDTO);
+        return "profil/profil";
     }
 }
