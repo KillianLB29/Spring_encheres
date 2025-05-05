@@ -6,7 +6,9 @@
 <!--<div th:replace="fragments/modal-auth :: modals-auth"></div>-->
 
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
-<title>Enchères ENI - Accueil</title>
+<head>
+    <title>Enchères ENI - Accueil</title>
+</head>
 
 <main>
     <section class="filtres">
@@ -26,8 +28,9 @@
                 <label for="categorie">Catégorie :</label>
                 <select id="categorie">
                     <option value="all">Toutes</option>
-                    <!-- Affichage des catégories avec Thymeleaf -->
-                    <option th:each="categorie : ${categories}" th:value="${categorie.idCategorie}" th:text="${categorie.libelle}"></option>
+                    <option th:each="categorie : ${categories}"
+                            th:value="${categorie.idCategorie}"
+                            th:text="${categorie.libelle}"></option>
                 </select>
             </div>
         </div>
@@ -37,18 +40,21 @@
 
     <section class="encheres">
         <div class="carousel">
-            <div class="card-container">
-                <div class="card" th:each="article : ${articles}">
-                    <div class="card-image">
-                        <img th:src="@{${article.urlImage}}" alt="Image de l'article">
-                    </div>
-
-                    <div class="card-content">
-                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                        <p><strong>Fin de l'enchère :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+            <div class="carousel-wrapper" style="overflow: hidden;">
+                <div class="card-container" style="display: flex; transition: transform 0.5s ease;">
+                    <div class="card" th:each="article : ${articles}">
+                        <div class="card-image">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin de l'enchère :</strong>
+                                <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong>
+                                <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,68 +62,6 @@
             <div class="carousel-btn next">›</div>
         </div>
     </section>
+    <script src="/js/carousel_index.js"></script>
 </main>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousels = document.querySelectorAll('.carousel');
-
-        carousels.forEach(carousel => {
-            const prevBtn = carousel.querySelector('.carousel-btn.prev');
-            const nextBtn = carousel.querySelector('.carousel-btn.next');
-            const cardContainer = carousel.querySelector('.card-container');
-            const cards = carousel.querySelectorAll('.card');
-
-            let cardsPerView = 4; // Par défaut, 4 cartes par vue
-
-            // Ajuster le nombre de cartes par vue en fonction de la largeur de l'écran
-            function updateCardsPerView() {
-                if (window.innerWidth <= 600) {
-                    cardsPerView = 1; // 1 carte pour petits écrans
-                } else if (window.innerWidth <= 900) {
-                    cardsPerView = 2; // 2 cartes pour écrans moyens
-                } else if (window.innerWidth <= 1200) {
-                    cardsPerView = 3; // 3 cartes pour écrans plus larges
-                } else {
-                    cardsPerView = 4; // 4 cartes pour grands écrans
-                }
-
-                updateCarousel();
-            }
-
-            // Fonction pour ajuster la position du carrousel
-            function updateCarousel() {
-                const cardWidth = cards[0].offsetWidth;
-                const totalCards = cards.length;
-                const maxIndex = totalCards - cardsPerView;
-                let currentIndex = 0;
-
-                const offset = currentIndex * cardWidth;
-                cardContainer.style.transform = `translateX(-${offset}px)`;
-
-                // Gérer les boutons précédent et suivant
-                nextBtn.addEventListener('click', function() {
-                    if (currentIndex < maxIndex) {
-                        currentIndex++;
-                        cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-                    }
-                });
-
-                prevBtn.addEventListener('click', function() {
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-                    }
-                });
-            }
-
-            // Initialiser la largeur des cartes à chaque changement de taille de fenêtre
-            window.addEventListener('resize', updateCardsPerView);
-            updateCardsPerView(); // Initial call to set the correct number of cards per view
-        });
-    });
-</script>
-
 </html>
-
-
