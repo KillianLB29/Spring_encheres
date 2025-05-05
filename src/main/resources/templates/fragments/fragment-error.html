@@ -1,7 +1,14 @@
+<!-- fragment-error.html -->
 <div th:fragment="fragmentErreur">
-    <div data-th-each="keyError: ${#fields.errors('global')}" class="erreur">
+    <div id="errors-container" style="display: none;">
         <ul>
-            <li data-th-text="${keyError}"></li>
+            <!-- Utilisation de th:each pour afficher toutes les erreurs associées aux champs -->
+            <li data-th-each="keyError: ${#fields.errors()}"
+                th:data-field="${keyError.fieldName}"
+                th:data-message="${keyError}">
+                <!-- Message d'erreur -->
+                <span data-th-text="${keyError}"></span>
+            </li>
         </ul>
     </div>
 </div>
