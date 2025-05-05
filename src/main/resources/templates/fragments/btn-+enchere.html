@@ -1,0 +1,71 @@
+<div th:fragment="btnEnchere">
+    <div id="btn-enchere-draggable">
+        <a href="/articles/creer" class="btn-enchere">
+            <span class="plus-icon">+</span>
+            <i class="fa-solid fa-gavel"></i>
+        </a>
+    </div>
+    <script>
+        // Drag & Drop simple en JS natif
+        const btn = document.getElementById("btn-enchere-draggable");
+        let isDragging = false, offsetX, offsetY;
+
+        btn.addEventListener("mousedown", function (e) {
+            isDragging = true;
+            offsetX = e.clientX - btn.getBoundingClientRect().left;
+            offsetY = e.clientY - btn.getBoundingClientRect().top;
+            btn.style.transition = "none";
+        });
+
+        document.addEventListener("mousemove", function (e) {
+            if (isDragging) {
+                btn.style.left = `${e.clientX - offsetX}px`;
+                btn.style.top = `${e.clientY - offsetY}px`;
+            }
+        });
+
+        document.addEventListener("mouseup", function () {
+            isDragging = false;
+            btn.style.transition = "all 0.2s ease";
+        });
+    </script>
+    <style>
+        #btn-enchere-draggable {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            cursor: grab;
+        }
+
+        .btn-enchere {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 2px solid black;
+            color: #2c3e50;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            text-decoration: none;
+            width: 60px;
+            height: 60px;
+        }
+
+        .btn-enchere .plus-icon {
+            font-size: 1.2rem;
+            margin-right: 3px;
+        }
+
+        .btn-enchere i {
+            font-size: 1.2rem;
+        }
+
+        .btn-enchere:hover {
+            background: rgba(0,0,0,0.05);
+        }
+    </style>
+</div>
