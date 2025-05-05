@@ -99,8 +99,11 @@ body {
 
 .card-container {
     display: flex;
+    align-items: stretch;
     transition: transform 0.4s ease;
     will-change: transform;
+    padding: 0 1rem;
+    box-sizing: border-box;
 }
 
 /* Cartes dans le carrousel */

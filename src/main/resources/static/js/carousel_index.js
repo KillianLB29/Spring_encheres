@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let cards = Array.from(cardContainer.children);
     const cardCount = cards.length;
+    const cardsPerView = 3;
+    const gap = 16; // en pixels (1rem = 16px)
     let currentIndex = cardCount;
 
     // Dupliquer les cartes pour l'effet infini
@@ -20,12 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Définir la largeur des cartes et du conteneur
     const updateCardWidth = () => {
-        const cardWidth = carousel.offsetWidth;
+        const totalGap = gap * (cardsPerView - 1);
+        const availableWidth = carousel.offsetWidth - totalGap;
+        const cardWidth = availableWidth / cardsPerView;
+
         cards.forEach(card => {
             card.style.minWidth = `${cardWidth}px`;
+            card.style.marginRight = `0px`; // Reset
         });
-        cardContainer.style.width = `${cardWidth * totalCards}px`;
-        cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        // Appliquer le gap entre les cartes manuellement
+        for (let i = 0; i < cards.length; i++) {
+            if ((i + 1) % cardsPerView !== 0) {
+                cards[i].style.marginRight = `${gap}px`;
+            }
+        }
+
+        cardContainer.style.width = `${(cardWidth + gap) * totalCards - gap}px`;
+        cardContainer.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
     };
 
     updateCardWidth();
@@ -36,34 +50,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const moveToIndex = (index) => {
         if (isTransitioning) return;
         isTransitioning = true;
-        const cardWidth = carousel.offsetWidth;
+
+        const totalGap = gap * (cardsPerView - 1);
+        const cardWidth = (carousel.offsetWidth - totalGap) / cardsPerView;
+        const fullCardWidth = cardWidth + gap;
+
         cardContainer.style.transition = 'transform 0.4s ease';
-        cardContainer.style.transform = `translateX(-${index * cardWidth}px)`;
+        cardContainer.style.transform = `translateX(-${index * fullCardWidth}px)`;
         currentIndex = index;
 
         cardContainer.addEventListener('transitionend', handleTransitionEnd, { once: true });
     };
 
     const handleTransitionEnd = () => {
-        const cardWidth = carousel.offsetWidth;
+        const totalGap = gap * (cardsPerView - 1);
+        const cardWidth = (carousel.offsetWidth - totalGap) / cardsPerView;
+        const fullCardWidth = cardWidth + gap;
+
         cardContainer.style.transition = 'none';
 
         if (currentIndex >= cardCount * 2) {
             currentIndex = cardCount;
-            cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            cardContainer.style.transform = `translateX(-${currentIndex * fullCardWidth}px)`;
         } else if (currentIndex < cardCount) {
-            currentIndex = cardCount * 2 - 1;
-            cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            currentIndex = cardCount * 2 - cardsPerView;
+            cardContainer.style.transform = `translateX(-${currentIndex * fullCardWidth}px)`;
         }
 
         isTransitioning = false;
     };
 
     prevBtn.addEventListener('click', () => {
-        moveToIndex(currentIndex - 1);
+        moveToIndex(currentIndex - cardsPerView);
     });
 
     nextBtn.addEventListener('click', () => {
-        moveToIndex(currentIndex + 1);
+        moveToIndex(currentIndex + cardsPerView);
     });
 });
+
