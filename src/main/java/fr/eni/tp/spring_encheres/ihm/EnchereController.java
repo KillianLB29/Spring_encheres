@@ -66,12 +66,18 @@ public class EnchereController {
     ) {
         Enchere enchere = enchereService.meilleurEnchere(id);
         ArticleVendu article = articleVenduService.consulterArticleParId(id);
-        Boolean enCours = articleVenduService.isEnchereEnCours(id);
-        System.out.println(enCours ? "enchere" : "affichage");
-
+        String mode;
+        if(article.getDateDebutEncheres().after(Date.from(Instant.now()))) {
+            mode = "attente";
+        }
+        else{
+            Boolean enCours = articleVenduService.isEnchereEnCours(id);
+            System.out.println(enCours ? "enchere" : "affichage");
+            mode = enCours ? "enchere" : "affichage";
+        }
         model.addAttribute("article", article);
         model.addAttribute("enchere", enchere);
-        model.addAttribute("mode", enCours ? "enchere" : "affichage");
+        model.addAttribute("mode", mode );
         model.addAttribute("utilisateur", utilisateurSession);
 
         return "enchere";
@@ -175,6 +181,6 @@ public class EnchereController {
     @ModelAttribute("utilisateurSession")
     public Utilisateur membreSession() {
         System.out.println("Création du contexte utilisateur en session");
-        return utilisateurService.findById(1); // à remplacer plus tard par session réelle
+        return utilisateurService.findById(2); // à remplacer plus tard par session réelle
     }
 }

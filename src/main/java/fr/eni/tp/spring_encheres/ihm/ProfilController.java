@@ -2,9 +2,12 @@ package fr.eni.tp.spring_encheres.ihm;
 
 import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
+import fr.eni.tp.spring_encheres.exception.UtilisateurException;
 import fr.eni.tp.spring_encheres.ihm.dto.UtilisateurDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -57,6 +60,7 @@ public class ProfilController {
     public String modifierProfil(
             @ModelAttribute("utilisateurDTO") UtilisateurDTO utilisateurDTO,
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+            BindingResult bindingResult,
             Model model
     ) {
         if (utilisateurSession == null || utilisateurSession.getNoUtilisateur() == 0) {
@@ -74,40 +78,53 @@ public class ProfilController {
                 utilisateurModif.setMotDePasse(utilisateurDTO.getNewMotDePasse());
             }
             else{
-                //erreur mot de passe pas identique
-                System.out.println("Les mots de passes ne sont pas identiques");
-                UtilisateurDTO utilDTO = new UtilisateurDTO();
-                utilDTO.setPseudo(utilisateurSession.getPseudo());
-                utilDTO.setNom(utilisateurSession.getNom());
-                utilDTO.setPrenom(utilisateurSession.getPrenom());
-                utilDTO.setEmail(utilisateurSession.getEmail());
-                utilDTO.setTelephone(utilisateurSession.getTelephone());
-                utilDTO.setRue(utilisateurSession.getRue());
-                utilDTO.setCodePostal(utilisateurSession.getCodePostal());
-                utilDTO.setVille(utilisateurSession.getVille());
-
-                model.addAttribute("utilisateur", utilisateurSession);
-                model.addAttribute("utilisateurDTO", utilisateurDTO);
-                return "profil/monProfil"; // Affichage du profil utilisateur
+               ObjectError error = new ObjectError("globalError", "Les mots de passe ne sont pas identiques");
+               bindingResult.addError(error);
             }
         }
-        utilisateurModif.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
-        utilisateurModif.setPseudo(utilisateurDTO.getPseudo());
-        utilisateurModif.setNom(utilisateurDTO.getNom());
-        utilisateurModif.setPrenom(utilisateurDTO.getPrenom());
+        if(!bindingResult.hasErrors()){
+            utilisateurModif.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
+            utilisateurModif.setPseudo(utilisateurDTO.getPseudo());
+            utilisateurModif.setNom(utilisateurDTO.getNom());
+            utilisateurModif.setPrenom(utilisateurDTO.getPrenom());
 
-        utilisateurModif.setEmail(utilisateurDTO.getEmail());
-        utilisateurModif.setTelephone(utilisateurDTO.getTelephone());
-        utilisateurModif.setRue(utilisateurDTO.getRue());
-        utilisateurModif.setCodePostal(utilisateurDTO.getCodePostal());
-        utilisateurModif.setVille(utilisateurDTO.getVille());
-        utilisateurModif.setCredit(utilisateurSession.getCredit());
-        utilisateurModif.setAdmin(utilisateurSession.isAdmin());
-        System.out.println(utilisateurModif);
+            utilisateurModif.setEmail(utilisateurDTO.getEmail());
+            utilisateurModif.setTelephone(utilisateurDTO.getTelephone());
+            utilisateurModif.setRue(utilisateurDTO.getRue());
+            utilisateurModif.setCodePostal(utilisateurDTO.getCodePostal());
+            utilisateurModif.setVille(utilisateurDTO.getVille());
+            utilisateurModif.setCredit(utilisateurSession.getCredit());
+            utilisateurModif.setAdmin(utilisateurSession.isAdmin());
+            System.out.println(utilisateurModif);
 
-        // Enregistrement des modifications dans la base de données
-        utilisateurService.update(utilisateurModif);
+            // Enregistrement des modifications dans la base de données
+            try{
+                utilisateurService.update(utilisateurModif);
+            }
+            catch (UtilisateurException utilisateurException){
+                utilisateurException.getMessages().forEach(message -> {
+                    ObjectError error = new ObjectError("globalError", message);
+                    bindingResult.addError(error);
+                });
+            }
+        }
 
+
+        if(bindingResult.hasErrors()) {
+            UtilisateurDTO utilDTO = new UtilisateurDTO();
+            utilDTO.setPseudo(utilisateurSession.getPseudo());
+            utilDTO.setNom(utilisateurSession.getNom());
+            utilDTO.setPrenom(utilisateurSession.getPrenom());
+            utilDTO.setEmail(utilisateurSession.getEmail());
+            utilDTO.setTelephone(utilisateurSession.getTelephone());
+            utilDTO.setRue(utilisateurSession.getRue());
+            utilDTO.setCodePostal(utilisateurSession.getCodePostal());
+            utilDTO.setVille(utilisateurSession.getVille());
+
+            model.addAttribute("utilisateur", utilisateurSession);
+            model.addAttribute("utilisateurDTO", utilisateurDTO);
+            return "profil/monProfil"; // Affichage du profil utilisateur
+        }
         // Mise à jour de la session utilisateur
         model.addAttribute("utilisateurSession", utilisateurModif);
         model.addAttribute("message", "Profil mis à jour avec succès !");

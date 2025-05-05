@@ -69,9 +69,11 @@ public class EnchereServiceImpl implements EnchereService {
                 utilisateurDAO.update(utilisateur);
                 //On gère maintenant l'ancienne meilleur enchère
                 //Je rend les crédits a l'utilisateur
-                Utilisateur ancienGagnant = utilisateurDAO.read(meilleurEnchere.getUtilisateur().getNoUtilisateur());
-                ancienGagnant.setCredit(ancienGagnant.getCredit()+meilleurEnchere.getMontantEnchere());
-                utilisateurDAO.update(ancienGagnant);
+                if(meilleurEnchere.getUtilisateur().getNoUtilisateur()>0){
+                    Utilisateur ancienGagnant = utilisateurDAO.read(meilleurEnchere.getUtilisateur().getNoUtilisateur());
+                    ancienGagnant.setCredit(ancienGagnant.getCredit()+meilleurEnchere.getMontantEnchere());
+                    utilisateurDAO.update(ancienGagnant);
+                }
                 }
             }
 
