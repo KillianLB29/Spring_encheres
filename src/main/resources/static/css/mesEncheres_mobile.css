@@ -1,9 +1,9 @@
 /*sur les ecrans quand la largeur de la fenêtre fait au max 767 px*/
 
 @media screen and (min-width:300px) and (max-width:991px) {
-    main{
+    main {
         width: 100%;
-        display:flex;
+        display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
@@ -11,39 +11,45 @@
 
     }
 
-.encheres{
-    margin:0 auto;
-    display:flex;
-    flex-direction: column;
-}
-   .titre_mobile_encheres {
+    .encheres {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
 
+    }
+
+    .titre_mobile_encheres {
+        align-self: center;
         margin: 15px 0;
         padding-left: 20px;
         font-size: 26px;
     }
-    .card-container{
+
+    .card-container {
         min-width: 300px;
         max-width: 991px;
         margin: 0 auto;
-        display:flex;
-        flex-direction: column;
-
-    }
-    .card{
-        display:flex;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
+
     }
 
-    .card-image{
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        /*min-width: 300px;
+        max-width: 767px;*/
+    }
+
+    .card-image {
         min-width: 100%;
         height: auto;
     }
-
-
-
-
 }

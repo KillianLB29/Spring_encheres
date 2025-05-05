@@ -1,3 +1,5 @@
+
+
 :root {
     --primary-color: #2980b9;
     --primary-color-hover: #1f5f91;
@@ -16,35 +18,68 @@ body {
     margin: 0;
 }
 
-/* Filtres */
 .filtres {
+    width: 100%;
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-}
+    align-items: center;
+    justify-content: space-between;
 
+    margin: 20px 0;
+
+}
+.activites{
+    width: 100%;
+    flex-direction: row;
+}
+.filtrant{
+
+    flex-direction: column;
+    align-items: center;
+}
 .filtre-title {
     font-weight: bold;
     margin-bottom: 0.5rem;
+    margin-bottom: 10px;
 }
 
 .filtre-group {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+
     gap: 1rem;
     width: 100%;
     flex-wrap: wrap;
 }
-
-.filtre-categorie {
-    margin-left: auto;
+/* Container général des filtres */
+.filtre-group {
+    display: flex;
+    align-items: flex-end; /* Aligne verticalement les éléments */
+    gap: 5px; /* Espacement entre les blocs */
+    flex-wrap: wrap; /* Permet de passer à la ligne si l'écran est trop petit */
+    width: 100%;
+}
+/* Style de chaque bloc individuel */
+.filtre-categorie{
+    display: flex;
+    flex-direction: column;
+}
+.filtre-input,
+.filtre-button {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 30%;
 }
 
 .filtre-input {
-    flex-grow: 2;
+    /*flex-grow: 2;
     position: relative;
-    max-width: 300px;
+    min-width: 300px;
+    max-width: 800px;*/
+
 }
 
 .input-icon {
@@ -69,6 +104,51 @@ body {
 .filtre-button {
     flex-shrink: 0;
 }
+
+.filtre-categorie {
+    margin-left: auto;
+
+}
+
+/* Pour aligner l'input et l'icône dans le même bloc */
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon input {
+    padding-right: 30px; /* espace pour l'icône */
+}
+
+.input-icon i {
+    position: absolute;
+    right: 20px;
+    color: #888;
+    pointer-events: none; /* permet de cliquer à travers l’icône */
+}
+
+/* Bouton avec icône */
+.filtre-button .icon-search {
+    margin-left: 5px;
+}
+
+/* Style optionnel pour input, select et bouton */
+input[type="text"], select {
+    padding: 5px 10px;
+    width: 100%;
+    font-size: 1rem;
+}
+
+
+
+.radio-form{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
 
 /* Titres */
 .encheres-title {
@@ -152,6 +232,14 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+/*
+.btn {
+    padding: 6px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+}*/
+
+
 
 .btn:hover {
     background: var(--primary-color-hover);
@@ -185,7 +273,6 @@ body {
     right: 10px;
 }
 
-/* Carrousel / cartes (en mode carrousel) */
 .card-container {
     display: flex;
     transition: transform 0.5s ease;
@@ -196,7 +283,7 @@ body {
     margin: 0 1rem;
 }
 
-/* Responsive */
+/* Optimisation de la grille */
 @media (max-width: 768px) {
     .card-container {
         grid-template-columns: 1fr;
