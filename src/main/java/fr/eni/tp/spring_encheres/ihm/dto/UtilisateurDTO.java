@@ -1,44 +1,36 @@
 package fr.eni.tp.spring_encheres.ihm.dto;
 
 public class UtilisateurDTO {
-    private long noUtilisateur;
     private String pseudo;
     private String nom;
     private String prenom;
+    private String NewMotDePasse;
+    private String ConfirmeMotDePasse;
     private String email;
     private String telephone;
     private String rue;
     private String codePostal;
     private String ville;
-    private String motDePasse;
-    private long credit;
-    private boolean admin;
 
     // Constructeur
     public UtilisateurDTO(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, long credit, boolean admin) {
-        this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
+        this.NewMotDePasse = NewMotDePasse;
+        this.ConfirmeMotDePasse = ConfirmeMotDePasse;
         this.email = email;
         this.telephone = telephone;
         this.rue = rue;
         this.codePostal = codePostal;
         this.ville = ville;
-        this.motDePasse = motDePasse;
-        this.credit = credit;
-        this.admin = admin;
+    }
+
+    public UtilisateurDTO() {
+
     }
 
     // Getters et Setters
-    public long getNoUtilisateur() {
-        return noUtilisateur;
-    }
-
-    public void setNoUtilisateur(long noUtilisateur) {
-        this.noUtilisateur = noUtilisateur;
-    }
-
     public String getPseudo() {
         return pseudo;
     }
@@ -61,6 +53,22 @@ public class UtilisateurDTO {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public String getNewMotDePasse() {
+        return NewMotDePasse;
+    }
+
+    public void setNewMotDePasse(String newMotDePasse) {
+        this.NewMotDePasse = newMotDePasse;
+    }
+
+    public String getConfirmeMotDePasse() {
+        return ConfirmeMotDePasse;
+    }
+
+    public void setConfirmeMotDePasse(String confirmeMotDePasse) {
+        this.ConfirmeMotDePasse = confirmeMotDePasse;
     }
 
     public String getEmail() {
@@ -103,27 +111,4 @@ public class UtilisateurDTO {
         this.ville = ville;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
-    }
-
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    public long getCredit() {
-        return credit;
-    }
-
-    public void setCredit(long credit) {
-        this.credit = credit;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
 }

@@ -1,10 +1,21 @@
+:root {
+    --primary-color: #2980b9;
+    --primary-color-hover: #1f5f91;
+    --background-color: #f4f4f4;
+    --white: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --shadow-hover: rgba(0, 0, 0, 0.25);
+    --max-width: 1200px;
+    --input-padding-left: 30px;
+    --card-gap: 2rem;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    background-color: var(--background-color);
     margin: 0;
 }
 
-/* Filtres */
 .filtres {
     padding: 1rem 2rem;
     display: flex;
@@ -45,7 +56,7 @@ body {
 }
 
 .input-icon input {
-    padding-left: 30px;
+    padding-left: var(--input-padding-left);
     height: 2rem;
     width: 100%;
 }
@@ -75,24 +86,25 @@ body {
 .card-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: var(--card-gap);
     padding: 0 2rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
 }
 
-/* Carte */
 .card {
-    background: white;
+    background: var(--white);
     min-width: 45%;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 10px var(--shadow-color);
     overflow: hidden;
     display: flex;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 14px var(--shadow-hover);
 }
 
 .card-image {
@@ -127,8 +139,8 @@ body {
 
 /* Bouton */
 .btn {
-    background: #2980b9;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--white);
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -137,25 +149,66 @@ body {
     width: fit-content;
     align-self: flex-start;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn:hover {
-    background: #1f5f91;
+    background: var(--primary-color-hover);
 }
 
-/* Responsive : 1 carte par ligne en dessous de 768px */
+/* Carrousel */
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.carousel-btn {
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+.card-container {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.card {
+    flex: 0 0 auto;
+    margin: 0 1rem;
+}
+
+/* Optimisation de la grille */
 @media (max-width: 768px) {
-    .card {
-        width: 100%;
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+
+    .filtres {
+        padding: 1rem;
+    }
+
+    .filtre-group {
         flex-direction: column;
     }
 
-    .card-image {
+    .filtre-input {
         max-width: 100%;
-        height: 200px;
-    }
-
-    .card-image img {
-        object-fit: cover;
     }
 }

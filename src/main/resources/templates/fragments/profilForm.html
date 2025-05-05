@@ -1,5 +1,5 @@
 <div th:fragment="profilForm(mode)">
-    <form th:action="@{/profil}" th:object="${utilisateur}" method="post">
+    <form th:action="@{/profil}" th:object="${utilisateurDTO}" method="post">
         <ul>
             <li>
                 <label for="pseudo">Pseudo :</label>
@@ -23,14 +23,14 @@
                        th:disabled="${mode == 'display'}" required />
             </li>
             <li th:if="${mode == 'modif'}">
-                <label for="motDePasse">Nouveau mot de passe :</label>
-                <input type="password" id="motDePasse" name="motDePasse"
-                       th:field="*{motDePasse}" />
+                <label for="NewMotDePasse">Nouveau mot de passe :</label>
+                <input type="password" id="NewMotDePasse" name="NewMotDePasse"
+                       th:field="*{NewMotDePasse}" />
             </li>
             <li th:if="${mode == 'modif'}">
-                <label for="confirmation">Confirmer mot de passe :</label>
-                <input type="password" id="confirmation" name="confirmation"
-                       th:field="*{confirmation}" />
+                <label for="ConfirmeMotDePasse">Confirmer mot de passe :</label>
+                <input type="password" id="ConfirmeMotDePasse" name="ConfirmeMotDePasse"
+                       th:field="*{ConfirmeMotDePasse}" />
             </li>
 
             <li>

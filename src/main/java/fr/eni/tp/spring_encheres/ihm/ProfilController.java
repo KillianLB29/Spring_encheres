@@ -2,6 +2,7 @@ package fr.eni.tp.spring_encheres.ihm;
 
 import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
+import fr.eni.tp.spring_encheres.ihm.dto.UtilisateurDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +35,9 @@ public class ProfilController {
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
             Model model
     ) {
-        if (utilisateurSession == null || utilisateurSession.getNoUtilisateur() == 0) {
-            return "redirect:/login"; // Redirection vers la page de connexion si non connecté
-        }
+//        if (utilisateurSession == null || utilisateurSession.getNoUtilisateur() == 0) {
+//            return "redirect:/login"; // Redirection vers la page de connexion si non connecté
+//        }
 
         // Recherche de l'utilisateur en base
         Utilisateur utilisateur = utilisateurService.findById(utilisateurSession.getNoUtilisateur());
@@ -44,8 +45,18 @@ public class ProfilController {
             model.addAttribute("messageErreur", "Utilisateur introuvable.");
             return "erreur"; // Page d'erreur si l'utilisateur n'est pas trouvé
         }
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setPseudo(utilisateur.getPseudo());
+        utilisateurDTO.setNom(utilisateur.getNom());
+        utilisateurDTO.setPrenom(utilisateur.getPrenom());
+        utilisateurDTO.setEmail(utilisateur.getEmail());
+        utilisateurDTO.setTelephone(utilisateur.getTelephone());
+        utilisateurDTO.setRue(utilisateur.getRue());
+        utilisateurDTO.setCodePostal(utilisateur.getCodePostal());
+        utilisateurDTO.setVille(utilisateur.getVille());
 
-        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", utilisateurDTO);
         return "profil/monProfil"; // Affichage du profil utilisateur
     }
 
@@ -54,25 +65,36 @@ public class ProfilController {
      */
     @PostMapping("/monProfil")
     public String modifierProfil(
-            @ModelAttribute("utilisateur") Utilisateur utilisateurModifie,
+            @ModelAttribute("utilisateurDTO") UtilisateurDTO utilisateurDTO,
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
             Model model
     ) {
         if (utilisateurSession == null || utilisateurSession.getNoUtilisateur() == 0) {
             return "redirect:/login"; // Redirection vers la page de connexion
         }
-
+        Utilisateur utilisateurModif = new Utilisateur();
+        utilisateurModif.setPseudo(utilisateurSession.getPseudo());
+        utilisateurModif.setNom(utilisateurDTO.getNom());
+        utilisateurModif.setPrenom(utilisateurDTO.getPrenom());
+        utilisateurModif.setMotDePasse(utilisateurDTO.getNewMotDePasse());
+        utilisateurModif.setMotDePasse(utilisateurDTO.getConfirmeMotDePasse());
+        utilisateurModif.setEmail(utilisateurDTO.getEmail());
+        utilisateurModif.setTelephone(utilisateurDTO.getTelephone());
+        utilisateurModif.setRue(utilisateurDTO.getRue());
+        utilisateurModif.setCodePostal(utilisateurDTO.getCodePostal());
+        utilisateurModif.setVille(utilisateurDTO.getVille());
         // Préservation des données sensibles de l'utilisateur connecté
-        utilisateurModifie.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
-        utilisateurModifie.setMotDePasse(utilisateurSession.getMotDePasse());
-        utilisateurModifie.setCredit(utilisateurSession.getCredit());
-        utilisateurModifie.setAdmin(utilisateurSession.isAdmin());
+        utilisateurModif.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
+        utilisateurModif.setCredit(utilisateurSession.getCredit());
+        utilisateurModif.setAdmin(utilisateurSession.isAdmin());
+        System.out.println(utilisateurModif);
 
         // Enregistrement des modifications dans la base de données
-        utilisateurService.enregistrerUtilisateur(utilisateurModifie);
+        utilisateurService.update(utilisateurModif);
 
         // Mise à jour de la session utilisateur
-        model.addAttribute("utilisateurSession", utilisateurModifie);
+        model.addAttribute("utilisateurSession", utilisateurDTO);
+
         model.addAttribute("message", "Profil mis à jour avec succès !");
         return "redirect:/monProfil"; // Redirection vers le profil après mise à jour
     }
