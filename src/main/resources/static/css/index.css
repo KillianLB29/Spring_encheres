@@ -16,6 +16,7 @@ body {
     margin: 0;
 }
 
+/* Filtres */
 .filtres {
     padding: 1rem 2rem;
     display: flex;
@@ -82,24 +83,40 @@ body {
     padding-left: 2rem;
 }
 
-/* Zone des cartes */
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--card-gap);
-    padding: 0 2rem;
+/* === CAROUSEL === */
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
     max-width: var(--max-width);
     margin: 0 auto;
 }
 
+.carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.card-container {
+    display: flex;
+    transition: transform 0.4s ease;
+    will-change: transform;
+}
+
+/* Cartes dans le carrousel */
 .card {
+    flex: 0 0 calc(100% / 3);
+    box-sizing: border-box;
+    padding: 0 1rem;
+    scroll-snap-align: start;
     background: var(--white);
-    min-width: 45%;
     border-radius: 8px;
     box-shadow: 0 4px 10px var(--shadow-color);
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
 }
 
 .card:hover {
@@ -110,7 +127,6 @@ body {
 .card-image {
     flex: 1;
     max-width: 200px;
-    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,13 +147,12 @@ body {
     justify-content: center;
 }
 
-/* Titre dans la carte */
 .card-title {
     text-decoration: underline;
     margin-bottom: 1rem;
 }
 
-/* Bouton */
+/* Bouton "voir" dans la carte */
 .btn {
     background: var(--primary-color);
     color: var(--white);
@@ -156,24 +171,16 @@ body {
     background: var(--primary-color-hover);
 }
 
-/* Carrousel */
-.carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
+/* Boutons de navigation du carrousel */
 .carousel-btn {
-    background: transparent;
-    border: none;
-    font-size: 2rem;
-    color: #333;
-    cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .carousel-btn.prev {
@@ -184,31 +191,15 @@ body {
     right: 10px;
 }
 
-.card-container {
-    display: flex;
-    transition: transform 0.5s ease;
+@media (max-width: 992px) {
+    .card {
+        flex: 0 0 50%; /* 2 cartes */
+    }
 }
 
-.card {
-    flex: 0 0 auto;
-    margin: 0 1rem;
-}
-
-/* Optimisation de la grille */
-@media (max-width: 768px) {
-    .card-container {
-        grid-template-columns: 1fr;
+@media (max-width: 600px) {
+    .card {
+        flex: 0 0 100%; /* 1 carte */
     }
 
-    .filtres {
-        padding: 1rem;
-    }
-
-    .filtre-group {
-        flex-direction: column;
-    }
-
-    .filtre-input {
-        max-width: 100%;
-    }
 }

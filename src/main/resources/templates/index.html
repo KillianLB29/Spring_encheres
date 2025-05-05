@@ -36,30 +36,34 @@
         </div>
     </section>
 
+    <!-- Titre de section -->
     <h2 class="encheres-title">Liste des enchères</h2>
 
+    <!-- Section des cartes -->
     <section class="encheres">
         <div class="carousel">
-            <div class="carousel-wrapper" style="overflow: hidden;">
-                <div class="card-container" style="display: flex; transition: transform 0.5s ease;">
+            <button class="carousel-btn prev">‹</button>
+
+            <div class="carousel-wrapper">
+                <div class="card-container" id="carouselContainer">
                     <div class="card" th:each="article : ${articles}">
                         <div class="card-image">
                             <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                         </div>
                         <div class="card-content">
-                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <h3 class="card-title" th:text="${article.nomArticle}">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'">10 crédits</span></p>
                             <p><strong>Fin de l'enchère :</strong>
-                                <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                                <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}">01/01/2025</span></p>
                             <p><strong>Vendeur :</strong>
-                                <span th:text="${article.utilisateur.pseudo}"></span></p>
+                                <span th:text="${article.utilisateur.pseudo}">Pseudo</span></p>
                             <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="carousel-btn prev">‹</div>
-            <div class="carousel-btn next">›</div>
+
+            <button class="carousel-btn next">›</button>
         </div>
     </section>
     <script src="/js/carousel_index.js"></script>

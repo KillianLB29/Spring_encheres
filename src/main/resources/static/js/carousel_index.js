@@ -1,68 +1,69 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.querySelector('.carousel');
     const cardContainer = carousel.querySelector('.card-container');
-    const cards = carousel.querySelectorAll('.card');
     const prevBtn = carousel.querySelector('.carousel-btn.prev');
     const nextBtn = carousel.querySelector('.carousel-btn.next');
 
-    let cardWidth = cards[0].offsetWidth;
-    let currentIndex = 0;
+    let cards = Array.from(cardContainer.children);
+    const cardCount = cards.length;
+    let currentIndex = cardCount;
 
-    // Dupliquer les cartes pour un effet infini
-    cards.forEach(card => {
-        const cloneFirst = card.cloneNode(true);
-        const cloneLast = card.cloneNode(true);
-        cardContainer.appendChild(cloneFirst); // ajout en fin
-        cardContainer.insertBefore(cloneLast, cardContainer.firstChild); // ajout au début
+    // Dupliquer les cartes pour l'effet infini
+    const prependClones = cards.map(card => card.cloneNode(true)).reverse();
+    const appendClones = cards.map(card => card.cloneNode(true));
+
+    prependClones.forEach(clone => cardContainer.insertBefore(clone, cardContainer.firstChild));
+    appendClones.forEach(clone => cardContainer.appendChild(clone));
+
+    cards = Array.from(cardContainer.children);
+    const totalCards = cards.length;
+
+    // Définir la largeur des cartes et du conteneur
+    const updateCardWidth = () => {
+        const cardWidth = carousel.offsetWidth;
+        cards.forEach(card => {
+            card.style.minWidth = `${cardWidth}px`;
+        });
+        cardContainer.style.width = `${cardWidth * totalCards}px`;
+        cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+    };
+
+    updateCardWidth();
+    window.addEventListener('resize', updateCardWidth);
+
+    let isTransitioning = false;
+
+    const moveToIndex = (index) => {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        const cardWidth = carousel.offsetWidth;
+        cardContainer.style.transition = 'transform 0.4s ease';
+        cardContainer.style.transform = `translateX(-${index * cardWidth}px)`;
+        currentIndex = index;
+
+        cardContainer.addEventListener('transitionend', handleTransitionEnd, { once: true });
+    };
+
+    const handleTransitionEnd = () => {
+        const cardWidth = carousel.offsetWidth;
+        cardContainer.style.transition = 'none';
+
+        if (currentIndex >= cardCount * 2) {
+            currentIndex = cardCount;
+            cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        } else if (currentIndex < cardCount) {
+            currentIndex = cardCount * 2 - 1;
+            cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        isTransitioning = false;
+    };
+
+    prevBtn.addEventListener('click', () => {
+        moveToIndex(currentIndex - 1);
     });
 
-    const totalCards = cardContainer.querySelectorAll('.card').length;
-
-    // Ajuster largeur du container
-    cardContainer.style.width = `${totalCards * cardWidth}px`;
-
-    // Position de départ (après les clones du début)
-    currentIndex = cards.length;
-    cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-
-    function moveTo(index) {
-        cardContainer.style.transition = 'transform 0.5s ease-in-out';
-        cardContainer.style.transform = `translateX(-${index * cardWidth}px)`;
-    }
-
-    function handleNext() {
-        currentIndex++;
-        moveTo(currentIndex);
-
-        if (currentIndex >= totalCards - cards.length) {
-            setTimeout(() => {
-                cardContainer.style.transition = 'none';
-                currentIndex = cards.length;
-                cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            }, 500);
-        }
-    }
-
-    function handlePrev() {
-        currentIndex--;
-        moveTo(currentIndex);
-
-        if (currentIndex < cards.length) {
-            setTimeout(() => {
-                cardContainer.style.transition = 'none';
-                currentIndex = totalCards - cards.length * 2;
-                cardContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            }, 500);
-        }
-    }
-
-    nextBtn.addEventListener('click', handleNext);
-    prevBtn.addEventListener('click', handlePrev);
-
-    // Recalculer la largeur à la redimension
-    window.addEventListener('resize', () => {
-        cardWidth = cards[0].offsetWidth;
-        cardContainer.style.width = `${totalCards * cardWidth}px`;
-        moveTo(currentIndex);
+    nextBtn.addEventListener('click', () => {
+        moveToIndex(currentIndex + 1);
     });
 });
