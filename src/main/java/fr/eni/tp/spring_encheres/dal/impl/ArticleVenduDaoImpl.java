@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -47,10 +49,17 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
         mapSqlParameterSource.addValue("no_categorie", article.getCategorie().getIdCategorie());
         mapSqlParameterSource.addValue("urlimage", article.getUrlImage());
 
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
         namedParameterJdbcTemplate.update(
                 INSERT_INTO,
-                mapSqlParameterSource
+                mapSqlParameterSource,
+                keyHolder
         );
+        Number generatedId = keyHolder.getKey();
+        if (generatedId != null) {
+            article.setNoArticle(generatedId.longValue());
+        }
 
     }
 

@@ -70,7 +70,11 @@ public class EnchereServiceImpl implements EnchereService {
         List<Enchere> encheres = enchereDAO.read(idArticle);
         if(encheres.size() == 0)
         {
-            return new Enchere();
+            Utilisateur util = new Utilisateur();
+            util.setPseudo("");
+            Enchere enchere = new Enchere();
+            enchere.setUtilisateur(util);
+            return enchere;
         }
         else{
             Enchere meilleureEnchere = encheres.stream()

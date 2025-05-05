@@ -19,7 +19,11 @@
   </ul>
   <form data-th-if="${mode=='enchere'}" data-th-action="@{'/encherir/' + ${article.noArticle}}" method="post">
     <label for="proposition">Ma proposition : </label>
-    <input id="proposition" type="number" name="proposition"
+    <input data-th-if="${enchere.montantEnchere == 0}" id="proposition" type="number" name="proposition"
+           data-th-min="${article.miseAPrix +1}"
+           th:value="${article.miseAPrix +1}"
+           step="1" required>
+    <input data-th-if="${enchere.montantEnchere > 0}" id="proposition" type="number" name="proposition"
            data-th-min="${enchere.montantEnchere +1}"
            th:value="${enchere.montantEnchere +1}"
            step="1" required>

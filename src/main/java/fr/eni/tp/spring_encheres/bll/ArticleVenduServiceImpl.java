@@ -49,6 +49,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     @Override
     public void creerArticle(ArticleVendu article) {
         articleVenduDAO.create(article);
+        retraitDAO.save(article.getLieuRetrait(),article.getNoArticle());
     }
 
     @Override
