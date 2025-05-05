@@ -73,11 +73,19 @@ public class ProfilController {
             return "redirect:/login"; // Redirection vers la page de connexion
         }
         Utilisateur utilisateurModif = new Utilisateur();
-        utilisateurModif.setPseudo(utilisateurSession.getPseudo());
+        utilisateurModif.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
+        utilisateurModif.setPseudo(utilisateurDTO.getPseudo());
         utilisateurModif.setNom(utilisateurDTO.getNom());
         utilisateurModif.setPrenom(utilisateurDTO.getPrenom());
-        utilisateurModif.setMotDePasse(utilisateurDTO.getNewMotDePasse());
-        utilisateurModif.setMotDePasse(utilisateurDTO.getConfirmeMotDePasse());
+        // Comparaison du nouveau mots de passe et de sa confirmation
+        if (utilisateurDTO.getNewMotDePasse() != null && !utilisateurDTO.getNewMotDePasse().isBlank()) {
+            if (utilisateurDTO.getNewMotDePasse().equals(utilisateurDTO.getConfirmeMotDePasse())) {
+                utilisateurModif.setMotDePasse(utilisateurDTO.getNewMotDePasse());
+            } else {
+                model.addAttribute("messageErreur", "Les mots de passe ne correspondent pas.");
+                return "profil/monProfil";
+            }
+        }
         utilisateurModif.setEmail(utilisateurDTO.getEmail());
         utilisateurModif.setTelephone(utilisateurDTO.getTelephone());
         utilisateurModif.setRue(utilisateurDTO.getRue());
@@ -93,7 +101,7 @@ public class ProfilController {
         utilisateurService.update(utilisateurModif);
 
         // Mise à jour de la session utilisateur
-        model.addAttribute("utilisateurSession", utilisateurDTO);
+        model.addAttribute("utilisateurSession", utilisateurModif);
 
         model.addAttribute("message", "Profil mis à jour avec succès !");
         return "redirect:/monProfil"; // Redirection vers le profil après mise à jour
