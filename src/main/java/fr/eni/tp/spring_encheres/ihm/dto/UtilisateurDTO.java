@@ -1,16 +1,29 @@
 package fr.eni.tp.spring_encheres.ihm.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public class UtilisateurDTO {
+    @NotBlank(message = "Le pseudo est obligatoire")
     private String pseudo;
+    @NotBlank(message = "Le nom est obligatoire")
     private String nom;
+    @NotBlank(message = "Le prenom est obligatoire")
     private String prenom;
     private String NewMotDePasse;
     private String ConfirmeMotDePasse;
+    @NotBlank(message = "L'email est obligatoire")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",message = "L'email n'est pas au bon format")
     private String email;
+    @NotBlank(message = "Le telephone est obligatoire")
     private String telephone;
+    @NotBlank(message = "La rue est obligatoire")
     private String rue;
+    @NotBlank(message = "Le codePostal est obligatoire")
     private String codePostal;
+    @NotBlank(message = "La ville est obligatoire")
     private String ville;
+
 
     // Constructeur
     public UtilisateurDTO(long noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, long credit, boolean admin) {

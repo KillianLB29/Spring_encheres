@@ -1,0 +1,7 @@
+<div th:fragment="fragmentErreur">
+    <div data-th-each="keyError: ${#fields.errors('global')}" class="erreur">
+        <ul>
+            <li data-th-text="${keyError}"></li>
+        </ul>
+    </div>
+</div>

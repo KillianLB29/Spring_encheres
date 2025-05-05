@@ -4,6 +4,7 @@ import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.exception.UtilisateurException;
 import fr.eni.tp.spring_encheres.ihm.dto.UtilisateurDTO;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,15 +59,14 @@ public class ProfilController {
      */
     @PostMapping("/monProfil")
     public String modifierProfil(
-            @ModelAttribute("utilisateurDTO") UtilisateurDTO utilisateurDTO,
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+            @Valid @ModelAttribute("utilisateurDTO") UtilisateurDTO utilisateurDTO,
             BindingResult bindingResult,
             Model model
     ) {
         if (utilisateurSession == null || utilisateurSession.getNoUtilisateur() == 0) {
             return "redirect:/login"; // Redirection vers la page de connexion
         }
-        System.out.println(utilisateurDTO);
         Utilisateur utilisateurModif = new Utilisateur();
         // On vérifie si un nouveau mot de passe a été renseigné et ensuite on fait la comparaison du nouveau mots de passe et de sa confirmation
         if (utilisateurDTO.getNewMotDePasse() == null || utilisateurDTO.getNewMotDePasse().isBlank())
@@ -104,6 +104,7 @@ public class ProfilController {
             catch (UtilisateurException utilisateurException){
                 utilisateurException.getMessages().forEach(message -> {
                     ObjectError error = new ObjectError("globalError", message);
+                    System.out.println(message);
                     bindingResult.addError(error);
                 });
             }
@@ -127,7 +128,6 @@ public class ProfilController {
         }
         // Mise à jour de la session utilisateur
         model.addAttribute("utilisateurSession", utilisateurModif);
-        model.addAttribute("message", "Profil mis à jour avec succès !");
         return "redirect:/monProfil"; // Redirection vers le profil après mise à jour
     }
 

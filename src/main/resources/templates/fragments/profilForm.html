@@ -71,5 +71,7 @@
             </li>
             <button type="submit" th:if="${mode == 'modif'}">Enregistrer</button>
         </ul>
+        <div th:replace="fragments/fragment-error :: fragmentErreur"></div>
     </form>
 </div>
+
