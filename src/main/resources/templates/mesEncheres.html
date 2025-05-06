@@ -13,24 +13,23 @@
     <form>
         <label>
             <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
-            Groupe 1
+            Achats
         </label>
+        <div id="group1">
+            <label><input type="checkbox" name="g1_opt1"> Enchères ouvertes</label>
+            <label><input type="checkbox" name="g1_opt2"> Mes enchères en cours</label>
+            <label><input type="checkbox" name="g1_opt3"> Mes enchères remportées</label>
+        </div>
         <label>
             <input type="radio" name="groupChoice" value="group2" onclick="switchGroup('group2')">
-            Groupe 2
+            Ventes
         </label>
-
-        <div id="group1">
-            <label><input type="checkbox" name="g1_opt1"> Option 1</label>
-            <label><input type="checkbox" name="g1_opt2"> Option 2</label>
-            <label><input type="checkbox" name="g1_opt3"> Option 3</label>
-        </div>
-
         <div id="group2">
-            <label><input type="checkbox" name="g2_opt1"> Option A</label>
-            <label><input type="checkbox" name="g2_opt2"> Option B</label>
-            <label><input type="checkbox" name="g2_opt3"> Option C</label>
+            <label><input type="checkbox" name="g2_opt1"> Mes ventes en cours</label>
+            <label><input type="checkbox" name="g2_opt2"> Mes ventes non débutées</label>
+            <label><input type="checkbox" name="g2_opt3"> Ventes terminées</label>
         </div>
+
     </form>
 
     <script>
