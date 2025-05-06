@@ -4,12 +4,13 @@
         <div class="modals-auth-modal-content">
             <span class="modals-auth-close" onclick="closeModal('loginModal')">&times;</span>
             <h2>Connexion</h2>
-            <form class="modals-auth-form" th:action="@{/connexion}" method="post">
-                <input type="text" name="pseudo" placeholder="Pseudo" required>
-                <input type="password" name="motDePasse" placeholder="Mot de passe" required>
+            <form class="modals-auth-form" th:action="@{/login}" method="post">
+                <input type="text" name="username" id="username" placeholder="Pseudo" required>
+                <input type="password" name="password" id="password" placeholder="Mot de passe" required>
                 <button type="submit">Se connecter</button>
             </form>
-            <p class="modals-auth-switch-link">Pas encore inscrit ?
+            <p class="modals-auth-switch-link">
+                Pas encore inscrit ?
                 <a href="#" onclick="switchModal('loginModal', 'registerModal')">Créer un compte</a>
             </p>
         </div>
@@ -40,7 +41,7 @@
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
         function closeModal(id) {
             document.getElementById(id).style.display = "none";
         }
@@ -53,6 +54,11 @@
             closeModal(current);
             openModal(target);
         }
+
+        // Vérifie si le modèle a l'attribut showLoginModal
+        var showLoginModal = /*[[${showLoginModal}]]*/ false;
+        if (showLoginModal) {
+            openModal('loginModal');  // Ouvre le modal de connexion
+        }
     </script>
 </div>
-

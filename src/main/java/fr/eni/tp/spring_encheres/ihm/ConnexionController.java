@@ -16,14 +16,15 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 @Controller
-@SessionAttributes("utilisateurSession")
 public class ConnexionController {
     ArticleVenduService articleVenduService;
     CategorieService categorieService;
+    UtilisateurService utilisateurService;
 
-    public ConnexionController(ArticleVenduService articleVenduService, CategorieService categorieService) {
+    public ConnexionController(ArticleVenduService articleVenduService, CategorieService categorieService, UtilisateurService utilisateurService) {
         this.articleVenduService = articleVenduService;
         this.categorieService = categorieService;
+        this.utilisateurService = utilisateurService;
     }
 
     @GetMapping("/login")
@@ -37,5 +38,13 @@ public class ConnexionController {
         model.addAttribute("utilisateur", utilisateurSession);
 
         return "index";
+    }
+    @GetMapping("login/connect/{pseudo}")
+    public String connect(HttpSession s ,
+                          @PathVariable("pseudo") String pseudo,Model model){
+        Utilisateur utilisateurSession = utilisateurService.findByUserName(pseudo);
+        System.out.println("passage login/connect :"+utilisateurSession);
+        s.setAttribute("utilisateurSession", utilisateurSession);
+        return "redirect:/";
     }
 }

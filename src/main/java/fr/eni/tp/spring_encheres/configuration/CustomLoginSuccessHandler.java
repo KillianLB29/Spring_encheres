@@ -15,7 +15,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        String email = authentication.getName(); // l'email utilisé pour se connecter
-        response.sendRedirect("/login/connect/" + email); // redirection vers ton contrôleur existant
+        String pseudo = authentication.getName(); // l'email utilisé pour se connecter
+        response.sendRedirect("/login/connect/" + pseudo); // redirection vers ton contrôleur existant
     }
 }

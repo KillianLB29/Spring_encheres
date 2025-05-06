@@ -4,6 +4,7 @@ import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import fr.eni.tp.spring_encheres.exception.UtilisateurException;
 import fr.eni.tp.spring_encheres.ihm.dto.UtilisateurDTO;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -156,5 +157,10 @@ public class ProfilController {
         model.addAttribute("utilisateur", utilisateurSession);
         model.addAttribute("utilisateurDTO", utilisateurDTO);
         return "profil/profil";
+    }
+    @ModelAttribute("utilisateurSession")
+    public Utilisateur utilisateurSession(HttpSession session) {
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurSession");
+        return utilisateur != null ? utilisateur : new Utilisateur(); // ou null si tu veux gérer l'absence
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,7 +23,7 @@ public class SecurityConfiguration {
     @Bean
     UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery("Select pseudo as username , password ,1 from UTILISATEURS where pseudo=?;");
+        jdbcUserDetailsManager.setUsersByUsernameQuery("Select pseudo as username , mot_de_passe as password ,1 from UTILISATEURS where pseudo=?;");
         jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT pseudo AS username, role AS authority FROM UTILISATEURS JOIN ROLES ON administrateur = is_admin WHERE pseudo = ?");
         return jdbcUserDetailsManager;
     }
@@ -38,6 +40,8 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/monProfil").hasRole("MEMBRE")
                             .requestMatchers(HttpMethod.POST, "/monProfil").hasRole("MEMBRE")
                             .requestMatchers(HttpMethod.GET,"/profil/*").hasRole("MEMBRE")
+                            .requestMatchers(HttpMethod.POST, "/test").permitAll()
+                            .requestMatchers(HttpMethod.POST,"/login/connect/*").permitAll()
                             .requestMatchers(HttpMethod.POST,"/inscription").permitAll()
                             .requestMatchers(HttpMethod.POST,"/login").permitAll()
                             .requestMatchers(HttpMethod.GET,"/login").permitAll()
@@ -63,5 +67,9 @@ public class SecurityConfiguration {
         );
 
         return http.build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

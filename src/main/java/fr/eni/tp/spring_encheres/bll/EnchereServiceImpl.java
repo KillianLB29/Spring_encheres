@@ -119,6 +119,7 @@ public class EnchereServiceImpl implements EnchereService {
     }
     public boolean utilisateurHasEnoughPoints(Enchere enchere) {
         boolean valid = true;
+        System.out.println("probleme : "+enchere.getUtilisateur());
         Utilisateur utilisateur = utilisateurDAO.read(enchere.getUtilisateur().getNoUtilisateur());
         if(utilisateur.getCredit()<enchere.getMontantEnchere())
         {

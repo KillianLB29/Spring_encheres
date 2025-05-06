@@ -7,6 +7,7 @@ import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.*;
 import fr.eni.tp.spring_encheres.exception.EnchereException;
 import fr.eni.tp.spring_encheres.ihm.dto.ArticleVenduDTO;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@SessionAttributes("utilisateurSession")
 public class EnchereController {
 
     private final ArticleVenduService articleVenduService;
@@ -48,13 +48,20 @@ public class EnchereController {
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
             Model model
     ) {
+
+        if(utilisateurSession!=null){
+            model.addAttribute("utilisateur",utilisateurSession);
+            System.out.println(utilisateurSession);
+        }
+        else{
+            model.addAttribute("utilisateur", new Utilisateur());
+        }
         List<ArticleVendu> articles = articleVenduService.consulterArticlesEnCoursDeVente();
         List<Categorie> categories = categorieService.consulterCategories();
         System.out.println(articles);
 
         model.addAttribute("articles", articles);
         model.addAttribute("categories", categories);
-        model.addAttribute("utilisateur", utilisateurSession);
 
         return "index";
     }
@@ -197,13 +204,15 @@ public class EnchereController {
         enchere.setArticleVendu(article);
         enchere.setMontantEnchere(proposition);
         enchereService.enregistrerEnchere(enchere);
+        utilisateurSession.setCredit(utilisateurSession.getCredit() -proposition);
         return "redirect:/encheres/" + id;
     }
-
-    // === GESTION SESSION UTILISATEUR (EXEMPLE FIXE TEMPORAIRE) ===
     @ModelAttribute("utilisateurSession")
-    public Utilisateur membreSession() {
-        System.out.println("Création du contexte utilisateur en session");
-        return utilisateurService.findById(1); // à remplacer plus tard par session réelle
+    public Utilisateur utilisateurSession(HttpSession session) {
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurSession");
+        System.out.println("util session : "+utilisateur);
+        return utilisateur != null ? utilisateur : new Utilisateur(); // ou null si tu veux gérer l'absence
     }
+
+
 }
