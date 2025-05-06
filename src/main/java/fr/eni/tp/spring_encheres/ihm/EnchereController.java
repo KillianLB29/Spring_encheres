@@ -186,6 +186,45 @@ public class EnchereController {
         List<ArticleVendu> encheresTerminer = articleVenduService.consulterEncheresTerminer(utilisateurSession.getNoUtilisateur());
         List<ArticleVendu> encheresEnCours = articleVenduService.consulterEncheresEnCours(utilisateurSession.getNoUtilisateur());
         List<ArticleVendu> enchereParticipe = articleVenduService.consulterEncheresParticipe(utilisateurSession.getNoUtilisateur());
+        model.addAttribute("categories", categorieService.consulterCategories());
+        model.addAttribute("encheresTerminer", encheresTerminer);
+        model.addAttribute("encheresEnCours", encheresEnCours);
+        model.addAttribute("encheresParticipe", enchereParticipe);
+        model.addAttribute("utilisateur", utilisateurSession);
+        return "mesEncheres";
+    }
+    @PostMapping("/encheres")
+    public String filtrerEncheres(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+            @RequestParam(name = "filtre", required = false) String filtre,
+            @RequestParam(name = "categorie", required = false) String categorie,
+            @RequestParam(name = "groupChoice", required = false) String groupChoice,
+            @RequestParam(name = "g1_opt1", required = false) String g1Opt1,
+            @RequestParam(name = "g1_opt2", required = false) String g1Opt2,
+            @RequestParam(name = "g1_opt3", required = false) String g1Opt3,
+            @RequestParam(name = "g2_opt1", required = false) String g2Opt1,
+            @RequestParam(name = "g2_opt2", required = false) String g2Opt2,
+            @RequestParam(name = "g2_opt3", required = false) String g2Opt3,
+            Model model
+    ) {
+        // Exemple de debug
+        System.out.println("Filtre texte : " + filtre);
+        System.out.println("Catégorie : " + categorie);
+        System.out.println("Groupe sélectionné : " + groupChoice);
+
+        // Vérifie si les cases sont cochées (valeur reçue != null)
+        if (g1Opt1 != null) System.out.println("✔ Enchères ouvertes cochée");
+        if (g1Opt2 != null) System.out.println("✔ Mes enchères en cours cochée");
+        if (g1Opt3 != null) System.out.println("✔ Mes enchères remportées cochée");
+
+        if (g2Opt1 != null) System.out.println("✔ Mes ventes en cours cochée");
+        if (g2Opt2 != null) System.out.println("✔ Mes ventes non débutées cochée");
+        if (g2Opt3 != null) System.out.println("✔ Ventes terminées cochée");
+
+        // Traitement métier ici...
+        List<ArticleVendu> encheresTerminer = articleVenduService.consulterEncheresTerminer(utilisateurSession.getNoUtilisateur());
+        List<ArticleVendu> encheresEnCours = articleVenduService.consulterEncheresEnCours(utilisateurSession.getNoUtilisateur());
+        List<ArticleVendu> enchereParticipe = articleVenduService.consulterEncheresParticipe(utilisateurSession.getNoUtilisateur());
+        model.addAttribute("categories", categorieService.consulterCategories());
         model.addAttribute("encheresTerminer", encheresTerminer);
         model.addAttribute("encheresEnCours", encheresEnCours);
         model.addAttribute("encheresParticipe", enchereParticipe);

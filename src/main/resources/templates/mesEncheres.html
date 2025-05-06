@@ -10,7 +10,15 @@
 <main>
 <!--    <div data-th-replace="fragments/filtre-index-recherche :: filtre"></div>-->
 <!--    <div th:replace="fragments/form-filtres-encheres :: filtres"></div>-->
-    <form>
+    <form data-th-action="@{/encheres}" method="post">
+        <label for="filtre">Filtre : </label>
+        <input type="text" id="filtre" name="filtre">
+        <select id="categorie">
+            <option value="all">Toutes</option>
+            <option th:each="categorie : ${categories}"
+                    th:value="${categorie.idCategorie}"
+                    th:text="${categorie.libelle}"></option>
+        </select>
         <label>
             <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
             Achats
@@ -29,7 +37,7 @@
             <label><input type="checkbox" name="g2_opt2"> Mes ventes non débutées</label>
             <label><input type="checkbox" name="g2_opt3"> Ventes terminées</label>
         </div>
-
+        <button type="submit">Filtrer</button>
     </form>
 
     <script>
