@@ -181,6 +181,6 @@ public class EnchereController {
     @ModelAttribute("utilisateurSession")
     public Utilisateur membreSession() {
         System.out.println("Création du contexte utilisateur en session");
-        return new Utilisateur(); // à remplacer plus tard par session réelle
+        return utilisateurService.findById(1); // à remplacer plus tard par session réelle
     }
 }

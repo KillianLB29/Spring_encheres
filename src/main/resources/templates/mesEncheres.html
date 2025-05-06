@@ -4,8 +4,11 @@
 <div id="extraCss">
     <link rel="stylesheet" data-th-href="@{/css/mesEncheres.css}">
     <link rel="stylesheet" data-th-href="@{/css/mesEncheres_mobile.css}">
+    <link rel="stylesheet" data-th-href="@{/css/form-filtres-encheres.css}">
+    <link rel="stylesheet" data-th-href="@{/css/filtre-index-recherche.css}">
 </div>
 <main>
+    <div data-th-replace="fragments/filtre-index-recherche :: filtre"></div>
     <div th:replace="fragments/form-filtres-encheres :: filtres"></div>
     <h2 class="titre_mobile_encheres">Mes objets mis en enchère terminés</h2>
     <section class="encheres">
