@@ -34,10 +34,11 @@ public class EnchereServiceImpl implements EnchereService {
     }
 
     @Override
-    public void enregistrerEnchere(Enchere enchere) {
+    public boolean enregistrerEnchere(Enchere enchere) {
         if(!utilisateurHasEnoughPoints(enchere))
         {
             System.out.println("L'utilisateur n'a pas assez de crédit pour enchérir!");
+            return false;
         }
         else
         {
@@ -47,6 +48,7 @@ public class EnchereServiceImpl implements EnchereService {
             Enchere meilleurEnchere = meilleurEnchere(enchere.getArticleVendu().getNoArticle());
             if(meilleurEnchere.getUtilisateur().getNoUtilisateur()==enchere.getUtilisateur().getNoUtilisateur()){
                 System.out.println("Vous etes déja la meilleur offre pour cet objet!");
+                return false;
             }
             else{
                 List<Enchere> encheres = enchereDAO.read(enchere.getArticleVendu().getNoArticle());
@@ -76,8 +78,8 @@ public class EnchereServiceImpl implements EnchereService {
                 }
                 }
             }
-
-        }
+        return true;
+    }
 
     @Override
     public void supprimerEnchere(long idArticle,long idUtilisateur) {
@@ -119,6 +121,7 @@ public class EnchereServiceImpl implements EnchereService {
     }
     public boolean utilisateurHasEnoughPoints(Enchere enchere) {
         boolean valid = true;
+        System.out.println("probleme : "+enchere.getUtilisateur());
         Utilisateur utilisateur = utilisateurDAO.read(enchere.getUtilisateur().getNoUtilisateur());
         if(utilisateur.getCredit()<enchere.getMontantEnchere())
         {

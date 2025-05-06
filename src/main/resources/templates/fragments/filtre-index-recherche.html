@@ -1,6 +1,7 @@
-<div th:fragment="filtre-index-recherche">
+<div th:fragment="filtre">
+    <div class="research">
     <h2 class="encheres-title">Liste des enchères</h2>
-        <div class="card-container filtrant">
+        <div class="card-container">
             <!--titre devant les filtres-->
             <p class="filtre-title">Filtres :</p>
             <!--le div qui englobe tous les inputs , icones et boutons des filtres-->
@@ -19,9 +20,12 @@
                         <input type="text" id="searchName" placeholder="Le nom de l'article contient">
                     </div>
                 </div>
-                <div class="filtre-button">
-                    <input type="submit" value="Rechercher" class="btn"><span><i class="icon-search fas fa-search"></i></span>
-                </div>
+                <button type="submit" id="btn" value="">
+                    <span class="text_research">Rechercher</span>
+                    <span><i class="icon-search fas fa-search"></i></span>
+                </button>
+            </div>
         </div>
     </div>
+</div>
 </div>

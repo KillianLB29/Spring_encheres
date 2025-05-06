@@ -44,7 +44,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public Utilisateur findByUserName(String username) {
-        return utilisateurDAO.findByPseudo(username);
+
+        Utilisateur utilisateur =  utilisateurDAO.findByPseudo(username);
+        System.out.println(utilisateur);
+        return utilisateur;
     }
 
     @Override

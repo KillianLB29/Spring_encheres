@@ -17,7 +17,6 @@
 
             <label for="categorie">Catégorie :</label>
             <select id="categorie" name="categorie" th:field="*{categorie}">
-                <option value="" disabled selected>Sélectionner une catégorie</option>
                 <option data-th-each="categorie : ${categories}"
                         data-th-value="${categorie.idCategorie}"
                         data-th-text="${categorie.libelle}"></option>
@@ -61,6 +60,7 @@
 
             <button type="submit">Enregistrer</button>
             <button type="reset">Effacer</button>
+            <div th:replace="fragments/fragment-error :: fragmentErreur"></div>
         </form>
     </div>
     <script src="/js/article-preview.js"></script>

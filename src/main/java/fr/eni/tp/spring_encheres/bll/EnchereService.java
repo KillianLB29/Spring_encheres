@@ -8,7 +8,7 @@ import java.util.List;
 public interface EnchereService {
     List<Enchere> findByArticleId(long idArticle);
 
-    void enregistrerEnchere(Enchere enchere);
+    boolean enregistrerEnchere(Enchere enchere);
 
     void supprimerEnchere(long idArticle, long idUtilisateur);
 
