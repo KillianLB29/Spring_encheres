@@ -1,36 +1,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <div th:fragment="filtres">
-    <div class="recherche-container">
-        <form class="radio-form" th:action="@{/filtres}" method="get">
-            <label>
-                <input type="radio" name="type" value="achats"> Achats
-            </label>
-            <div class="subgroup">
-                <label><input type="checkbox" name="achats" value="${encheresEnCours}"> enchères ouvertes</label>
-                <label><input type="checkbox" name="achats" value="${encheresParticipe}"> mes enchères en cours</label>
-                <label><input type="checkbox" name="achats" value="${encheresTerminer}"> mes enchères remportées</label>
-            </div>
+      <div class="recherche-container">
+            <form class="radio-form" th:action="@{/filtres}" method="get">
+                <label>
+                    <input type="radio" name="type" value="achats" onchange="toggleCheckboxes()"> Achats
+                </label>
+                <div class="subgroup" id="achatsGroup">
+                    <label><input type="checkbox" name="achats" value="ouvertes" disabled> enchères ouvertes</label>
+                    <label><input type="checkbox" name="achats" value="encours" disabled> mes enchères en cours</label>
+                    <label><input type="checkbox" name="achats" value="remportees" disabled> mes enchères remportées</label>
+                </div>
 
-            <label>
-                <input type="radio" name="type" value="ventes"> Ventes
-            </label>
-            <div class="subgroup">
-                <label><input type="checkbox" name="ventes" value="${ventesEnCours}"> mes ventes en cours</label>
-                <label><input type="checkbox" name="ventes" value="${ventesNonDebutes}"> ventes non-débutées</label>
-                <label><input type="checkbox" name="ventes" value="${ventesTerminer}"> ventes terminées</label>
-            </div>
-        </form>
-    </div>
-</div>
-<!--
-<script>
-    const radios = document.querySelectorAll('input[name="type"]');
-    radios.forEach(radio => {
-        radio.addEventListener('change', function () {
-            document.getElementById('extra-options').style.display =
-                this.value === 'autre' ? 'block' : 'none';
-        });
-    });
-</script>
--->
+                <label>
+                    <input type="radio" name="type" value="ventes" onchange="toggleCheckboxes()"> Ventes
+                </label>
+                <div class="subgroup" id="ventesGroup">
+                    <label><input type="checkbox" name="ventes" value="encours" disabled> mes ventes en cours</label>
+                    <label><input type="checkbox" name="ventes" value="nondebutees" disabled> ventes non-débutées</label>
+                    <label><input type="checkbox" name="ventes" value="terminees" disabled> ventes terminées</label>
+                </div>
+            </form>
+      </div>
+ </div>
+
+    <script>
+        function toggleCheckboxes() {
+            const typeValue = document.querySelector('input[name="type"]:checked')?.value;
+
+            const achatsCheckboxes = document.querySelectorAll('#achatsGroup input[type="checkbox"]');
+            const ventesCheckboxes = document.querySelectorAll('#ventesGroup input[type="checkbox"]');
+
+            if (typeValue === 'achats') {
+                achatsCheckboxes.forEach(cb => cb.disabled = false);
+                ventesCheckboxes.forEach(cb => cb.disabled = true);
+            } else if (typeValue === 'ventes') {
+                achatsCheckboxes.forEach(cb => cb.disabled = true);
+                ventesCheckboxes.forEach(cb => cb.disabled = false);
+            }
+        }
+    </script>

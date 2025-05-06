@@ -1,7 +1,36 @@
 .recherche-container{
-display: flex;
-flex-direction: row;
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
 
-    flex-wrap: wrap;
+.radio-form {
+    display: flex;
+    gap: 40px; /* espace entre les deux colonnes */
+}
 
+.radio-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-block > label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.subgroup {
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    gap: 40px;
+
+}
+/*par rapport aux petits écrans - les filtres de recherches pour Achats/Ventes ne s'affichent pas*/
+@media screen and (min-width:300px) and (max-width:991px) {
+    .recherche-container {
+        display: none;
+
+    }
 }

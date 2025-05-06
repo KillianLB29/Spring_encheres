@@ -1,5 +1,3 @@
-
-
 :root {
     --primary-color: #2980b9;
     --primary-color-hover: #1f5f91;
@@ -16,28 +14,16 @@ body {
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
     margin: 0;
-}
-
-.filtres {
-    width: 100%;
-    padding: 1rem 2rem;
-    display: flex;
+    display:flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+}
 
-    margin: 20px 0;
+.text_research{
 
 }
-.activites{
-    width: 100%;
-    flex-direction: row;
-}
-.filtrant{
 
-    flex-direction: column;
-    align-items: center;
-}
+
 .filtre-title {
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -65,7 +51,7 @@ body {
     display: flex;
     flex-direction: column;
 }
-.filtre-input,
+/*.filtre-input,*/
 .filtre-button {
     display: flex;
     flex-direction: row;
@@ -82,7 +68,9 @@ body {
 
 }
 
+/*
 .input-icon {
+
     display: flex;
     align-items: center;
     position: relative;
@@ -100,6 +88,7 @@ body {
     height: 2rem;
     width: 100%;
 }
+*/
 
 .filtre-button {
     flex-shrink: 0;
@@ -111,6 +100,7 @@ body {
 }
 
 /* Pour aligner l'input et l'icône dans le même bloc */
+/*
 .input-icon {
     position: relative;
     display: flex;
@@ -118,19 +108,20 @@ body {
 }
 
 .input-icon input {
-    padding-right: 30px; /* espace pour l'icône */
+    padding-right: 30px; /* espace pour l'icône
 }
 
 .input-icon i {
     position: absolute;
     right: 20px;
     color: #888;
-    pointer-events: none; /* permet de cliquer à travers l’icône */
-}
+    pointer-events: none; /* permet de cliquer à travers l’icône
+}*/
 
 /* Bouton avec icône */
-.filtre-button .icon-search {
-    margin-left: 5px;
+.filtre-button {
+    width: fit-content;
+
 }
 
 /* Style optionnel pour input, select et bouton */
@@ -140,83 +131,6 @@ input[type="text"], select {
     font-size: 1rem;
 }
 
-
-
-.radio-form{
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-
-/* Titres */
-.encheres-title {
-    text-align: center;
-    margin: 2rem 0;
-}
-
-.categorie-title {
-    margin-top: 2rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding-left: 2rem;
-}
-
-/* Zone des cartes */
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--card-gap);
-    padding: 0 2rem;
-    max-width: var(--max-width);
-    margin: 0 auto;
-}
-
-.card {
-    background: var(--white);
-    min-width: 45%;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    overflow: hidden;
-    display: flex;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 14px var(--shadow-hover);
-}
-
-.card-image {
-    flex: 1;
-    max-width: 200px;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card-content {
-    flex: 2;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Titre dans la carte */
-.card-title {
-    text-decoration: underline;
-    margin-bottom: 1rem;
-}
 
 /* Bouton */
 .btn {
@@ -232,12 +146,20 @@ input[type="text"], select {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-/*
+
 .btn {
-    padding: 6px 12px;
-    font-size: 1rem;
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: auto;
+    width: fit-content;
+    align-self: flex-start;
     cursor: pointer;
-}*/
+    transition: background-color 0.3s;
+}
 
 
 
@@ -245,53 +167,9 @@ input[type="text"], select {
     background: var(--primary-color-hover);
 }
 
-/* Carrousel */
-.carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.carousel-btn {
-    background: transparent;
-    border: none;
-    font-size: 2rem;
-    color: #333;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.carousel-btn.prev {
-    left: 10px;
-}
-
-.carousel-btn.next {
-    right: 10px;
-}
-
-.card-container {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.card {
-    flex: 0 0 auto;
-    margin: 0 1rem;
-}
 
 /* Optimisation de la grille */
 @media (max-width: 768px) {
-    .card-container {
-        grid-template-columns: 1fr;
-    }
-
-    .filtres {
-        padding: 1rem;
-    }
 
     .filtre-group {
         flex-direction: column;
@@ -300,4 +178,16 @@ input[type="text"], select {
     .filtre-input {
         max-width: 100%;
     }
+
+    .text_research{
+        display: none;
+    }
 }
+
+/*
+@media screen and (min-width:769px) and (max-width:991px) {
+    .icon-search {
+        display: none;
+    }
+}
+*/
