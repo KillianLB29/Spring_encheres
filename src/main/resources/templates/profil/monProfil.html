@@ -1,7 +1,11 @@
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Mon profil</title>
 <main>
-  <div data-th-replace="fragments/profilForm :: profilForm(mode='modif')"></div>
+  <!-- Fragment de formulaire de profil -->
+  <div data-th-replace="~{fragments/profilForm :: profilForm(mode='modif')}"></div>
+
+  <!-- Fragment d'erreur -->
+  <!-- <div th:replace="~{fragment-error :: fragmentErreur}"></div> -->
 </main>
 </html>
 
