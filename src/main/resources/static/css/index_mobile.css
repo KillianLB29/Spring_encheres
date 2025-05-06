@@ -1,225 +1,132 @@
-/* index_mobile.css */
 
-/* Pour les tablettes et mobiles, on applique les styles dans ce @media */
+/* ===== CAROUSEL ===== */
+.carousel-page {
+    display: flex;
+    transition: transform 0.4s ease;
+    width: 100%;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+}
+
+.carousel-wrapper_index {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    display: none; /* Cacher le carousel par défaut */
+}
+
+/* ===== BOUTONS CAROUSEL ===== */
+.carousel-btn_index {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.carousel-btn_index.prev_index {
+    left: 10px;
+}
+
+.carousel-btn_index.next_index {
+    right: 10px;
+}
+
+
+/* ===== CARDS: Hover effect ===== */
+.card_index:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+/* ===== CARDS: Active effect ===== */
+.card_index:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+/* Image en haut et contenu en bas pour tablette et mobile */
+@media (max-width: 1024px) {
+    .card_index {
+        flex-direction: column; /* Les éléments sont empilés verticalement */
+    }
+
+    .card-image_index {
+        width: 100%; /* L'image prend toute la largeur de la carte */
+        height: 200px; /* Limiter la taille de l'image pour éviter qu'elle soit trop grande */
+        overflow: hidden;
+    }
+
+    .card-image_index img {
+        width: 100%; /* Assure que l'image prend toute la largeur du conteneur */
+        height: 100%; /* L'image prendra la hauteur spécifiée */
+        object-fit: cover; /* L'image remplira l'espace sans se déformer */
+    }
+
+    .card-content_index {
+        padding: 1rem; /* Ajouter de l'espace autour du contenu */
+    }
+}
+
+/* ===== RESPONSIVE DESIGN FOR SMALL SCREENS ===== */
 @media (max-width: 768px) {
-    /* Filtres : positionnement */
-    .filtres_mobile {
-        padding: 1rem;
-        display: flex;
+    .card_index {
         flex-direction: column;
-        align-items: flex-start;
     }
 
-    .filtre-title_mobile {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
+    .card-image_index {
+        height: 180px; /* Ajustement de la taille de l'image pour les très petits écrans */
     }
 
-    .filtre-group_mobile {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        width: 100%;
-        flex-wrap: wrap;
+    .card-content_index {
+        padding: 0.5rem; /* Moins d'espace autour du contenu */
+    }
+}
+
+/* Layout tablette : 2/2 avec carousel */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .grid-cards_index {
+        grid-template-columns: repeat(2, 1fr); /* Afficher 2 colonnes sur tablette */
     }
 
-    .filtre-input_mobile {
-        flex-grow: 2;
-        position: relative;
-        max-width: 100%;
+    .carousel-wrapper_index {
+        display: block; /* Afficher le carousel sur tablette */
     }
 
-    .input-icon_mobile {
-        display: flex;
-        align-items: center;
-        position: relative;
+    .pagination-controls_index {
+        display: none; /* Cacher la pagination sur tablette */
+    }
+}
+
+/* Layout mobile : 1/1 avec carousel */
+@media (max-width: 767px) {
+    .grid-cards_index {
+        display: none; /* Cacher la grille des cartes sur mobile */
     }
 
-    .input-icon_mobile i {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
+    .carousel-wrapper_index {
+        display: block; /* Afficher le carousel sur mobile */
     }
 
-    .input-icon_mobile input {
-        padding-left: var(--input-padding-left);
-        height: 2rem;
-        width: 100%;
+    .pagination-controls_index {
+        display: none; /* Cacher la pagination sur mobile */
     }
 
-    .filtre-button_mobile {
-        flex-shrink: 0;
+    .carousel-btn_index {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        transition: background 0.2s;
     }
 
-    .filtre-categorie_mobile {
-        margin-left: auto;
-    }
-
-    /* Categorie sous les filtres */
-    .categorie-title_mobile {
-        margin-top: 2rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-        padding-left: 2rem;
-    }
-
-    /* Zone des cartes */
-    .card-container_mobile {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--card-gap);
-        padding: 0 2rem;
-        max-width: 100%;
-        margin: 0 auto;
-    }
-
-    .card_mobile {
-        background: var(--white);
-        min-width: 45%;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px var(--shadow-color);
-        overflow: hidden;
-        display: flex;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card_mobile:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 14px var(--shadow-hover);
-    }
-
-    .card-image_mobile {
-        flex: 1;
-        max-width: 200px;
-        height: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
-    .card-image_mobile img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .card-content_mobile {
-        flex: 2;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    /* Titre dans la carte */
-    .card-title_mobile {
-        text-decoration: underline;
-        margin-bottom: 1rem;
-    }
-
-    /* Bouton */
-    .btn_mobile {
-        background: var(--primary-color);
-        color: var(--white);
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-        margin-top: auto;
-        width: fit-content;
-        align-self: flex-start;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .btn_mobile:hover {
-        background: var(--primary-color-hover);
-    }
-
-    /* Carrousel */
-    .carousel_mobile {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
-    .carousel-btn_mobile {
-        background: transparent;
-        border: none;
-        font-size: 2rem;
-        color: #333;
-        cursor: pointer;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .carousel-btn_mobile.prev {
-        left: 10px;
-    }
-
-    .carousel-btn_mobile.next {
-        right: 10px;
-    }
-
-    .card-container_mobile {
-        display: flex;
-        transition: transform 0.5s ease;
-    }
-
-    .card_mobile {
-        flex: 0 0 auto;
-        margin: 0 1rem;
-    }
-
-    /* Nouveau pour version mobile : Ajout d'un H3 et carrousel */
-    .enchere-bientot-mobile {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin: 2rem 0;
-        text-align: center;
-    }
-
-    /* Modifier la présentation du carrousel pour mobile */
-    .carousel-mobile {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    /* A partir de 768px, les cartes du carrousel vont s'afficher deux par deux */
-    .carousel-item-mobile {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-    }
-
-    /* Recherche */
-    .search-bar-mobile {
-        width: 80%;
-        margin: 1rem auto;
-    }
-
-    .rechercher-btn-mobile {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        background-color: var(--primary-color);
-        color: var(--white);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1.1rem;
-        transition: background-color 0.3s;
-    }
-
-    .rechercher-btn-mobile:hover {
-        background-color: var(--primary-color-hover);
+    .carousel-btn_index:hover {
+        background: rgba(255, 255, 255, 1);
     }
 }

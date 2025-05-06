@@ -9,20 +9,33 @@
     <meta charset="UTF-8">
     <title data-th-replace="${title}"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" data-th-href="@{/css/index.css}">
-    <link rel="stylesheet" data-th-href="@{/css/index_mobile.css}">
-    <link rel="stylesheet" data-th-href="@{/css/modals-auth.css}">
-    <link rel="stylesheet" data-th-href="@{/css/mesEncheres.css}">
-    <link rel="stylesheet" data-th-href="@{/css/mesEncheres_mobile.css}">
-    <link rel="stylesheet" data-th-href="@{/css/article_mobile.css}">
-    <link rel="stylesheet" data-th-href="@{/css/article.css}">
-    <link rel="stylesheet" data-th-href="@{/css/header.css}">
-    <link rel="stylesheet" data-th-href="@{/css/filtre-index-recherche.css}">
-    <link rel="stylesheet" data-th-href="@{/css/form-filtres-encheres.css}">
+
+    <!-- Global & Page-specific CSS -->
     <link rel="stylesheet" data-th-href="@{/css/header.css}">
     <link rel="stylesheet" data-th-href="@{/css/footer.css}">
+
+    <!-- page specific (desktop) FINI -->
+    <link rel="stylesheet" data-th-href="@{/css/index.css}">
+    <!-- page specific (mobile only) FINI -->
+    <link rel="stylesheet" data-th-href="@{/css/index_mobile.css}" media="(max-width: 768px)">
+
+    <!-- Autres CSS En cours... -->
+    <link rel="stylesheet" data-th-href="@{/css/article.css}">
+    <link rel="stylesheet" data-th-href="@{/css/article_mobile.css}" media="(max-width: 768px)">
+    <link rel="stylesheet" data-th-href="@{/css/mesEncheres.css}">
+    <link rel="stylesheet" data-th-href="@{/css/mesEncheres_mobile.css}" media="(max-width: 768px)">
+
+    <!-- Divers -->
+    <link rel="stylesheet" data-th-href="@{/css/modals-auth.css}">
+    <link rel="stylesheet" data-th-href="@{/css/filtre-index-recherche.css}">
+    <link rel="stylesheet" data-th-href="@{/css/form-filtres-encheres.css}">
     <link rel="shortcut icon" data-th-href="@{/images/LogoENI.png}" />
+
+    <!-- Injection spécifique si besoin -->
     <div data-th-replace="${css} ?: ~{}"></div>
+
+    <link rel="shortcut icon" data-th-href="@{/images/LogoENI.png}" />
+
 </head>
 <body>
 <header data-th-replace="~{fragments/header :: header}">

@@ -1,71 +1,71 @@
-<!--&lt;!&ndash; Navbar ou header selon connexion &ndash;&gt;-->
-<!--<div th:if="${utilisateur != null}" th:replace="fragments/navbar-connectee :: navbar-connectee"></div>-->
-<!--<div th:if="${utilisateur == null}" th:replace="fragments/header :: header"></div>-->
-
-<!--&lt;!&ndash; Modals pour Connexion/Inscription &ndash;&gt;-->
-<!--<div th:replace="fragments/modal-auth :: modals-auth"></div>-->
-
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <head>
     <title>Enchères ENI - Accueil</title>
 </head>
+<div class="pagination-controls_index">
+    <ul class="pagination" id="paginationContainer">
+        <!-- Pagination dynamique générée par JavaScript -->
+    </ul>
+</div>
 
 <main>
-    <section class="filtres">
-        <p class="filtre-title">Filtres :</p>
-        <div class="filtre-group">
-            <div class="filtre-input">
-                <label for="searchName"></label>
-                <div class="input-icon">
-                    <i class="icon-search">🔍</i>
-                    <input type="text" id="searchName" placeholder="Le nom de l'article contient">
+    <div data-th-replace="fragments/filtre-index-recherche :: filtre-index-recherche"></div>
+
+    <!-- Zone des cartes en version Desktop -->
+    <section class="cards-section">
+        <div class="grid-cards_index" id="cardContainer">
+            <div class="card_index" th:each="article : ${articles}">
+                <div class="card-image_index">
+                    <img th:src="@{${article.urlImage}}" alt="Image de l'article">
+                </div>
+                <div class="card-content_index">
+                    <h3 class="card-title_index" th:text="${article.nomArticle}">Nom article</h3>
+                    <p><strong>Prix :</strong>
+                        <span th:text="${article.miseAPrix} + ' crédits'">10 crédits</span></p>
+                    <p><strong>Fin :</strong>
+                        <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                    <p><strong>Vendeur :</strong>
+                        <span th:text="${article.utilisateur.pseudo}">Pseudo</span></p>
+                    <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_index">Voir</a>
                 </div>
             </div>
-            <div class="filtre-button">
-                <input type="submit" value="Rechercher" class="btn">
-            </div>
-            <div class="filtre-categorie">
-                <label for="categorie">Catégorie :</label>
-                <select id="categorie">
-                    <option value="all">Toutes</option>
-                    <option th:each="categorie : ${categories}"
-                            th:value="${categorie.idCategorie}"
-                            th:text="${categorie.libelle}"></option>
-                </select>
-            </div>
         </div>
+
+        <!-- Pagination visible uniquement en mode Desktop -->
+        <div id="paginationControls" class="pagination-controls_index"></div>
     </section>
 
-    <!-- Titre de section -->
-    <h2 class="encheres-title">Liste des enchères</h2>
-
-    <!-- Section des cartes -->
-    <section class="encheres">
-        <div class="carousel">
-            <button class="carousel-btn prev">‹</button>
-
-            <div class="carousel-wrapper">
-                <div class="card-container" id="carouselContainer">
-                    <div class="card" th:each="article : ${articles}">
-                        <div class="card-image">
+    <!-- Zone du Carousel pour Mobile/Tablette -->
+    <section class="carousel-wrapper_index">
+        <div id="carouselContainer" class="carousel">
+            <div class="carousel-page">
+                <div class="carousel-slide" th:each="article : ${articles}">
+                    <div class="card_index">
+                        <div class="card-image_index">
                             <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                         </div>
-                        <div class="card-content">
-                            <h3 class="card-title" th:text="${article.nomArticle}">Nom article</h3>
-                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'">10 crédits</span></p>
-                            <p><strong>Fin de l'enchère :</strong>
-                                <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}">01/01/2025</span></p>
+                        <div class="card-content_index">
+                            <h3 class="card-title_index" th:text="${article.nomArticle}">Nom article</h3>
+                            <p><strong>Prix :</strong>
+                                <span th:text="${article.miseAPrix} + ' crédits'">10 crédits</span></p>
+                            <p><strong>Fin :</strong>
+                                <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong>
                                 <span th:text="${article.utilisateur.pseudo}">Pseudo</span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_index">Voir</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <button class="carousel-btn next">›</button>
         </div>
+
+        <!-- Pagination des slides dans le carousel -->
+        <button class="carousel-btn_index prev_index">&lt;</button>
+        <button class="carousel-btn_index next_index">&gt;</button>
     </section>
+
     <script src="/js/carousel_index.js"></script>
+    <script src="/js/pagination_index.js"></script>
 </main>
+
 </html>

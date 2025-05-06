@@ -53,6 +53,12 @@
             closeModal(current);
             openModal(target);
         }
+
+        // Vérifie si le modèle a l'attribut showLoginModal
+        var showLoginModal = /*[[${showLoginModal}]]*/ false;
+
+        if (showLoginModal) {
+            openModal('loginModal');  // Ouvre le modal de connexion
+        }
     </script>
 </div>
-
