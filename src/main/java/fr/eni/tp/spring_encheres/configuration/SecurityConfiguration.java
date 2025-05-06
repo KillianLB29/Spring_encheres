@@ -48,6 +48,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/").permitAll()
                             .requestMatchers("/css/*").permitAll()
                             .requestMatchers("/img/*").permitAll()
+                            .requestMatchers("/js/*").permitAll()
                             .anyRequest().authenticated();
                 }
         );

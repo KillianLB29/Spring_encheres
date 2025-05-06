@@ -33,8 +33,13 @@
                     <li>
                         <a data-th-href="@{/monProfil}" class="profile-link">
                             <i class="fa-regular fa-user"></i>
-                            <span class="nav_titre" th:text="${utilisateur.pseudo}+' ('+${utilisateur.credit}+' crédit(s))'">Pseudo</span>
+                           <span class="nav_titre" th:text="${utilisateur.pseudo}+'   '">
+                           </span>
                         </a>
+                        <span class="nav_titre credit" th:text="' '+${utilisateur.credit}"></span>
+
+                        <img data-th-src="@{/img/dollar.png}" alt="image de piece" id="imgCoin"/>
+
                     </li>
                     <li>
                         <a data-th-href="@{/encheres}"><i class="fa-solid fa-gavel"></i><span class="nav_titre">Mes enchères</span></a>

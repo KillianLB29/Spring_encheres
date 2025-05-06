@@ -121,3 +121,28 @@ nav a:hover {
     }
 }
 
+@keyframes shake-both {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(-2px, -2px); }
+    40%  { transform: translate(2px, 2px); }
+    60%  { transform: translate(-2px, 2px); }
+    80%  { transform: translate(2px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+
+#imgCoin {
+    width: 20px;
+    height: 20px;
+    padding-top: 7px;
+}
+#imgCoin:hover {
+    animation: shake-both 0.5s;
+}
+
+
+
+.credit{
+    padding-top: 10px;
+}
+
+

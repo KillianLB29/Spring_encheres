@@ -8,8 +8,53 @@
     <link rel="stylesheet" data-th-href="@{/css/filtre-index-recherche.css}">
 </div>
 <main>
-    <div data-th-replace="fragments/filtre-index-recherche :: filtre"></div>
-    <div th:replace="fragments/form-filtres-encheres :: filtres"></div>
+<!--    <div data-th-replace="fragments/filtre-index-recherche :: filtre"></div>-->
+<!--    <div th:replace="fragments/form-filtres-encheres :: filtres"></div>-->
+    <form>
+        <label>
+            <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
+            Groupe 1
+        </label>
+        <label>
+            <input type="radio" name="groupChoice" value="group2" onclick="switchGroup('group2')">
+            Groupe 2
+        </label>
+
+        <div id="group1">
+            <label><input type="checkbox" name="g1_opt1"> Option 1</label>
+            <label><input type="checkbox" name="g1_opt2"> Option 2</label>
+            <label><input type="checkbox" name="g1_opt3"> Option 3</label>
+        </div>
+
+        <div id="group2">
+            <label><input type="checkbox" name="g2_opt1"> Option A</label>
+            <label><input type="checkbox" name="g2_opt2"> Option B</label>
+            <label><input type="checkbox" name="g2_opt3"> Option C</label>
+        </div>
+    </form>
+
+    <script>
+        function switchGroup(activeGroupId) {
+            const groups = ['group1', 'group2'];
+
+            groups.forEach(groupId => {
+                const checkboxes = document.querySelectorAll(`#${groupId} input[type="checkbox"]`);
+                checkboxes.forEach(checkbox => {
+                    if (groupId === activeGroupId) {
+                        checkbox.disabled = false;
+                    } else {
+                        checkbox.checked = false;
+                        checkbox.disabled = true;
+                    }
+                });
+            });
+        }
+
+        // Optionnel : désactiver les deux groupes au chargement
+        window.onload = () => {
+            switchGroup(''); // Rien de sélectionné par défaut
+        };
+    </script>
     <h2 class="titre_mobile_encheres">Mes objets mis en enchère terminés</h2>
     <section class="encheres">
         <div class="carousel">

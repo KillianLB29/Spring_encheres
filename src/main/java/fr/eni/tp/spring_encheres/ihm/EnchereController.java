@@ -203,8 +203,8 @@ public class EnchereController {
         article.setNoArticle(id);
         enchere.setArticleVendu(article);
         enchere.setMontantEnchere(proposition);
-        enchereService.enregistrerEnchere(enchere);
-        utilisateurSession.setCredit(utilisateurSession.getCredit() -proposition);
+        if(enchereService.enregistrerEnchere(enchere))
+            utilisateurSession.setCredit(utilisateurSession.getCredit() -proposition);
         return "redirect:/encheres/" + id;
     }
     @ModelAttribute("utilisateurSession")
