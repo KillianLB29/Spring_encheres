@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <div th:fragment="header">
-   <header data-th-if="${utilisateur.noUtilisateur <1}">
+    <!-- Import des modales -->
+    <div th:replace="fragments/modals-auth :: modals-auth"></div>
+
+    <header data-th-if="${utilisateur.noUtilisateur < 1}">
         <div class="nav-container">
             <a href="/" class="logo">
                 <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
@@ -9,16 +12,17 @@
             <nav class="nav_bar">
                 <ul>
                     <li>
-                        <a data-th-href="@{/inscription}"><i class="fa-solid fa-user-plus"></i><span class="nav_titre">S'inscrire</span></a>
+                        <a href="#" onclick="openModal('registerModal')"><i class="fa-solid fa-user-plus"></i><span class="nav_titre">S'inscrire</span></a>
                     </li>
                     <li>
-                <a data-th-href="@{/connexion}"><i class="fa-solid fa-right-to-bracket"></i><span class="nav_titre">Se connecter</span></a>
+                        <a href="#" onclick="openModal('loginModal')"><i class="fa-solid fa-right-to-bracket"></i><span class="nav_titre">Se connecter</span></a>
                     </li>
                 </ul>
             </nav>
         </div>
     </header>
-    <header data-th-if="${utilisateur.noUtilisateur >0}">
+
+    <header data-th-if="${utilisateur.noUtilisateur > 0}">
         <div class="nav-container">
             <a href="/" class="logo">
                 <img th:src="@{/img/logoENI.png}" alt="Logo ENI-Enchères">
@@ -27,13 +31,13 @@
             <nav class="nav_bar">
                 <ul>
                     <li>
-                        <a data-th-href="@{/monProfil}" class="profile-link"> <i class="fa-regular fa-user"></i>
-                    <!--                    <img th:src="@{'/img/profils/' + ${utilisateur.photo}}" alt="Photo de profil" class="profile-pic">-->
+                        <a data-th-href="@{/monProfil}" class="profile-link">
+                            <i class="fa-regular fa-user"></i>
                             <span class="nav_titre" th:text="${utilisateur.pseudo}+' ('+${utilisateur.credit}+' crédit(s))'">Pseudo</span>
                         </a>
                     </li>
                     <li>
-                        <a data-th-href="@{/encheres}" ><i class="fa-solid fa-gavel"></i><span class="nav_titre">Mes enchères</span></a>
+                        <a data-th-href="@{/encheres}"><i class="fa-solid fa-gavel"></i><span class="nav_titre">Mes enchères</span></a>
                     </li>
                     <li>
                         <a data-th-href="@{/deconnexion}"><i class="fa-regular fa-circle-xmark"></i><span class="nav_titre">Déconnexion</span></a>
