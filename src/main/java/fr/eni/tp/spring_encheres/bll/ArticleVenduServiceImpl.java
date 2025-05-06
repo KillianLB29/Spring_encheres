@@ -1,11 +1,12 @@
 package fr.eni.tp.spring_encheres.bll;
 
-import fr.eni.tp.spring_encheres.bo.ArticleVendu;
-import fr.eni.tp.spring_encheres.bo.Enchere;
+import fr.eni.tp.spring_encheres.bo.*;
 import fr.eni.tp.spring_encheres.dal.*;
+import fr.eni.tp.spring_encheres.exception.EnchereException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -47,9 +48,26 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     }
 
     @Override
-    public void creerArticle(ArticleVendu article) {
-        articleVenduDAO.create(article);
-        retraitDAO.save(article.getLieuRetrait(),article.getNoArticle());
+    public void creerArticle(ArticleVendu article) throws EnchereException {
+        EnchereException enchereException = new EnchereException();
+        boolean isValid = true;
+        isValid&= isNomArticleValid(article.getNomArticle(),enchereException);
+        isValid&=isDescriptionValid(article.getDescription(),enchereException);
+        isValid&=isDateDebutEncheresValid(article.getDateDebutEncheres(),enchereException);
+        isValid&=isDateFinEncheresValid(article.getDateFinEncheres(),enchereException);
+        isValid&=isMiseAPrixValid(article.getMiseAPrix(),enchereException);
+        isValid&=isUtilisateurValid(article.getUtilisateur(),enchereException);
+        isValid&=isCategorieValid(article.getCategorie(),enchereException);
+        isValid&=isLieuRetraitValid(article.getLieuRetrait(),enchereException);
+        isValid&=isUrlImageValid(article.getUrlImage(),enchereException);
+        if(isValid){
+            articleVenduDAO.create(article);
+            retraitDAO.save(article.getLieuRetrait(),article.getNoArticle());
+        }
+        else {
+            throw enchereException;
+        }
+
     }
 
     @Override
@@ -128,6 +146,125 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
             isValid=false;
         return isValid;
     }
+
+    private boolean isNomArticleValid(String nomArticle, EnchereException enchereException) {
+        boolean isValid = true;
+        if(nomArticle == null || nomArticle.isEmpty()||nomArticle.isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("Le nom de l'article doit être renseigné.");
+        }
+        if(nomArticle.length()>30){
+            isValid=false;
+            enchereException.addMessage("Le nom de l'article ne peut pas faire plus de 30 caractères");
+        }
+        return isValid;
+    }
+    private boolean isDescriptionValid(String description, EnchereException enchereException) {
+        boolean isValid = true;
+        if(description == null || description.isEmpty()||description.isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("La description de l'article doit tre renseignée");
+        }
+        if(description.length()>300){
+            isValid=false;
+            enchereException.addMessage("La description de l'article ne peut pas faire plus de 300 caractères");
+        }
+        return isValid;
+    }
+    private boolean isDateDebutEncheresValid(Date dateDebutEncheres, EnchereException enchereException) {
+        boolean isValid = true;
+        if(dateDebutEncheres == null){
+            isValid=false;
+            enchereException.addMessage("La date de debut d'enchère doit être renseignée");
+        }
+        return isValid;
+    }
+    private boolean isDateFinEncheresValid(Date dateFinEncheres, EnchereException enchereException) {
+        boolean isValid = true;
+        if(dateFinEncheres == null){
+            isValid=false;
+            enchereException.addMessage("La date de fin d'enchère doit être renseignée");
+        }
+        return isValid;
+    }
+    private boolean isMiseAPrixValid(long miseAPrix, EnchereException enchereException) {
+        boolean isValid = true;
+        if(miseAPrix<0){
+            isValid=false;
+            enchereException.addMessage("La mise a prix initial de l'article doit être supérieure a 0");
+        }
+        return isValid;
+    }
+    private boolean isCategorieValid(Categorie categorie, EnchereException enchereException) {
+        boolean isValid = true;
+        if(categorie==null){
+            isValid=false;
+            enchereException.addMessage("Il faut obligatoirement sélectionner une catégorie pour l'article");
+        }
+        if(categorie.getLibelle() == null || categorie.getLibelle().isEmpty()||categorie.getLibelle().isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("Le libellé de catégorie doit être renseigné");
+        }
+        if(categorie.getLibelle().length()>30){
+            isValid=false;
+            enchereException.addMessage("Le libellé de catégorie ne doit pas faire plus de 30 caractères");
+        }
+        return isValid;
+    }
+    private boolean isUtilisateurValid(Utilisateur utilisateur, EnchereException enchereException) {
+        boolean isValid = true;
+        Utilisateur utilDAO = utilisateurDAO.read(utilisateur.getNoUtilisateur());
+        if(utilDAO.getNoUtilisateur() == 0){
+            isValid=false;
+            enchereException.addMessage("L'utilisateur qui essaye de créer l'article n'existe pas");
+        }
+        return isValid;
+    }
+    private boolean isLieuRetraitValid(Retrait lieuRetrait, EnchereException enchereException) {
+        boolean isValid = true;
+        if(lieuRetrait.getRue() == null || lieuRetrait.getRue().isEmpty()||lieuRetrait.getRue().isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("La rue du lieu de retrait doit être renseignée");
+        }
+        if(lieuRetrait.getRue().length()>30){
+            isValid=false;
+            enchereException.addMessage("La rue ne doit pas faire plus de 30 caractères");
+        }
+        if(lieuRetrait.getCode_Postal() == null || lieuRetrait.getCode_Postal().isEmpty()||lieuRetrait.getCode_Postal().isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("Le code postal lieu de retrait doit être renseigné");
+        }
+        if(lieuRetrait.getCode_Postal().length() != 5){
+            isValid=false;
+            enchereException.addMessage("La code postal du lieu de retrait doit faire 5 caractères");
+        }
+        if(lieuRetrait.getVille() == null || lieuRetrait.getVille().isEmpty()||lieuRetrait.getVille().isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("La ville du lieu de retrait doit être renseignée");
+        }
+        if(lieuRetrait.getVille().length()>30){
+            isValid=false;
+            enchereException.addMessage("La ville ne doit pas faire plus de 30 caractères");
+        }
+        return isValid;
+    }
+    private boolean isUrlImageValid(String urlImage, EnchereException enchereException) {
+        boolean isValid = true;
+        if(urlImage == null || urlImage.isEmpty()||urlImage.isBlank())
+        {
+            isValid=false;
+            enchereException.addMessage("Il a y un problème avec l'image qui vient d'être envoyé");
+        }
+        return isValid;
+    }
+
+
 
 //    @Override
 //    public List<ArticleVendu> remplirEncheresEnCours(List<Enchere> encheres) {

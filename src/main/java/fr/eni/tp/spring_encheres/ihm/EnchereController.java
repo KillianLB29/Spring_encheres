@@ -5,11 +5,13 @@ import fr.eni.tp.spring_encheres.bll.CategorieService;
 import fr.eni.tp.spring_encheres.bll.EnchereService;
 import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.*;
+import fr.eni.tp.spring_encheres.exception.EnchereException;
 import fr.eni.tp.spring_encheres.ihm.dto.ArticleVenduDTO;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -105,17 +107,24 @@ public class EnchereController {
     // === TRAITEMENT DU FORMULAIRE ===
     @PostMapping("/articles/creer")
     public String enregistrerArticle(
-            @ModelAttribute("article") ArticleVenduDTO article,
-            BindingResult result,
             @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
-            Model model
-    ) throws IOException {
+            @Valid @ModelAttribute("article") ArticleVenduDTO article,
+            BindingResult result,
+            Model model)
+            throws IOException
+    {
+        EnchereException enchereException = new EnchereException();
         // Validation date fin > début + 24h
         if (article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null ||
                 article.getDateFinEncheres().before(new Date(article.getDateDebutEncheres().getTime() + 86400000))) {
-            result.rejectValue("dateFinEncheres", "dateFinEncheres.invalide",
-                    "La date de fin doit être au moins 24h après le début.");
+
+            enchereException.addMessage("L'enchère doit durer au moins 24h.");
+            enchereException.getMessages().forEach(message -> {
+                ObjectError error = new ObjectError("globalError",message);
+                result.addError(error);
+            });
         }
+        System.out.println(article.getCategorie());
 
         if (result.hasErrors()) {
             model.addAttribute("article", article);
@@ -146,8 +155,22 @@ public class EnchereController {
         // Chemin relatif à utiliser dans les vues HTML
         articleVendu.setUrlImage("/img/" + filename);
         // Création de l’article + lieu de retrait lié
-        articleVenduService.creerArticle(articleVendu);
+        try{
+            articleVenduService.creerArticle(articleVendu);
+        }
+        catch (EnchereException e) {
+            e.getMessages().forEach(message -> {
+                ObjectError error = new ObjectError("globalError",message);
+                result.addError(error);
+            });
+        }
 
+        if (result.hasErrors()) {
+            model.addAttribute("utilisateur",utilisateurSession);
+            model.addAttribute("article", article);
+            model.addAttribute("categories", categorieService.consulterCategories());
+            return "article";
+        }
 
         return "redirect:/accueil";
     }

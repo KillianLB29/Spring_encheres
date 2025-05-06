@@ -3,20 +3,32 @@ package fr.eni.tp.spring_encheres.ihm.dto;
 import fr.eni.tp.spring_encheres.bo.Categorie;
 import fr.eni.tp.spring_encheres.bo.Retrait;
 import fr.eni.tp.spring_encheres.bo.Utilisateur;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
 public class ArticleVenduDTO {
+    @NotBlank(message = "Le nom de l'article doit etre renseigné")
     private String nomArticle;
+    @NotBlank(message = "La description de l'article doit etre renseigné")
     private String description;
+    @NotNull(message = "La date de début d'enchère de l'article doit etre renseigné")
     private Date dateDebutEncheres;
+    @NotNull(message = "La date de fin d'enchère de l'article doit etre renseigné")
     private Date dateFinEncheres;
+    @Min(value = 1,message = "L'article doit avoir une mise a prix supérieur a 0")
     private long miseAPrix;
     private Categorie categorie;
+    @NotNull(message = "L'image de l'article doit etre renseigné")
     private MultipartFile image;
+    @NotBlank(message = "La rue du lieu de retrait de l'article doit etre renseigné")
     private String rue;
+    @NotBlank(message = "Le code postal du lieu de retrait de l'article doit etre renseigné")
     private String codePostal;
+    @NotBlank(message = "La ville du lieu de retrait de l'article doit etre renseigné")
     private String ville;
 
     @Override
