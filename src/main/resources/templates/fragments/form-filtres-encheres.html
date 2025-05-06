@@ -3,31 +3,28 @@
 <div th:fragment="filtre-index-recherche">
     <div class="recherche-container">
             <form class="radio-form">
-                <p>Type d’annonce :</p>
+                <p>Liste des enchères :</p>
 
-                <label class="radio-option">
-                    <input type="radio" name="annonceType" value="achats" checked>
-                    <span class="custom-radio"></span>
-                    Achats
+                <<label>
+                    <input type="radio" name="type" value="achat"> Achats
                 </label>
-                <label class="radio-option">
-                    <input type="radio" name="annonceType" value="ventes" checked>
-                    <span class="custom-radio"></span>
-                    Ventes
+                <label>
+                    <input type="radio" name="type" value="vente"> Ventes
                 </label>
-    </div>
-
+    <div id="extra-options" style="display: none; margin-top: 10px;">
+            <label><input type="checkbox" name="option1"> Option 1</label><br>
+            <label><input type="checkbox" name="option2"> Option 2</label>
+        </div>
+    </form>
 </div>
 </body>
 </html>
-
-
-
-
-
-    <label class="radio-option">
-        <input type="radio" name="annonceType" value="vente">
-        <span class="custom-radio"></span>
-        Ventes
-    </label>
-</form>
+<script>
+    const radios = document.querySelectorAll('input[name="type"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            document.getElementById('extra-options').style.display =
+                this.value === 'autre' ? 'block' : 'none';
+        });
+    });
+</script>
