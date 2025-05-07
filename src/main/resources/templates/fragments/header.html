@@ -3,6 +3,7 @@
     <!-- Import des modales -->
     <div th:replace="fragments/modals-auth :: modals-auth"></div>
 
+    <!-- Header lorsque l'utilisateur n'est pas connecté -->
     <header data-th-if="${utilisateur.noUtilisateur < 1}">
         <div class="nav-container">
             <a href="/" class="logo">
@@ -22,6 +23,7 @@
         </div>
     </header>
 
+    <!-- Header lorsque l'utilisateur est connecté -->
     <header data-th-if="${utilisateur.noUtilisateur > 0}">
         <div class="nav-container">
             <a href="/" class="logo">
@@ -30,16 +32,19 @@
             </a>
             <nav class="nav_bar">
                 <ul>
+                    <!-- Panneau de contrôle visible uniquement si l'utilisateur est admin -->
+                    <li data-th-if="${utilisateur.admin}">
+                        <a href="#" class="admin-link"><i class="fa-solid fa-cogs"></i><span class="nav_titre">Panneau de contrôle</span></a>
+                    </li>
+
                     <li>
                         <a data-th-href="@{/monProfil}" class="profile-link">
                             <i class="fa-regular fa-user"></i>
-                           <span class="nav_titre" th:text="${utilisateur.pseudo}+'   '">
-                           </span>
+                            <span class="nav_titre" th:text="${utilisateur.pseudo}+'   '"></span>
                         </a>
                         <span class="nav_titre credit" th:text="' '+${utilisateur.credit}"></span>
 
                         <img data-th-src="@{/img/dollar.png}" alt="image de piece" id="imgCoin"/>
-
                     </li>
                     <li>
                         <a data-th-href="@{/encheres}"><i class="fa-solid fa-gavel"></i><span class="nav_titre">Enchères</span></a>
@@ -47,12 +52,9 @@
                     <li>
                         <a data-th-href="@{/logout}"><i class="fa-regular fa-circle-xmark"></i><span class="nav_titre">Déconnexion</span></a>
                     </li>
+
                 </ul>
             </nav>
         </div>
     </header>
 </div>
-    <!--<script src="https://kit.fontawesome.com/0dfb43c94e.js" crossorigin="anonymous"></script>
-    <i class="fa-regular fa-house"></i>  HOME ICONE
-    <i class="fa-regular fa-user"></i> USER ICONE
-    -->
