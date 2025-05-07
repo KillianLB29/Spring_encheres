@@ -1,22 +1,28 @@
-
 /* ===== CAROUSEL ===== */
+.carousel-wrapper_index {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel {
+    width: 100%;
+}
+
 .carousel-page {
     display: flex;
     transition: transform 0.4s ease;
     width: 100%;
 }
 
+/* Slide contenant 2 cartes */
 .carousel-slide {
     min-width: 100%;
     box-sizing: border-box;
     padding: 0 0.5rem;
-}
-
-.carousel-wrapper_index {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    display: none; /* Cacher le carousel par défaut */
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 
 /* ===== BOUTONS CAROUSEL ===== */
@@ -24,11 +30,19 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.7);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
     border: none;
     font-size: 2rem;
     cursor: pointer;
-    z-index: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.carousel-btn_index:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .carousel-btn_index.prev_index {
@@ -38,7 +52,6 @@
 .carousel-btn_index.next_index {
     right: 10px;
 }
-
 
 /* ===== CARDS: Hover effect ===== */
 .card_index:hover {
@@ -52,81 +65,53 @@
     box-shadow: 0 4px 10px var(--shadow-color);
 }
 
-/* Image en haut et contenu en bas pour tablette et mobile */
+/* ===== Responsive design pour Tablettes et Mobiles ===== */
 @media (max-width: 1024px) {
     .card_index {
-        flex-direction: column; /* Les éléments sont empilés verticalement */
+        flex-direction: column;
+        flex: 1;
+        max-width: 48%;
     }
 
     .card-image_index {
-        width: 100%; /* L'image prend toute la largeur de la carte */
-        height: 200px; /* Limiter la taille de l'image pour éviter qu'elle soit trop grande */
+        width: 100%;
+        height: 200px;
         overflow: hidden;
     }
 
     .card-image_index img {
-        width: 100%; /* Assure que l'image prend toute la largeur du conteneur */
-        height: 100%; /* L'image prendra la hauteur spécifiée */
-        object-fit: cover; /* L'image remplira l'espace sans se déformer */
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .card-content_index {
-        padding: 1rem; /* Ajouter de l'espace autour du contenu */
+        padding: 1rem;
+    }
+
+    .grid-cards_index {
+        display: none;
+    }
+
+    .carousel-wrapper_index {
+        display: block;
+    }
+
+    .pagination-controls_index {
+        display: none;
     }
 }
 
-/* ===== RESPONSIVE DESIGN FOR SMALL SCREENS ===== */
 @media (max-width: 768px) {
     .card_index {
-        flex-direction: column;
+        max-width: 48%;
     }
 
     .card-image_index {
-        height: 180px; /* Ajustement de la taille de l'image pour les très petits écrans */
+        height: 180px;
     }
 
     .card-content_index {
-        padding: 0.5rem; /* Moins d'espace autour du contenu */
-    }
-}
-
-/* Layout tablette : 2/2 avec carousel */
-@media (max-width: 1024px) and (min-width: 768px) {
-    .grid-cards_index {
-        grid-template-columns: repeat(2, 1fr); /* Afficher 2 colonnes sur tablette */
-    }
-
-    .carousel-wrapper_index {
-        display: block; /* Afficher le carousel sur tablette */
-    }
-
-    .pagination-controls_index {
-        display: none; /* Cacher la pagination sur tablette */
-    }
-}
-
-/* Layout mobile : 1/1 avec carousel */
-@media (max-width: 767px) {
-    .grid-cards_index {
-        display: none; /* Cacher la grille des cartes sur mobile */
-    }
-
-    .carousel-wrapper_index {
-        display: block; /* Afficher le carousel sur mobile */
-    }
-
-    .pagination-controls_index {
-        display: none; /* Cacher la pagination sur mobile */
-    }
-
-    .carousel-btn_index {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        transition: background 0.2s;
-    }
-
-    .carousel-btn_index:hover {
-        background: rgba(255, 255, 255, 1);
+        padding: 0.5rem;
     }
 }
