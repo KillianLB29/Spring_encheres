@@ -7,24 +7,50 @@
     <h1 class="title-animated">Bienvenue <span th:text="${utilisateurDTO.pseudo}">Pseudo</span> !</h1>
     <p class="email-text">Administrateur <span th:text="${utilisateurDTO.email}">Email</span></p>
 
-<div class="admin-container">
-    <div class="row">
-        <!-- Première colonne de 2 cartes -->
-        <div class="card_admin" style="background-color: rgba(255, 99, 71, 0.1);">
-            <div class="card-header_admin">
-                <h3>Désactiver un compte utilisateur</h3>
+    <div class="admin-container">
+        <div class="row">
+            <!-- Première colonne de 2 cartes -->
+            <div class="card_admin" style="background-color: rgba(255, 99, 71, 0.1);">
+                <div class="card-header_admin">
+                    <h3>Désactiver un compte utilisateur</h3>
+                </div>
+                <div class="card-body_admin">
+                    <button class="secondary_admin">Désactiver</button>
+                </div>
             </div>
-            <div class="card-body_admin">
-                <button class="secondary_admin">Désactiver</button>
-            </div>
-        </div>
 
-        <div class="card_admin" style="background-color: rgba(39, 174, 96, 0.1);">
-            <div class="card-header_admin">
-                <h3>Supprimer des comptes utilisateur</h3>
+            <!-- Ne pas lire ce message -->
+            <div class="card_admin error-card">
+                <!-- Card Header -->
+                <div class="card-head-error">
+                    <h3>Erreur</h3>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body-error">
+                    <div class="error-icon">
+                        <!-- Icône de bombe (utilisation de FontAwesome ou autre librairie d'icônes) -->
+                        <i class="fa fa-bomb"></i>
+                        <i class="fa fa-bomb"></i>
+                        <i class="fa fa-bomb"></i>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer-error">
+                    <a href="error.html">
+                        <button class="secondary_admin">Ne pas cliquer</button>
+                    </a>
+                </div>
             </div>
-            <div class="card-body_admin">
-                <button class="secondary_admin">Supprimer</button>
+
+            <div class="card_admin" style="background-color: rgba(39, 174, 96, 0.1);">
+                <div class="card-header_admin">
+                    <h3>Supprimer des comptes utilisateur</h3>
+                </div>
+                <div class="card-body_admin">
+                    <button class="secondary_admin">Supprimer</button>
+                </div>
             </div>
         </div>
     </div>

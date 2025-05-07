@@ -62,6 +62,7 @@
         transform: translateX(0);
     }
 }
+
 .card_admin:hover {
     transform: translateY(-5px);
 }
@@ -74,12 +75,79 @@
     font-weight: bold;
 }
 
-/* Corps des cartes avec le bouton */
-.card-body_admin {
+/* Style spécifique à la carte d'erreur */
+.error-card {
+    background-color: rgba(231, 76, 60, 0.1); /* Couleur de fond de la carte */
+    border: 2px solid rgba(231, 76, 60, 0.5); /* Bordure pour accentuer le rouge */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition pour l'effet hover */
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Card Header */
+.card-head-error {
+    padding: 1rem;
+    text-align: center;
+    background-color: rgba(231, 76, 60, 0.3); /* Fond léger pour l'entête */
+    color: rgba(231, 76, 60, 1); /* Couleur texte rouge vif */
+}
+
+/* Card Body */
+.card-body-error {
+    padding: 1.5rem;
+    text-align: center;
+    flex-grow: 1; /* Assure que le body prend l'espace disponible sans dépasser */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding: 15px;
+}
+
+/* Icônes de la bombe */
+.error-icon {
+    font-size: 3rem; /* Taille de l'icône */
+    color: rgba(231, 76, 60, 1); /* Rouge vif pour les icônes */
+    margin-bottom: 20px; /* Espacement sous l'icône */
+}
+
+/* Card Footer */
+.card-footer-error {
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba(231, 76, 60, 0.3); /* Fond léger pour le pied de la carte */
+}
+
+/* Hover de la carte */
+.error-card:hover {
+    background-color: rgba(169, 169, 169, 0.3); /* Carte devient gris au survol */
+    border-color: rgba(169, 169, 169, 0.5); /* Bordure gris au survol */
+}
+
+/* Hover sur les icônes de la bombe */
+.error-card:hover .error-icon i {
+    color: rgba(231, 76, 60, 1); /* Icônes deviennent rouges au survol de la carte */
+}
+
+/* Hover sur le bouton */
+.error-card:hover button.secondary_admin {
+    background-color: rgba(231, 76, 60, 1); /* Bouton devient rouge vif au survol */
+    color: #fff; /* Texte du bouton devient blanc */
+}
+
+/* Inverser les couleurs quand la carte devient rouge */
+.error-card:hover .card-head-error,
+.error-card:hover .card-footer-error {
+    background-color: rgba(231, 76, 60, 1); /* Fond rouge vif pour l'entête et le pied */
+    color: #fff; /* Texte devient blanc au survol */
+}
+
+/* Icône de la bombe */
+.error-icon {
+    text-align: center;
+    font-size: 3rem; /* Taille de l'icône */
+    color: rgba(231, 76, 60, 1); /* Rouge vif pour l'icône */
+    margin-bottom: 20px; /* Espacement sous l'icône */
 }
 
 /* Bouton de la carte */
@@ -96,6 +164,7 @@ button.secondary_admin {
     color: #2c3e50;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Centrer le bouton */
 }
 
 button.secondary_admin:hover {
