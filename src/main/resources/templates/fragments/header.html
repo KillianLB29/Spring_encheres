@@ -34,7 +34,10 @@
                 <ul>
                     <!-- Panneau de contrôle visible uniquement si l'utilisateur est admin -->
                     <li data-th-if="${utilisateur.admin}">
-                        <a href="#" class="admin-link"><i class="fa-solid fa-cogs"></i><span class="nav_titre">Panneau de contrôle</span></a>
+                        <a data-th-href="@{/admin}" class="admin-link">
+                            <i class="fa-solid fa-cogs"></i>
+                            <span class="nav_titre">Panneau de contrôle</span>
+                        </a>
                     </li>
 
                     <li>

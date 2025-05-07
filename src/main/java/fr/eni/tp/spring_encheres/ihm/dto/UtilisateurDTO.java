@@ -1,5 +1,6 @@
 package fr.eni.tp.spring_encheres.ihm.dto;
 
+import fr.eni.tp.spring_encheres.bo.Utilisateur;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -42,6 +43,17 @@ public class UtilisateurDTO {
     public UtilisateurDTO() {
 
     }
+    public UtilisateurDTO(Utilisateur utilisateur) {
+        this.pseudo = utilisateur.getPseudo();
+        this.nom = utilisateur.getNom();
+        this.prenom = utilisateur.getPrenom();
+        this.email = utilisateur.getEmail();
+        this.telephone = utilisateur.getTelephone();
+        this.rue = utilisateur.getRue();
+        this.codePostal = utilisateur.getCodePostal();
+        this.ville = utilisateur.getVille();
+    }
+
 
     @Override
     public String toString() {
