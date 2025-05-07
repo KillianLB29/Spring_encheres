@@ -25,7 +25,7 @@
 }
 
 /* Carte principale */
-.card {
+.main-card-article {
     position: relative;
     background: white;
     padding: 2rem 1.5rem 3rem;
@@ -33,8 +33,8 @@
     border-radius: 10px;
     box-shadow: 0 0 10px #ccc;
     width: 100%;
-    max-width: 600px;
-    overflow: visible;
+    max-width: 500px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,16 +42,18 @@
 }
 
 /* Carte Retrait */
-.retrait-card {
+.retrait-card-article {
     position: relative;
     background: white;
     padding: 2rem 1.5rem 3rem;
-    margin: 2rem auto;
+    margin: 1rem auto;
     border-radius: 10px;
     box-shadow: 0 0 10px #ccc;
     width: 100%;
-    max-width: 600px;
-    overflow: visible;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+
 }
 
 /* Formulaires */

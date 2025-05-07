@@ -5,7 +5,7 @@
 
 <body>
 <main>
-    <div class="card main-card">
+    <div class="main-card-article">
         <h2 data-th-if="${mode == 'creation'}">Vendre un nouvel article</h2>
         <h2 data-th-if="${mode == 'modif'}" data-th-text="'modification de l\'article ' + ${article.nomArticle}"></h2>
         <form th:action="@{${formAction}}" th:object="${article}" method="post" enctype="multipart/form-data">
@@ -42,7 +42,7 @@
             <input type="date" id="dateFinEncheres" name="dateFinEncheres" th:field="*{dateFinEncheres}"
                    th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
 
-            <div class="card retrait-card">
+            <div class="retrait-card-article">
                 <h3>Retrait</h3>
 
                 <div class="form-group">
