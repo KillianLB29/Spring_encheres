@@ -111,6 +111,7 @@ public class EnchereController {
         article.setDateDebutEncheres(Date.from(Instant.now()));
 
         model.addAttribute("mode","creation");
+        model.addAttribute("formAction", "/articles/creer");
         model.addAttribute("article", article);
         model.addAttribute("categories", categorieService.consulterCategories());
         model.addAttribute("utilisateur", utilisateurSession);
@@ -140,6 +141,8 @@ public class EnchereController {
         article.setDateFinEncheres(articleModif.getDateFinEncheres());
         article.setMiseAPrix(articleModif.getMiseAPrix());
         article.setCategorie(articleModif.getCategorie());
+        model.addAttribute("mode", "modif");
+        model.addAttribute("formAction", "/articles/modifier");
         model.addAttribute("mode","modif");
         model.addAttribute("article", article);
         model.addAttribute("categories", categorieService.consulterCategories());

@@ -8,7 +8,7 @@
     <div class="card main-card">
         <h2 data-th-if="${mode == 'creation'}">Vendre un nouvel article</h2>
         <h2 data-th-if="${mode == 'modif'}" data-th-text="'modification de l\'article ' + ${article.nomArticle}"></h2>
-        <form th:action="@{/articles/creer}" th:object="${article}" method="post" enctype="multipart/form-data">
+        <form th:action="@{${formAction}}" th:object="${article}" method="post" enctype="multipart/form-data">
 
             <label for="nomArticle">Article :</label>
             <input type="text" id="nomArticle" name="nomArticle" th:field="*{nomArticle}" required>
