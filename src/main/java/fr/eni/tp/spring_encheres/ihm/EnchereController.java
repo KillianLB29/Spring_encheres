@@ -374,7 +374,10 @@ public class EnchereController {
             System.out.println("✔ Mes ventes non débutées cochée");
             venteNonDebutes = articleVenduService.consulterVentesNonDebutes(utilisateurSession.getNoUtilisateur(),filtre,categorie);
         }
-        if (g2Opt3 != null) System.out.println("✔ Ventes terminées cochée");
+        if (g2Opt3 != null) {
+            System.out.println("✔ Ventes terminées cochée");
+            venteTerminees=articleVenduService.consulterVentesTerminees(utilisateurSession.getNoUtilisateur(),filtre,categorie);
+        }
 
 
         model.addAttribute("encheresOuvertes", encheresOuvertes);

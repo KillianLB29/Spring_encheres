@@ -301,6 +301,26 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         return articles;
     }
 
+    @Override
+    public List<ArticleVendu> consulterVentesTerminees(long noUtilisateur, String filtre, String categorie) {
+        List<ArticleVendu> articles = articleVenduDAO.findAll();
+        articles.forEach(a-> {a.setCategorie(categorieDAO.read(a.getCategorie().getIdCategorie()));
+        a.setUtilisateur(utilisateurDAO.read(a.getUtilisateur().getNoUtilisateur()));});
+
+        articles=articles.stream().filter(a-> a.getUtilisateur().getNoUtilisateur() == noUtilisateur).collect(Collectors.toList());
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        articles = articles.stream().filter(article -> article.getDateFinEncheres().before(nowDate)).collect(Collectors.toList());
+        if(!"".equals(filtre)){
+            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+        }
+        if(!"all".equals(categorie)){
+            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+        }
+        return articles;
+    }
+
     private boolean isNomArticleValid(String nomArticle, EnchereException enchereException) {
         boolean isValid = true;
         if(nomArticle == null || nomArticle.isEmpty()||nomArticle.isBlank())

@@ -168,6 +168,7 @@
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
                             <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/articles/modifier/'+${article.noArticle}}" class="btn">Modifier</a>
                         </div>
                     </div>
                 </div>
