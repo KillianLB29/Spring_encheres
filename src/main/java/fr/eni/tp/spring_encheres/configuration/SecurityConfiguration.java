@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/monProfil").hasRole("MEMBRE")
                             .requestMatchers(HttpMethod.POST, "/monProfil").hasRole("MEMBRE")
                             .requestMatchers(HttpMethod.GET,"/profil/*").hasRole("MEMBRE")
+                            .requestMatchers(HttpMethod.GET,"/admin/*").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/test").permitAll()
                             .requestMatchers(HttpMethod.POST,"/login/connect/*").permitAll()
                             .requestMatchers(HttpMethod.POST,"/inscription").permitAll()
