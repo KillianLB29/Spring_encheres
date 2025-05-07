@@ -8,4 +8,6 @@ public interface RetraitDAO {
     void save(Retrait retrait,long idArticle);
 
     void update(Retrait lieuRetrait, long noArticle);
+
+    void delete(long idArticle);
 }

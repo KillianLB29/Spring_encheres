@@ -169,6 +169,7 @@
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
                             <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
                             <a th:href="@{'/articles/modifier/'+${article.noArticle}}" class="btn">Modifier</a>
+                            <a th:href="@{'/articles/supprimer/'+${article.noArticle}}" class="btn">Annuler la vente</a>
                         </div>
                     </div>
                 </div>

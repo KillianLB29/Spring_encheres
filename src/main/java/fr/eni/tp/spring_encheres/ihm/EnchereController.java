@@ -391,6 +391,20 @@ public class EnchereController {
         model.addAttribute("utilisateurDTO", new UtilisateurDTO());
         return "mesEncheres";
     }
+    //=== SUPPRESSION D'UNE ENCHERE ===
+    @GetMapping("/articles/supprimer/{id}")
+    public String supprimerArticle(@PathVariable int id,@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, Model model) {
+        ArticleVendu articleVendu = articleVenduService.consulterArticleParId(id);
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        if(articleVendu.getDateDebutEncheres().after(nowDate) && articleVendu.getUtilisateur().getNoUtilisateur()==utilisateurSession.getNoUtilisateur()){
+            System.out.println("passage suppression article");
+            articleVenduService.supprimerArticle(id);
+        }
+        return "redirect:/encheres";
+    }
+
+
     // === CREATION D'UNE ENCHERE ===
     @PostMapping("/encherir/{id}")
     public String nouvelleEnchere(@ModelAttribute("utilisateurSession")Utilisateur utilisateurSession, @PathVariable int id, @RequestParam("proposition") int proposition)

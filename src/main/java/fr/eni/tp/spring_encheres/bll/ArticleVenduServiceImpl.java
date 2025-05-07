@@ -97,6 +97,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
 
     @Override
     public void supprimerArticle(long noArticle) {
+        retraitDAO.delete(noArticle);
         articleVenduDAO.delete(noArticle);
     }
     @Override
