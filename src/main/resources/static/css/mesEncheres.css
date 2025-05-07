@@ -1,3 +1,89 @@
+/* FORMULAIRE FILTRE */
+.filtre-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    width: auto;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.filtre-barre {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+}
+
+.filtre-barre label {
+    white-space: nowrap;
+}
+
+.filtre-barre input[type="text"],
+.filtre-barre select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+}
+
+.submit-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* ACHATS / VENTES */
+.filtre-groupes {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+
+/* Bloc Achat / Vente */
+.filtre-section {
+    min-width: 280px;
+    max-width: 400px;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Titre radio Achats/Ventes */
+.radio-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2980b9;
+}
+
+/* Bloc de checkboxes */
+.filtre-options {
+    display: flex;
+}
+
+/* Alignement checkbox + label */
+.filtre-options label {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+/* ENCHERES */
 .encheres {
     margin: 2rem 0;
     overflow-x: auto;
@@ -5,37 +91,73 @@
     -webkit-overflow-scrolling: touch;
 }
 
-/* Style général du carousel */
-.carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
-
 .card-container {
     display: flex;
+    gap: 1rem;
     transition: transform 0.5s ease;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    width: fit-content;
+    padding: 1rem 0;
 }
 
 .card {
-    flex: 0 0 25%;
-    box-sizing: border-box;
-    padding: 10px;
-    scroll-snap-align: start;
-    height: 100%;
+    flex: 0 0 auto;
+    min-width: 250px;
+    max-width: 280px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
 
 .card-image img {
     width: 100%;
-    height: auto;
+    height: 160px;
+    object-fit: cover;
 }
 
-/* Les boutons de navigation (flèches) */
+.card-content {
+    padding: 0.8rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    margin: 0.3rem 0;
+}
+
+.card-content p {
+    margin: 0.2rem 0;
+    font-size: 0.95rem;
+}
+
+.card {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background-color: #007bff;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* CAROUSEL */
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+    padding: 1rem 0;
+}
+.carousel-viewport {
+    overflow: hidden;
+    width: calc((250px + 16px) * 5 - 16px);
+    position: relative;
+}
+
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -55,7 +177,6 @@
     opacity: 1;
 }
 
-/* Positionnement des flèches */
 .carousel-btn.prev {
     left: 10px;
 }
@@ -64,7 +185,6 @@
     right: 10px;
 }
 
-/* Affichage des flèches au survol du carousel */
 .carousel:hover .carousel-btn {
     opacity: 1;
 }

@@ -1,49 +1,136 @@
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <title>Enchères ENI - Mes enchères</title>
-<title>Mes enchères</title>
+
 <div id="extraCss">
     <link rel="stylesheet" data-th-href="@{/css/mesEncheres.css}">
     <link rel="stylesheet" data-th-href="@{/css/mesEncheres_mobile.css}">
     <link rel="stylesheet" data-th-href="@{/css/form-filtres-encheres.css}">
     <link rel="stylesheet" data-th-href="@{/css/filtre-index-recherche.css}">
 </div>
+
 <main>
-<!--    <div data-th-replace="fragments/filtre-index-recherche :: filtre"></div>-->
-<!--    <div th:replace="fragments/form-filtres-encheres :: filtres"></div>-->
-    <form data-th-action="@{/encheres}" method="post">
-        <label for="filtre">Filtre : </label>
-        <input type="text" id="filtre" name="filtre">
-        <select id="categorie">
-            <option value="all">Toutes</option>
-            <option th:each="categorie : ${categories}"
-                    th:value="${categorie.idCategorie}"
-                    th:text="${categorie.libelle}"></option>
-        </select>
-        <label>
-            <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
-            Achats
-        </label>
-        <div id="group1">
-            <label><input type="checkbox" name="g1_opt1"> Enchères ouvertes</label>
-            <label><input type="checkbox" name="g1_opt2"> Mes enchères en cours</label>
-            <label><input type="checkbox" name="g1_opt3"> Mes enchères remportées</label>
+    <form data-th-action="@{/encheres}" method="post" class="filtre-form">
+        <div class="filtre-barre">
+            <label for="filtre">Filtre :</label>
+            <input type="text" id="filtre" name="filtre" placeholder="Nom d'article ou mot-clé">
+            <select id="categorie" name="categorie">
+                <option value="all">Toutes les catégories</option>
+                <option th:each="categorie : ${categories}"
+                        th:value="${categorie.idCategorie}"
+                        th:text="${categorie.libelle}"></option>
+            </select>
+            <div class="submit-wrapper">
+                <button type="submit" class="btn-filtrer">Filtrer</button>
+            </div>
         </div>
-        <label>
-            <input type="radio" name="groupChoice" value="group2" onclick="switchGroup('group2')">
-            Ventes
-        </label>
-        <div id="group2">
-            <label><input type="checkbox" name="g2_opt1"> Mes ventes en cours</label>
-            <label><input type="checkbox" name="g2_opt2"> Mes ventes non débutées</label>
-            <label><input type="checkbox" name="g2_opt3"> Ventes terminées</label>
+
+        <div class="filtre-groupes">
+            <div class="filtre-section">
+                <label class="radio-label">
+                    <span>Achats</span>
+                    <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
+                </label>
+                <div id="group1" class="filtre-options">
+                    <label><input type="checkbox" name="g1_opt1"> Enchères ouvertes</label>
+                    <label><input type="checkbox" name="g1_opt2"> Mes enchères en cours</label>
+                    <label><input type="checkbox" name="g1_opt3"> Mes enchères remportées</label>
+                </div>
+            </div>
+
+            <div class="filtre-section">
+                <label class="radio-label">
+                    <span>Ventes</span>
+                    <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
+                </label>
+
+                <div id="group2" class="filtre-options">
+                    <label><input type="checkbox" name="g2_opt1"> Mes ventes en cours</label>
+                    <label><input type="checkbox" name="g2_opt2"> Mes ventes non débutées</label>
+                    <label><input type="checkbox" name="g2_opt3"> Ventes terminées</label>
+                </div>
+            </div>
         </div>
-        <button type="submit">Filtrer</button>
     </form>
 
+    <!-- Section 1 : Enchères terminées -->
+    <h2 class="titre_mobile_encheres">Mes objets mis en enchère terminés</h2>
+    <section class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="card-container">
+                    <div class="card" th:each="article : ${encheresTerminer}">
+                        <div class="card-image">
+                            <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Section 2 : Enchères en cours -->
+    <h2 class="titre_mobile_encheres">Mes objets actuellement en enchères</h2>
+    <section class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="card-container">
+                    <div class="card" th:each="article : ${encheresEnCours}">
+                        <div class="card-image">
+                            <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Section 3 : Enchères auxquelles je participe -->
+    <h2 class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <section class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="card-container">
+                    <div class="card" th:each="article : ${encheresParticipe}">
+                        <div class="card-image">
+                            <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Scripts -->
     <script>
         function switchGroup(activeGroupId) {
             const groups = ['group1', 'group2'];
-
             groups.forEach(groupId => {
                 const checkboxes = document.querySelectorAll(`#${groupId} input[type="checkbox"]`);
                 checkboxes.forEach(checkbox => {
@@ -57,76 +144,10 @@
             });
         }
 
-        // Optionnel : désactiver les deux groupes au chargement
         window.onload = () => {
-            switchGroup(''); // Rien de sélectionné par défaut
+            switchGroup('');
         };
     </script>
-    <h2 class="titre_mobile_encheres">Mes objets mis en enchère terminés</h2>
-    <section class="encheres">
-        <div class="carousel">
-            <button class="carousel-btn prev">&#10094;</button>
-            <div class="card-container">
-                <div class="card" th:each="article : ${encheresTerminer}">
-                    <div class="card-image">
-                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
-                    </div>
-                    <div class="card-content">
-                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                        <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-btn next">&#10095;</button>
-        </div>
-    </section>
-
-    <h2 class="titre_mobile_encheres">Mes objets actuellement en enchères</h2>
-    <section class="encheres">
-        <div class="carousel">
-            <button class="carousel-btn prev">&#10094;</button>
-            <div class="card-content">
-                <div class="card" th:each="article : ${encheresEnCours}">
-                    <div class="card-image">
-                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
-                    </div>
-                    <div class="card-content">
-                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                        <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-btn next">&#10095;</button>
-        </div>
-    </section>
-
-    <h2 class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
-    <section class="encheres">
-        <div class="carousel">
-            <button class="carousel-btn prev">&#10094;</button>
-            <div class="card-container">
-                <div class="card" th:each="article : ${encheresParticipe}">
-                    <div class="card-image">
-                        <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
-                    </div>
-                    <div class="card-content">
-                        <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
-                        <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
-                        <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
-                        <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                        <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-btn next">&#10095;</button>
-        </div>
-    </section>
     <script src="/js/carousel.js"></script>
 </main>
 </html>
