@@ -15,8 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.Instant;
@@ -107,6 +110,37 @@ public class EnchereController {
         article.setVille(utilisateurSession.getVille());
         article.setDateDebutEncheres(Date.from(Instant.now()));
 
+        model.addAttribute("mode","creation");
+        model.addAttribute("article", article);
+        model.addAttribute("categories", categorieService.consulterCategories());
+        model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", new UtilisateurDTO());
+
+        return "article"; // retourne vers le template "article.html"
+    }
+
+    @GetMapping("/articles/modifier/{id}")
+    public String afficherFormulaireModificationArticle(
+            @PathVariable long id,
+            @ModelAttribute("utilisateurSession") Utilisateur utilisateurSession,
+            Model model
+    ) throws IOException {
+//        if(!articleVenduService.isEnchereNonCommencer(id)){
+//            return "redirect:/";
+//        }
+        ArticleVendu articleModif = articleVenduService.consulterArticleParId(id);
+        System.out.println(articleModif);
+        ArticleVenduDTO article = new ArticleVenduDTO();
+        article.setRue(articleModif.getLieuRetrait().getRue());
+        article.setCodePostal(articleModif.getLieuRetrait().getCode_Postal());
+        article.setVille(articleModif.getLieuRetrait().getVille());
+        article.setNomArticle(articleModif.getNomArticle());
+        article.setDescription(articleModif.getDescription());
+        article.setDateDebutEncheres(articleModif.getDateDebutEncheres());
+        article.setDateFinEncheres(articleModif.getDateFinEncheres());
+        article.setMiseAPrix(articleModif.getMiseAPrix());
+        article.setCategorie(articleModif.getCategorie());
+        model.addAttribute("mode","modif");
         model.addAttribute("article", article);
         model.addAttribute("categories", categorieService.consulterCategories());
         model.addAttribute("utilisateur", utilisateurSession);

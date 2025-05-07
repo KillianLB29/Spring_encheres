@@ -86,10 +86,10 @@ public class ProfilController {
             utilisateurModif.setVille(utilisateurDTO.getVille());
             utilisateurModif.setCredit(utilisateurSession.getCredit());
             utilisateurModif.setAdmin(utilisateurSession.isAdmin());
-            System.out.println(utilisateurModif);
 
             // Enregistrement des modifications dans la base de données
             try{
+                System.out.println(utilisateurModif);
                 utilisateurService.update(utilisateurModif);
             }
             catch (UtilisateurException utilisateurException){

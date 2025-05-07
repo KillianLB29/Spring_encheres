@@ -113,6 +113,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         isValid&=isVilleValid(utilisateur.getVille(),utilisateurException);
 
         if(isValid){
+            utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
             utilisateurDAO.update(utilisateur);
         }
         else{

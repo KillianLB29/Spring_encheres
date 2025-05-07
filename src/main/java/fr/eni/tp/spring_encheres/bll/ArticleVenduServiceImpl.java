@@ -146,6 +146,16 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
             isValid=false;
         return isValid;
     }
+    @Override
+    public boolean isEnchereNonCommencer(long idArticle) {
+        boolean isValid = true;
+        ArticleVendu articleVendu = articleVenduDAO.read(idArticle);
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        if(articleVendu.getDateDebutEncheres().before(nowDate))
+            isValid=false;
+        return isValid;
+    }
 
     private boolean isNomArticleValid(String nomArticle, EnchereException enchereException) {
         boolean isValid = true;

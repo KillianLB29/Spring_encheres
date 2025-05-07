@@ -13,6 +13,7 @@ public interface ArticleVenduService {
     List<ArticleVendu> consulterEncheresEnCours(long idUtilisateur);
     List<ArticleVendu> consulterEncheresParticipe(long idUtilisateur);
     boolean isEnchereEnCours(long idArticle);
+    boolean isEnchereNonCommencer(long idArticle);
 //    List<ArticleVendu> remplirEncheresEnCours(List<Enchere> encheres);
 
 }
