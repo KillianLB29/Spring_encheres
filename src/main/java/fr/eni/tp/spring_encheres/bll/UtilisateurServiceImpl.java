@@ -5,6 +5,7 @@ import fr.eni.tp.spring_encheres.dal.UtilisateurDAO;
 import fr.eni.tp.spring_encheres.exception.UtilisateurException;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.regex.Pattern;
 public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final UtilisateurDAO utilisateurDAO;
-   // private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO ) {
+    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO, PasswordEncoder passwordEncoder) {
         this.utilisateurDAO = utilisateurDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -32,9 +34,39 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public void enregistrerUtilisateur(Utilisateur utilisateur) {
-        utilisateur.setMotDePasse(utilisateur.getMotDePasse());
-        utilisateurDAO.save(utilisateur);
+    public void enregistrerUtilisateur(Utilisateur utilisateur) throws UtilisateurException {
+        boolean isValid = true;
+        UtilisateurException utilisateurException = new UtilisateurException();
+        isValid&=isPseudoValid(utilisateur.getPseudo(),utilisateurException);
+        isValid&=isPrenomValid(utilisateur.getPrenom(),utilisateurException);
+        isValid&=isNomValid(utilisateur.getNom(),utilisateurException);
+        isValid&=isEmailValid(utilisateur.getEmail(),utilisateurException);
+        isValid&=isMotDePasseValid(utilisateur.getMotDePasse(),utilisateurException);
+        isValid&=isTelephoneValid(utilisateur.getTelephone(),utilisateurException);
+        isValid&=isRueValid(utilisateur.getRue(),utilisateurException);
+        isValid&=isCodePostalValid(utilisateur.getCodePostal(),utilisateurException);
+        isValid&=isVilleValid(utilisateur.getVille(),utilisateurException);
+
+        if(isValid){
+            Utilisateur utilexistant = utilisateurDAO.findByPseudo(utilisateur.getPseudo());
+            if(utilexistant != null){
+                utilisateurException.addMessage("Un utilisateur avec ce pseudo existe déja!");
+                isValid=false;
+            }
+            utilexistant=utilisateurDAO.findByEmail(utilisateur.getEmail());
+            if(utilexistant != null){
+                utilisateurException.addMessage("Un utilisateur avec cet email existe déja!");
+                isValid=false;
+            }
+        }
+        if(isValid){
+            utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
+            utilisateur.setCredit(750);
+            utilisateurDAO.save(utilisateur);
+        }
+        else {
+            throw utilisateurException;
+        }
     }
 
     @Override
@@ -46,7 +78,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public Utilisateur findByUserName(String username) {
 
         Utilisateur utilisateur =  utilisateurDAO.findByPseudo(username);
-        System.out.println(utilisateur);
         return utilisateur;
     }
 

@@ -2,13 +2,14 @@
 <title>Enchères ENI - Accueil</title>
 <div id="extraCss">
   <link rel="stylesheet" data-th-href="@{/css/detailVente.css}">
+  <link rel="stylesheet" data-th-href="@{/css/header.css}">
 </div>
 <main>
   <div class="div-title-detail-vente">
     <h2 data-th-if="${mode == 'attente'}" data-th-text="'Detail de l\'enchere qui commence le '+${#dates.format(article.dateDebutEncheres, 'dd/MM/yyyy')}" id="h2-title-detail"></h2>
     <h2 data-th-if="${mode == 'enchere'}" data-th-text="'Detail de l\'enchere en cours jusqu\'au '+${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}" id="h2-title-detail"></h2>
     <h2 data-th-if="${mode == 'affichage'}" data-th-text="'Enchere remporté par '+${enchere.utilisateur.pseudo}" id="h2-title-detail"></h2>
-    <a data-th-href="@{'/profil/'+${enchere.utilisateur.pseudo}}"><button class="btn">Consulter son profil</button></a>
+    <a data-th-if="${mode == 'affichage'}" data-th-href="@{'/profil/'+${enchere.utilisateur.pseudo}}"><button class="btn">Consulter son profil</button></a>
   </div>
 
 

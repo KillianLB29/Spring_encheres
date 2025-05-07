@@ -13,7 +13,7 @@
     <form data-th-action="@{/encheres}" method="post">
         <label for="filtre">Filtre : </label>
         <input type="text" id="filtre" name="filtre">
-        <select id="categorie">
+        <select id="categorie" name="categorie">
             <option value="all">Toutes</option>
             <option th:each="categorie : ${categories}"
                     th:value="${categorie.idCategorie}"

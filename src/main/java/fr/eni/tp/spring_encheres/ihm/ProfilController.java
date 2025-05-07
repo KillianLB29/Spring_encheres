@@ -14,22 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("utilisateurSession")
 public class ProfilController {
 
     private final UtilisateurService utilisateurService;
 
     public ProfilController(UtilisateurService utilisateurService) {
         this.utilisateurService = utilisateurService;
-    }
-
-    /**
-     * Initialise un utilisateur dans la session si nécessaire.
-     */
-    @ModelAttribute("utilisateurSession")
-    public Utilisateur getUtilisateurSession() {
-        // Ne pas créer un UtilisateurDTO avec des valeurs par défaut.
-        return null; // Aucun utilisateur connecté par défaut
     }
 
     /**
@@ -135,27 +125,31 @@ public class ProfilController {
     /**
      * Affiche le profil public d’un utilisateur à partir de son pseudo.
      */
-    @GetMapping("/profil/{pseudo}")
-    public String afficherProfilParPseudo(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, @PathVariable("pseudo") String pseudo, Model model) {
-        Utilisateur utilisateur = utilisateurService.findByUserName(pseudo);
+    @GetMapping("/profil/{pseudoConsulter}")
+    public String afficherProfilParPseudo(@ModelAttribute("utilisateurSession") Utilisateur utilisateurSession, @PathVariable("pseudoConsulter") String pseudo, Model model) {
+        System.out.println(utilisateurSession);
+        Utilisateur utilisateurConsulte = utilisateurService.findByUserName(pseudo);
 
-        if (utilisateur == null) {
+        if (utilisateurConsulte == null) {
             model.addAttribute("messageErreur", "Utilisateur non trouvé.");
             return "erreur"; // Redirection vers une page d'erreur ou retour à la recherche
 
         }
+        System.out.println(utilisateurSession);
         UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
 
-        utilisateurDTO.setPseudo(utilisateur.getPseudo());
-        utilisateurDTO.setNom(utilisateur.getNom());
-        utilisateurDTO.setPrenom(utilisateur.getPrenom());
-        utilisateurDTO.setEmail(utilisateur.getEmail());
-        utilisateurDTO.setTelephone(utilisateur.getTelephone());
-        utilisateurDTO.setRue(utilisateur.getRue());
-        utilisateurDTO.setCodePostal(utilisateur.getCodePostal());
-        utilisateurDTO.setVille(utilisateur.getVille());
+        utilisateurDTO.setPseudo(utilisateurConsulte.getPseudo());
+        utilisateurDTO.setNom(utilisateurConsulte.getNom());
+        utilisateurDTO.setPrenom(utilisateurConsulte.getPrenom());
+        utilisateurDTO.setEmail(utilisateurConsulte.getEmail());
+        utilisateurDTO.setTelephone(utilisateurConsulte.getTelephone());
+        utilisateurDTO.setRue(utilisateurConsulte.getRue());
+        utilisateurDTO.setCodePostal(utilisateurConsulte.getCodePostal());
+        utilisateurDTO.setVille(utilisateurConsulte.getVille());
+        System.out.println(utilisateurSession);
         model.addAttribute("utilisateur", utilisateurSession);
         model.addAttribute("utilisateurDTO", utilisateurDTO);
+        System.out.println(utilisateurSession);
         return "profil/profil";
     }
     @ModelAttribute("utilisateurSession")

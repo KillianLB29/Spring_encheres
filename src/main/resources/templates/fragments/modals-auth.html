@@ -21,23 +21,25 @@
         <div class="modals-auth-modal-content">
             <span class="modals-auth-close" onclick="closeModal('registerModal')">&times;</span>
             <h2>Inscription</h2>
-            <form class="modals-auth-form" th:action="@{/inscription}" method="post">
-                <input type="text" name="pseudo" placeholder="Pseudo" required>
-                <input type="text" name="nom" placeholder="Nom" required>
-                <input type="text" name="prenom" placeholder="Prénom" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="text" name="telephone" placeholder="Téléphone" required>
-                <input type="text" name="rue" placeholder="Rue" required>
-                <input type="text" name="codePostal" placeholder="Code postal" required>
-                <input type="text" name="ville" placeholder="Ville" required>
-                <input type="password" name="NewMotDePasse" placeholder="Mot de passe" required>
-                <input type="password" name="ConfirmeMotDePasse" placeholder="Confirmer le mot de passe" required>
+            <form class="modals-auth-form" th:action="@{/inscription}" th:object="${utilisateurDTO}" method="post">
+                <input type="text" name="pseudo" th:field="*{pseudo}" placeholder="Pseudo" required>
+                <input type="text" name="nom" th:field="*{nom}" placeholder="Nom" required>
+                <input type="text" name="prenom" th:field="*{prenom}" placeholder="Prénom" required>
+                <input type="email" name="email" th:field="*{email}" placeholder="Email" required>
+                <input type="text" name="telephone" th:field="*{telephone}" placeholder="Téléphone" required>
+                <input type="text" name="rue" th:field="*{rue}" placeholder="Rue" required>
+                <input type="text" name="codePostal" th:field="*{codePostal}" placeholder="Code postal" required>
+                <input type="text" name="ville" th:field="*{ville}" placeholder="Ville" required>
+                <input type="password" name="NewMotDePasse" th:field="*{NewMotDePasse}" placeholder="Mot de passe" required>
+                <input type="password" name="ConfirmeMotDePasse" th:field="*{ConfirmeMotDePasse}" placeholder="Confirmer le mot de passe" required>
                 <button type="submit">S'inscrire</button>
+                <div th:replace="fragments/fragment-error :: fragmentErreur"></div>
             </form>
             <p class="modals-auth-switch-link">
                 Déjà inscrit ?
                 <a href="#" onclick="switchModal('registerModal', 'loginModal')">Se connecter</a>
             </p>
+
         </div>
     </div>
 
@@ -59,6 +61,10 @@
         var showLoginModal = /*[[${showLoginModal}]]*/ false;
         if (showLoginModal) {
             openModal('loginModal');  // Ouvre le modal de connexion
+        }
+        var showInscriptionModal = /*[[${showInscriptionModal}]]*/ false;
+        if(showInscriptionModal){
+            openModal('registerModal')
         }
     </script>
 </div>

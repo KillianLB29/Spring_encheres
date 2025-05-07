@@ -7,6 +7,7 @@ import fr.eni.tp.spring_encheres.bll.UtilisateurService;
 import fr.eni.tp.spring_encheres.bo.*;
 import fr.eni.tp.spring_encheres.exception.EnchereException;
 import fr.eni.tp.spring_encheres.ihm.dto.ArticleVenduDTO;
+import fr.eni.tp.spring_encheres.ihm.dto.UtilisateurDTO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -62,6 +63,7 @@ public class EnchereController {
 
         model.addAttribute("articles", articles);
         model.addAttribute("categories", categories);
+        model.addAttribute("utilisateurDTO",new UtilisateurDTO());
 
         return "index";
     }
@@ -88,6 +90,7 @@ public class EnchereController {
         model.addAttribute("enchere", enchere);
         model.addAttribute("mode", mode );
         model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", new UtilisateurDTO());
 
         return "enchere";
     }
@@ -107,6 +110,7 @@ public class EnchereController {
         model.addAttribute("article", article);
         model.addAttribute("categories", categorieService.consulterCategories());
         model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", new UtilisateurDTO());
 
         return "article"; // retourne vers le template "article.html"
     }
@@ -136,6 +140,7 @@ public class EnchereController {
         if (result.hasErrors()) {
             model.addAttribute("article", article);
             model.addAttribute("categories", categorieService.consulterCategories());
+            model.addAttribute("utilisateurDTO", new UtilisateurDTO());
             return "article";
         }
         ArticleVendu articleVendu = new ArticleVendu();
@@ -176,6 +181,7 @@ public class EnchereController {
             model.addAttribute("utilisateur",utilisateurSession);
             model.addAttribute("article", article);
             model.addAttribute("categories", categorieService.consulterCategories());
+            model.addAttribute("utilisateurDTO", new UtilisateurDTO());
             return "article";
         }
 
@@ -191,6 +197,7 @@ public class EnchereController {
         model.addAttribute("encheresEnCours", encheresEnCours);
         model.addAttribute("encheresParticipe", enchereParticipe);
         model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", new UtilisateurDTO());
         return "mesEncheres";
     }
     @PostMapping("/encheres")
@@ -229,6 +236,7 @@ public class EnchereController {
         model.addAttribute("encheresEnCours", encheresEnCours);
         model.addAttribute("encheresParticipe", enchereParticipe);
         model.addAttribute("utilisateur", utilisateurSession);
+        model.addAttribute("utilisateurDTO", new UtilisateurDTO());
         return "mesEncheres";
     }
     // === CREATION D'UNE ENCHERE ===

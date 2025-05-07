@@ -41,5 +41,10 @@ public class UtilisateurDAOImplTest {
         utilisateurDAO.delete(5);
         utilisateurDAO.findAll().forEach(util -> System.out.println(util));
     }
+    @Test
+    public void testUtilisateurByEmail() {
+        Utilisateur util = utilisateurDAO.findByEmail("john.doe@example.com");
+        System.out.println(util);
+    }
 
 }
