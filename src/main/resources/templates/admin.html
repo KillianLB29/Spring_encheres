@@ -3,8 +3,9 @@
     <title>Administration</title>
 </head>
 <body>
-<h1>Bienvenue, <span th:text="${utilisateurDTO.pseudo}">Pseudo</span> !</h1>
-<p>Email : <span th:text="${utilisateurDTO.email}">Email</span></p>
+<main>
+    <h1 class="title-animated">Bienvenue <span th:text="${utilisateurDTO.pseudo}">Pseudo</span> !</h1>
+    <p class="email-text">Administrateur <span th:text="${utilisateurDTO.email}">Email</span></p>
 
 <div class="admin-container">
     <div class="row">
@@ -58,5 +59,6 @@
         </div>
     </div>
 </div>
+</main>
 </body>
 </html>

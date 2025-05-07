@@ -1,3 +1,32 @@
+/* Animation pour le titre */
+.title-animated {
+    font-size: 2rem;
+    text-align: center;
+    color: #2c3e50;
+    position: relative;
+    animation: fadeInUp 1.5s ease-out;
+}
+
+.email-text {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    animation: fadeInUp 1.5s ease-out 0.5s;
+}
+
+/* Animation de fade-in du titre */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Style général du container d'administration */
 .admin-container {
     display: flex;
@@ -5,6 +34,7 @@
     gap: 20px;
     justify-content: center;
     padding: 20px;
+    margin-top: 20px;
 }
 
 /* Structure des cartes d'administration */
@@ -18,8 +48,20 @@
     flex-direction: column;
     justify-content: space-between;
     transition: all 0.3s ease;
+    animation: cardSlideIn 1s ease-out;
 }
 
+/* Animation d'apparition des cartes */
+@keyframes cardSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 .card_admin:hover {
     transform: translateY(-5px);
 }
@@ -81,4 +123,25 @@ button.secondary_admin:hover {
 
 .card_admin:nth-child(5) {
     background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Structure de la ligne contenant les cartes (3 cartes en ligne) */
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Chaque carte prendra 30% de la largeur de l'écran */
+.card_admin {
+    width: 30%;
+    min-width: 220px;
+}
+
+/* Responsivité : Si la taille de l'écran est inférieure à 768px (mobile), chaque carte occupe toute la largeur */
+@media (max-width: 768px) {
+    .card_admin {
+        width: 100%;
+    }
 }
