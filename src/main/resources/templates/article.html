@@ -4,9 +4,9 @@
 </head>
 
 <body>
-<main class="container-form-article">
+<main>
     <div class="card main-card">
-        <h2 class="floating-title-article">Vendre un nouvel article</h2>
+        <h2>Vendre un nouvel article</h2>
         <form th:action="@{/articles/creer}" th:object="${article}" method="post" enctype="multipart/form-data">
 
             <label for="nomArticle">Article :</label>
@@ -24,8 +24,8 @@
 
             <label for="image">Photo de l'article :</label>
             <input type="file" id="image" name="image" accept="image/*" required>
-            <div id="imagePreviewContainer" style="margin-top: 1rem;">
-                <img id="imagePreview" src="#" alt="Aperçu de l'image" style="max-width: 200px; display: none; border: 1px solid #ccc; padding: 5px;">
+            <div id="imagePreviewContainer">
+                <img id="imagePreview" src="#" alt="Aperçu de l'image">
             </div>
 
             <label for="miseAPrix">Mise à prix :</label>
@@ -40,7 +40,7 @@
                    th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
 
             <div class="card retrait-card">
-                <h3 class="floating-title-article">Retrait</h3>
+                <h3>Retrait</h3>
 
                 <div class="form-group">
                     <label for="rue">Rue :</label>
@@ -65,6 +65,4 @@
     </div>
     <script src="/js/article-preview.js"></script>
 </main>
-
-
-
+</body>
