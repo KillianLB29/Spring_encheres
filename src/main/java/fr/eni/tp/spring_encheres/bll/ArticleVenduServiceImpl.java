@@ -28,6 +28,8 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     private RetraitDAO retraitDAO;
     @Autowired
     private EnchereDAO enchereDAO;
+    @Autowired
+    private EnchereService enchereService;
 
     public ArticleVenduServiceImpl(ArticleVenduDAO articleVenduDAO) {
         this.articleVenduDAO = articleVenduDAO;
@@ -68,6 +70,29 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
             throw enchereException;
         }
 
+    }
+
+    @Override
+    public void updateArticle(ArticleVendu article) {
+        EnchereException enchereException = new EnchereException();
+        boolean isValid = true;
+        isValid&= isNomArticleValid(article.getNomArticle(),enchereException);
+        isValid&=isDescriptionValid(article.getDescription(),enchereException);
+        isValid&=isDateDebutEncheresValid(article.getDateDebutEncheres(),enchereException);
+        isValid&=isDateFinEncheresValid(article.getDateFinEncheres(),enchereException);
+        isValid&=isMiseAPrixValid(article.getMiseAPrix(),enchereException);
+        isValid&=isUtilisateurValid(article.getUtilisateur(),enchereException);
+        isValid&=isCategorieValid(article.getCategorie(),enchereException);
+        isValid&=isLieuRetraitValid(article.getLieuRetrait(),enchereException);
+        isValid&=isUrlImageValid(article.getUrlImage(),enchereException);
+        if(isValid){
+            System.out.println("passage");
+            articleVenduDAO.update(article);
+            retraitDAO.update(article.getLieuRetrait(),article.getNoArticle());
+        }
+        else {
+            throw enchereException;
+        }
     }
 
     @Override
@@ -155,6 +180,85 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         if(articleVendu.getDateDebutEncheres().before(nowDate))
             isValid=false;
         return isValid;
+    }
+
+    @Override
+    public List<ArticleVendu> consulterEncheresOuvertes(long noUtilisateur, String filtre, String categorie) {
+        List<Enchere> mesEncheres =enchereDAO.findAll();
+        System.out.println(mesEncheres);
+        List<ArticleVendu> articles = new ArrayList<>();
+        for(Enchere e: mesEncheres)
+        {
+            ArticleVendu article = articleVenduDAO.read(e.getArticleVendu().getNoArticle());
+            article.setCategorie(categorieDAO.read(article.getCategorie().getIdCategorie()));
+            articles.add(article);
+        }
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        articles = articles
+                .stream().filter(a-> a.getDateFinEncheres().after(nowDate)).collect(Collectors.toList())
+                .stream().filter(article -> article.getDateDebutEncheres().before(nowDate)).collect(Collectors.toList());
+        articles.forEach(a-> a.setUtilisateur(utilisateurDAO.read(a.getUtilisateur().getNoUtilisateur())));
+
+        if(filtre!=""){
+            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+        }
+        if(!"all".equals(categorie)){
+            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+        }
+        return articles;
+    }
+
+    @Override
+    public List<ArticleVendu> consulterEncheresEnCoursFiltrer(long noUtilisateur, String filtre, String categorie) {
+        List<Enchere> mesEncheres =enchereDAO.readByUtilID(noUtilisateur);
+        List<ArticleVendu> articles = new ArrayList<>();
+        for(Enchere e: mesEncheres)
+        {
+            ArticleVendu article = articleVenduDAO.read(e.getArticleVendu().getNoArticle());
+            article.setCategorie(categorieDAO.read(article.getCategorie().getIdCategorie()));
+            articles.add(article);
+        }
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        articles = articles
+                .stream().filter(a-> a.getDateFinEncheres().after(nowDate)).collect(Collectors.toList())
+                .stream().filter(article -> article.getDateDebutEncheres().before(nowDate)).collect(Collectors.toList());
+        articles.forEach(a-> a.setUtilisateur(utilisateurDAO.read(a.getUtilisateur().getNoUtilisateur())));
+
+        if(filtre!=""){
+            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+        }
+        if(!"all".equals(categorie)){
+            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+        }
+        return articles;
+    }
+
+    @Override
+    public List<ArticleVendu> consulterEncheresRemportes(long noUtilisateur, String filtre, String categorie) {
+        List<ArticleVendu> articlesVendus = articleVenduDAO.findAll();
+        List<ArticleVendu> articles = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        articlesVendus = articlesVendus.stream().filter(article -> article.getDateFinEncheres().before(nowDate)).collect(Collectors.toList());
+        for(ArticleVendu article: articlesVendus){
+            article.setCategorie(categorieDAO.read(article.getCategorie().getIdCategorie()));
+            Enchere meilleurEnchere = enchereService.meilleurEnchere(article.getNoArticle());
+        }
+
+
+
+//        if(filtre!=""){
+//            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+//        }
+//        if(!"all".equals(categorie)){
+//            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+//            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+//        }
+        return articles;
     }
 
     private boolean isNomArticleValid(String nomArticle, EnchereException enchereException) {

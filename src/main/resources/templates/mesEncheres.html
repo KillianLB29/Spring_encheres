@@ -52,16 +52,16 @@
         </div>
     </form>
 
-    <!-- Section 1 : Enchères terminées -->
-    <h2 class="titre_mobile_encheres">Mes objets mis en enchère terminés</h2>
-    <section class="encheres">
+    <!-- Section 1 : Enchères ouverte -->
+    <h2 data-th-if="${not #lists.isEmpty(encheresOuvertes)}" class="titre_mobile_encheres">Les enchères ouvertes</h2>
+    <section data-th-if="${not #lists.isEmpty(encheresOuvertes)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
             <div class="carousel-viewport">
                 <div class="card-container">
-                    <div class="card" th:each="article : ${encheresTerminer}">
+                    <div class="card" th:each="article : ${encheresOuvertes}">
                         <div class="card-image">
-                            <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                         </div>
                         <div class="card-content">
                             <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
@@ -78,15 +78,15 @@
     </section>
 
     <!-- Section 2 : Enchères en cours -->
-    <h2 class="titre_mobile_encheres">Mes objets actuellement en enchères</h2>
-    <section class="encheres">
+    <h2 data-th-if="${not #lists.isEmpty(encheresEnCours)}" class="titre_mobile_encheres">Mes enchères en cours</h2>
+    <section data-th-if="${not #lists.isEmpty(encheresEnCours)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
             <div class="carousel-viewport">
                 <div class="card-container">
                     <div class="card" th:each="article : ${encheresEnCours}">
                         <div class="card-image">
-                            <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                         </div>
                         <div class="card-content">
                             <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
@@ -102,16 +102,89 @@
         </div>
     </section>
 
-    <!-- Section 3 : Enchères auxquelles je participe -->
-    <h2 class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
-    <section class="encheres">
+    <!-- Section 3 : Enchères remportés -->
+    <h2 data-th-if="${not #lists.isEmpty(encheresRemportes)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <section data-th-if="${not #lists.isEmpty(encheresRemportes)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
             <div class="carousel-viewport">
                 <div class="card-container">
-                    <div class="card" th:each="article : ${encheresParticipe}">
+                    <div class="card" th:each="article : ${encheresRemportes}">
+                        <div class="card-image">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Section 4 : Ventes en cours -->
+    <h2 data-th-if="${not #lists.isEmpty(venteEnCours)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <section data-th-if="${not #lists.isEmpty(venteEnCours)}" class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="card-container">
+                    <div class="card" th:each="article : ${venteEnCours}">
                         <div class="card-image">
                             <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="@{${article.urlImage}}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next">&#10095;</button>
+        </div>
+    </section>
+    <!-- Section 5 : Ventes non débutées -->
+    <h2 data-th-if="${not #lists.isEmpty(venteNonDebutes)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <section data-th-if="${not #lists.isEmpty(venteNonDebutes)}" class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="card-container">
+                    <div class="card" th:each="article : ${venteNonDebutes}">
+                        <div class="card-image">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
+                        </div>
+                        <div class="card-content">
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
+                            <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
+                            <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
+                            <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next">&#10095;</button>
+        </div>
+    </section>
+    <!-- Section 6 : Ventes terminées -->
+    <h2 data-th-if="${not #lists.isEmpty(venteTerminees)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <section data-th-if="${not #lists.isEmpty(venteTerminees)}" class="encheres">
+        <div class="carousel">
+            <button class="carousel-btn prev">&#10094;</button>
+            <div class="carousel-viewport">
+                <div class="card-container">
+                    <div class="card" th:each="article : ${venteTerminees}">
+                        <div class="card-image">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                         </div>
                         <div class="card-content">
                             <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>

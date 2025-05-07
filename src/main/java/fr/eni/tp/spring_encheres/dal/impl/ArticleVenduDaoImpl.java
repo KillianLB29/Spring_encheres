@@ -26,6 +26,7 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
     private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie,urlimage FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
     //a changer la requête SQL
     private static final String DELETE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article = :no_article;";
+    private static final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article=:nom_article,description=:description,date_debut_encheres=:dateDebut,date_fin_encheres=:dateFin,prix_initial=:prix_initial,no_categorie=:no_categorie,urlimage=:urlImage WHERE no_article =:no_article;";
 
 
     private JdbcTemplate jdbcTemplate;
@@ -90,7 +91,22 @@ public class ArticleVenduDaoImpl implements ArticleVenduDAO {
         namedParameterJdbcTemplate.update(DELETE_BY_ID, mapSqlParameterSource);
     }
 
+    @Override
+    public void update(ArticleVendu article) {
+        System.out.println(article);
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("no_article", article.getNoArticle());
+        mapSqlParameterSource.addValue("nom_article", article.getNomArticle());
+        mapSqlParameterSource.addValue("description", article.getDescription());
+        mapSqlParameterSource.addValue("dateDebut",article.getDateDebutEncheres());
+        mapSqlParameterSource.addValue("dateFin",article.getDateFinEncheres());
+        mapSqlParameterSource.addValue("prix_initial",article.getMiseAPrix());
+        mapSqlParameterSource.addValue("no_categorie",article.getCategorie().getIdCategorie());
+        mapSqlParameterSource.addValue("urlImage", article.getUrlImage());
+        namedParameterJdbcTemplate.update(UPDATE, mapSqlParameterSource);
     }
+
+}
 
 
     class ArticleVenduRowMapper implements RowMapper<ArticleVendu> {

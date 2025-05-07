@@ -6,4 +6,6 @@ public interface RetraitDAO {
     Retrait read(long idRetrait);
 
     void save(Retrait retrait,long idArticle);
+
+    void update(Retrait lieuRetrait, long noArticle);
 }

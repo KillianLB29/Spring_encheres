@@ -9,5 +9,7 @@ public interface ArticleVenduDAO {
     List<ArticleVendu> findAll();
     ArticleVendu read(long noArticle);
     void delete(long noArticle);
+
+    void update(ArticleVendu article);
     //boolean peut-être plus tard
 }
