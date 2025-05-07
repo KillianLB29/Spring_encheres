@@ -38,7 +38,7 @@ public class ArticleDAOImplTest {
         util.setNoUtilisateur(1);
         Categorie cate = new Categorie();
         cate.setIdCategorie(1);
-        ArticleVendu articleVendu = new ArticleVendu(6,"T-shirt test","description test",date,dateFin,333,0,"",util,cate,null);
+        ArticleVendu articleVendu = new ArticleVendu(6,"T-shirt test","description test",date,dateFin,333,0,"",util,cate,null,"testUrl");
         articleVenduDAO.create(articleVendu);
     }
 

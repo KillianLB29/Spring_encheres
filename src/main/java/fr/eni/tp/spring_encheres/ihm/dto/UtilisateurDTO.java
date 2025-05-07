@@ -43,6 +43,23 @@ public class UtilisateurDTO {
 
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("UtilisateurDTO{");
+        sb.append("pseudo='").append(pseudo).append('\'');
+        sb.append(", nom='").append(nom).append('\'');
+        sb.append(", prenom='").append(prenom).append('\'');
+        sb.append(", NewMotDePasse='").append(NewMotDePasse).append('\'');
+        sb.append(", ConfirmeMotDePasse='").append(ConfirmeMotDePasse).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", telephone='").append(telephone).append('\'');
+        sb.append(", rue='").append(rue).append('\'');
+        sb.append(", codePostal='").append(codePostal).append('\'');
+        sb.append(", ville='").append(ville).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
     // Getters et Setters
     public String getPseudo() {
         return pseudo;

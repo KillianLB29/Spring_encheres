@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
@@ -27,6 +28,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur = :no_utilisateur";
     private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = :pseudo";
     private static final String UPDATE="UPDATE UTILISATEURS SET pseudo=:pseudo , nom=:nom, prenom=:prenom, email=:email, telephone=:telephone, rue=:rue, code_postal=:code_postal, ville=:ville, mot_de_passe=:mot_de_passe, credit=:credit WHERE no_utilisateur = :no_utilisateur";
+    private static final String SELECT_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = :email";
 
     @Override
     public List<Utilisateur> findAll() {
@@ -79,11 +81,19 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         namedParameterJdbcTemplate.update(DELETE, params);
     }
 
-    @Override
     public Utilisateur findByPseudo(String pseudo) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("pseudo", pseudo);
-        return namedParameterJdbcTemplate.queryForObject(SELECT_BY_PSEUDO, params, new UtilisateurRowMapper());
+        List<Utilisateur> result = namedParameterJdbcTemplate.query(SELECT_BY_PSEUDO, params, new UtilisateurRowMapper());
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    @Override
+    public Utilisateur findByEmail(String email) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("email", email);
+        List<Utilisateur> result = namedParameterJdbcTemplate.query(SELECT_BY_EMAIL, params, new UtilisateurRowMapper());
+        return result.isEmpty() ? null : result.get(0);
     }
 }
  class UtilisateurRowMapper implements RowMapper<Utilisateur> {

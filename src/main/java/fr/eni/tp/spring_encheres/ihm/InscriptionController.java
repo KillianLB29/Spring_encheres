@@ -15,13 +15,13 @@ public class InscriptionController {
     @Autowired
     private UtilisateurService utilisateurService;
 
-    @GetMapping("/inscription")
+    @GetMapping("/inscriptionazeaeaze")
     public String afficherFormulaireInscription(Model model) {
         model.addAttribute("utilisateur", new Utilisateur());
         return "inscription";
     }
 
-    @PostMapping("/inscription")
+    @PostMapping("/inscriptionazeaze")
     public String inscription(@ModelAttribute Utilisateur utilisateur, HttpSession session, Model model) {
 
         // Initialisation des valeurs par défaut

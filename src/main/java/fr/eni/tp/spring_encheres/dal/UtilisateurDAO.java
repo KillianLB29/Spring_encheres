@@ -17,4 +17,6 @@ public interface UtilisateurDAO {
     void delete(long noUtilisateur);
 
     Utilisateur findByPseudo(String pseudo);
+
+    Utilisateur findByEmail(String email);
 }
