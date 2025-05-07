@@ -184,15 +184,11 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
 
     @Override
     public List<ArticleVendu> consulterEncheresOuvertes(long noUtilisateur, String filtre, String categorie) {
-        List<Enchere> mesEncheres =enchereDAO.findAll();
-        System.out.println(mesEncheres);
-        List<ArticleVendu> articles = new ArrayList<>();
-        for(Enchere e: mesEncheres)
-        {
-            ArticleVendu article = articleVenduDAO.read(e.getArticleVendu().getNoArticle());
-            article.setCategorie(categorieDAO.read(article.getCategorie().getIdCategorie()));
-            articles.add(article);
-        }
+
+        List<ArticleVendu> articles = articleVenduDAO.findAll();
+        articles.forEach(a-> a.setCategorie(categorieDAO.read(a.getCategorie().getIdCategorie())));
+
+
         LocalDateTime now = LocalDateTime.now();
         Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
         articles = articles
@@ -200,7 +196,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
                 .stream().filter(article -> article.getDateDebutEncheres().before(nowDate)).collect(Collectors.toList());
         articles.forEach(a-> a.setUtilisateur(utilisateurDAO.read(a.getUtilisateur().getNoUtilisateur())));
 
-        if(filtre!=""){
+        if(!"".equals(filtre)){
             articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
         }
         if(!"all".equals(categorie)){
@@ -240,6 +236,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     @Override
     public List<ArticleVendu> consulterEncheresRemportes(long noUtilisateur, String filtre, String categorie) {
         List<ArticleVendu> articlesVendus = articleVenduDAO.findAll();
+        articlesVendus.forEach(a-> a.setCategorie(categorieDAO.read(a.getCategorie().getIdCategorie())));
         List<ArticleVendu> articles = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
         Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
@@ -247,17 +244,60 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         for(ArticleVendu article: articlesVendus){
             article.setCategorie(categorieDAO.read(article.getCategorie().getIdCategorie()));
             Enchere meilleurEnchere = enchereService.meilleurEnchere(article.getNoArticle());
+            if(meilleurEnchere.getUtilisateur().getNoUtilisateur() == noUtilisateur){
+                articles.add(article);
+            }
         }
+        if(filtre!=""){
+            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+        }
+        if(!"all".equals(categorie)){
+            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+        }
+        return articles;
+    }
 
+    @Override
+    public List<ArticleVendu> consulterVentesEnCours(long noUtilisateur, String filtre, String categorie) {
+        List<ArticleVendu> articles = articleVenduDAO.findAll();
+        articles.forEach(a-> a.setCategorie(categorieDAO.read(a.getCategorie().getIdCategorie())));
 
+        articles.stream().filter(a-> a.getUtilisateur().getNoUtilisateur() == noUtilisateur).collect(Collectors.toList());
 
-//        if(filtre!=""){
-//            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
-//        }
-//        if(!"all".equals(categorie)){
-//            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
-//            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
-//        }
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        articles = articles
+                .stream().filter(a-> a.getDateFinEncheres().after(nowDate)).collect(Collectors.toList())
+                .stream().filter(article -> article.getDateDebutEncheres().before(nowDate)).collect(Collectors.toList());
+        articles.forEach(a-> a.setUtilisateur(utilisateurDAO.read(a.getUtilisateur().getNoUtilisateur())));
+
+        if(!"".equals(filtre)){
+            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+        }
+        if(!"all".equals(categorie)){
+            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+        }
+        return articles;
+    }
+
+    @Override
+    public List<ArticleVendu> consulterVentesNonDebutes(long noUtilisateur, String filtre, String categorie) {
+        List<ArticleVendu> articles = articleVenduDAO.findAll();
+        articles.forEach(a-> a.setCategorie(categorieDAO.read(a.getCategorie().getIdCategorie())));
+
+        articles=articles.stream().filter(a-> a.getUtilisateur().getNoUtilisateur() == noUtilisateur).collect(Collectors.toList());
+        LocalDateTime now = LocalDateTime.now();
+        Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        articles = articles.stream().filter(article -> article.getDateDebutEncheres().after(nowDate)).collect(Collectors.toList());
+        if(!"".equals(filtre)){
+            articles = articles.stream().filter(a-> a.getNomArticle().contains(filtre)).collect(Collectors.toList());
+        }
+        if(!"all".equals(categorie)){
+            Categorie categorieRechercher = categorieDAO.read(Long.parseLong(categorie));
+            articles = articles.stream().filter(a-> a.getCategorie().getLibelle().equals(categorieRechercher.getLibelle())).collect(Collectors.toList());
+        }
         return articles;
     }
 

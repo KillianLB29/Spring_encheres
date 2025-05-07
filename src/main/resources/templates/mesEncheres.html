@@ -40,7 +40,7 @@
             <div class="filtre-section">
                 <label class="radio-label">
                     <span>Ventes</span>
-                    <input type="radio" name="groupChoice" value="group1" onclick="switchGroup('group1')">
+                    <input type="radio" name="groupChoice" value="group2" onclick="switchGroup('group2')">
                 </label>
 
                 <div id="group2" class="filtre-options">
@@ -103,7 +103,7 @@
     </section>
 
     <!-- Section 3 : Enchères remportés -->
-    <h2 data-th-if="${not #lists.isEmpty(encheresRemportes)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <h2 data-th-if="${not #lists.isEmpty(encheresRemportes)}" class="titre_mobile_encheres">Mes enchères remportées</h2>
     <section data-th-if="${not #lists.isEmpty(encheresRemportes)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
@@ -128,7 +128,7 @@
     </section>
 
     <!-- Section 4 : Ventes en cours -->
-    <h2 data-th-if="${not #lists.isEmpty(venteEnCours)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <h2 data-th-if="${not #lists.isEmpty(venteEnCours)}" class="titre_mobile_encheres">Mes ventes en cours</h2>
     <section data-th-if="${not #lists.isEmpty(venteEnCours)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
@@ -136,10 +136,10 @@
                 <div class="card-container">
                     <div class="card" th:each="article : ${venteEnCours}">
                         <div class="card-image">
-                            <img th:src="@{/img/lamp-design.jpg}" alt="Image de l'article">
+                            <img th:src="@{${article.urlImage}}" alt="Image de l'article">
                         </div>
                         <div class="card-content">
-                            <h3 th:text="@{${article.urlImage}}" class="card-title">Nom article</h3>
+                            <h3 th:text="${article.nomArticle}" class="card-title">Nom article</h3>
                             <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
@@ -152,7 +152,7 @@
         </div>
     </section>
     <!-- Section 5 : Ventes non débutées -->
-    <h2 data-th-if="${not #lists.isEmpty(venteNonDebutes)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <h2 data-th-if="${not #lists.isEmpty(venteNonDebutes)}" class="titre_mobile_encheres">Mes ventes non débutées</h2>
     <section data-th-if="${not #lists.isEmpty(venteNonDebutes)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>
@@ -176,7 +176,7 @@
         </div>
     </section>
     <!-- Section 6 : Ventes terminées -->
-    <h2 data-th-if="${not #lists.isEmpty(venteTerminees)}" class="titre_mobile_encheres">Les enchères auxquelles je participe</h2>
+    <h2 data-th-if="${not #lists.isEmpty(venteTerminees)}" class="titre_mobile_encheres">Mes ventes terminées</h2>
     <section data-th-if="${not #lists.isEmpty(venteTerminees)}" class="encheres">
         <div class="carousel">
             <button class="carousel-btn prev">&#10094;</button>

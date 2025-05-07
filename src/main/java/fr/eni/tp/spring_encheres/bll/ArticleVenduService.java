@@ -21,6 +21,10 @@ public interface ArticleVenduService {
     List<ArticleVendu> consulterEncheresEnCoursFiltrer(long noUtilisateur, String filtre, String categorie);
 
     List<ArticleVendu> consulterEncheresRemportes(long noUtilisateur, String filtre, String categorie);
+
+    List<ArticleVendu> consulterVentesEnCours(long noUtilisateur, String filtre, String categorie);
+
+    List<ArticleVendu> consulterVentesNonDebutes(long noUtilisateur, String filtre, String categorie);
 //    List<ArticleVendu> remplirEncheresEnCours(List<Enchere> encheres);
 
 }

@@ -366,8 +366,14 @@ public class EnchereController {
 
         }
 
-        if (g2Opt1 != null) System.out.println("✔ Mes ventes en cours cochée");
-        if (g2Opt2 != null) System.out.println("✔ Mes ventes non débutées cochée");
+        if (g2Opt1 != null) {
+            System.out.println("✔ Mes ventes en cours cochée");
+            venteEnCours=articleVenduService.consulterVentesEnCours(utilisateurSession.getNoUtilisateur(),filtre,categorie);
+        }
+        if (g2Opt2 != null){
+            System.out.println("✔ Mes ventes non débutées cochée");
+            venteNonDebutes = articleVenduService.consulterVentesNonDebutes(utilisateurSession.getNoUtilisateur(),filtre,categorie);
+        }
         if (g2Opt3 != null) System.out.println("✔ Ventes terminées cochée");
 
 

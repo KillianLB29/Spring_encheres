@@ -18,10 +18,8 @@ public class AdminController {
         if (utilisateurSession == null || utilisateurSession.getPseudo() == null || !utilisateurSession.isAdmin()) {
             return "redirect:/login";  // Rediriger vers la page de login
         }
-
-        // Si l'utilisateur est admin, on prépare l'objet UtilisateurDTO
-        UtilisateurDTO utilisateurDTO = new UtilisateurDTO(utilisateurSession);
-        model.addAttribute("utilisateurDTO", utilisateurDTO);
+        model.addAttribute("utilisateurDTO", new UtilisateurDTO());
+        model.addAttribute("utilisateur", utilisateurSession);
 
         return "admin";
     }
