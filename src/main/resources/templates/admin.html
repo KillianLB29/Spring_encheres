@@ -1,42 +1,41 @@
 <html data-th-replace="~{layout/layout :: layout(content=~{:: main}, title=~{:: title}, css=~{:: #extraCss})}">
 <head>
     <title>Administration</title>
+    <div id="extraCss">
+        <link rel="stylesheet" th:href="@{/css/admin.css}">
+    </div>
 </head>
 <body>
 <main>
-    <h1 class="title-animated">Bienvenue <span th:text="${utilisateurDTO.pseudo}">Pseudo</span> !</h1>
-    <p class="email-text">Administrateur <span th:text="${utilisateurDTO.email}">Email</span></p>
+    <h1 class="title-animated">Espace d'administration</h1>
+    <p class="email-text">admin@example.com</p>
 
     <div class="admin-container">
         <div class="row">
-            <!-- Première colonne de 2 cartes -->
-            <div class="card_admin" style="background-color: rgba(255, 99, 71, 0.1);">
+            <div class="card_admin">
                 <div class="card-header_admin">
                     <h3>Désactiver un compte utilisateur</h3>
                 </div>
                 <div class="card-body_admin">
+                    <p>Désactive l'accès du compte</p>
+                </div>
+                <div class="card-footer_admin">
+                    <audio id="alarm-sound" src="assets/sounds/buzzer.mp3" preload="auto"></audio>
                     <button class="secondary_admin">Désactiver</button>
                 </div>
             </div>
 
-            <!-- Ne pas lire ce message -->
             <div class="card_admin error-card">
-                <!-- Card Header -->
                 <div class="card-head-error">
                     <h3>Erreur</h3>
                 </div>
-
-                <!-- Card Body -->
                 <div class="card-body-error">
                     <div class="error-icon">
-                        <!-- Icône de bombe (utilisation de FontAwesome ou autre librairie d'icônes) -->
                         <i class="fa fa-bomb"></i>
                         <i class="fa fa-bomb"></i>
                         <i class="fa fa-bomb"></i>
                     </div>
                 </div>
-
-                <!-- Card Footer -->
                 <div class="card-footer-error">
                     <a href="error.html">
                         <button class="secondary_admin">Ne pas cliquer</button>
@@ -44,47 +43,86 @@
                 </div>
             </div>
 
-            <div class="card_admin" style="background-color: rgba(39, 174, 96, 0.1);">
+            <div class="card_admin">
                 <div class="card-header_admin">
                     <h3>Supprimer des comptes utilisateur</h3>
                 </div>
                 <div class="card-body_admin">
+                    <p>Efface définitivement le compte</p>
+                </div>
+                <div class="card-footer_admin">
+                    <button class="secondary_admin">Supprimer</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="card_admin">
+                <div class="card-header_admin">
+                    <h3>Ajouter une catégorie</h3>
+                </div>
+                <div class="card-body_admin">
+                    <p>Crée une nouvelle catégorie</p>
+                </div>
+                <div class="card-footer_admin">
+                    <button class="secondary_admin">Ajouter</button>
+                </div>
+            </div>
+
+            <div class="card_admin">
+                <div class="card-header_admin">
+                    <h3>Modifier une catégorie</h3>
+                </div>
+                <div class="card-body_admin">
+                    <p>Change le nom ou la couleur</p>
+                </div>
+                <div class="card-footer_admin">
+                    <button class="secondary_admin">Modifier</button>
+                </div>
+            </div>
+
+            <div class="card_admin">
+                <div class="card-header_admin">
+                    <h3>Supprimer une catégorie</h3>
+                </div>
+                <div class="card-body_admin">
+                    <p>Supprime définitivement la catégorie</p>
+                </div>
+                <div class="card-footer_admin">
                     <button class="secondary_admin">Supprimer</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <!-- Deuxième colonne de 3 cartes -->
-        <div class="card_admin" style="background-color: rgba(52, 152, 219, 0.1);">
-            <div class="card-header_admin">
-                <h3>Ajouter une catégorie</h3>
-            </div>
-            <div class="card-body_admin">
-                <button class="secondary_admin">Ajouter</button>
-            </div>
-        </div>
-
-        <div class="card_admin" style="background-color: rgba(241, 196, 15, 0.1);">
-            <div class="card-header_admin">
-                <h3>Modifier une catégorie</h3>
-            </div>
-            <div class="card-body_admin">
-                <button class="secondary_admin">Modifier</button>
-            </div>
-        </div>
-
-        <div class="card_admin" style="background-color: rgba(231, 76, 60, 0.1);">
-            <div class="card-header_admin">
-                <h3>Supprimer une catégorie</h3>
-            </div>
-            <div class="card-body_admin">
-                <button class="secondary_admin">Supprimer</button>
-            </div>
-        </div>
-    </div>
-</div>
 </main>
+<!-- Audio -->
+<script>
+    document.getElementById('alert-button').addEventListener('click', function() {
+        const alarm = document.getElementById('alarm-sound');
+        alarm.currentTime = 0; // Réinitialise le son
+        alarm.play();
+    });
+</script>
+<!-- Vibration -->
+<script>
+    const button = document.querySelector(".secondary_admin");
+    const sound = document.getElementById("alarm-sound");
+
+    button.addEventListener("mouseenter", () => {
+        sound.currentTime = 0;
+        sound.play();
+
+        button.classList.add("shake");
+        document.body.classList.add("alert-flash");
+    });
+
+    button.addEventListener("mouseleave", () => {
+        sound.pause();
+        sound.currentTime = 0;
+
+        button.classList.remove("shake");
+        document.body.classList.remove("alert-flash");
+    });
+</script>
 </body>
 </html>

@@ -1,9 +1,74 @@
-/* Animation pour le titre */
+/* ------------------ ANIMATIONS ------------------ */
+
+/* Fade-in du titre + texte */
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide-in des cartes */
+@keyframes cardSlideIn {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Animation de vibration forte pour le bouton */
+@keyframes strongVibrate {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-3px); }
+    20% { transform: translateX(3px); }
+    30% { transform: translateX(-3px); }
+    40% { transform: translateX(3px); }
+    50% { transform: translateX(-3px); }
+    60% { transform: translateX(3px); }
+    70% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+    90% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+/* Hover pulsation douce */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* Animation vibration infinie */
+@keyframes strongShake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake {
+    animation: strongShake 0.2s infinite;
+}
+
+/* Effet flash rouge */
+@keyframes flashRed {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(255, 0, 0, 0.3); }
+}
+
+.alert-flash {
+    animation: flashRed 0.3s infinite;
+}
+
+/* ------------------ TITRE & TEXTE ------------------ */
+
 .title-animated {
     font-size: 2rem;
     text-align: center;
     color: #2c3e50;
-    position: relative;
     animation: fadeInUp 1.5s ease-out;
 }
 
@@ -15,19 +80,8 @@
     animation: fadeInUp 1.5s ease-out 0.5s;
 }
 
-/* Animation de fade-in du titre */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* ------------------ STRUCTURE ADMIN ------------------ */
 
-/* Style général du container d'administration */
 .admin-container {
     display: flex;
     flex-wrap: wrap;
@@ -37,45 +91,129 @@
     margin-top: 20px;
 }
 
-/* Structure des cartes d'administration */
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* ------------------ CARD ------------------ */
+
 .card_admin {
-    width: 220px;
+    width: 30%;
+    min-width: 220px;
     height: 280px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin: 10px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: all 0.3s ease;
     animation: cardSlideIn 1s ease-out;
-}
-
-/* Animation d'apparition des cartes */
-@keyframes cardSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
 }
 
 .card_admin:hover {
     transform: translateY(-5px);
+    box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* En-tête des cartes */
-.card-header_admin {
-    padding: 15px;
+/* ------------------ CENTRAGE INTERNE ------------------ */
+
+.card-header_admin,
+.card-body_admin,
+.card-footer_admin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    padding: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header */
+.card-header_admin {
     font-size: 1.2rem;
     font-weight: bold;
+    background-color: rgba(44, 62, 80, 0.05);
 }
 
-/* Style spécifique à la carte d'erreur */
+.card-header_admin:hover {
+    animation: pulse 0.6s infinite;
+    background-color: rgba(44, 62, 80, 0.2);
+}
+
+/* Body */
+.card-body {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #34495e;
+    flex-direction: column;
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.card-body:hover {
+    animation: pulse 0.6s infinite;
+    background-color: rgba(236, 240, 241, 0.5);
+}
+
+/* Footer */
+.card-footer {
+    background-color: rgba(44, 62, 80, 0.05);
+}
+
+.card-footer:hover {
+    animation: pulse 0.6s infinite;
+    background-color: rgba(44, 62, 80, 0.2);
+}
+
+/* ------------------ BOUTON ------------------ */
+
+button.secondary_admin {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 30px;
+    width: 160px;
+    cursor: pointer;
+    border: 2px solid #2c3e50;
+    background-color: rgba(44, 62, 80, 0.1);
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+button.secondary_admin:hover {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    animation: strongVibrate 0.3s infinite;
+}
+
+/* ------------------ COULEURS DE CARTES ------------------ */
+
+.card_admin:nth-child(1) { background-color: rgba(255, 99, 71, 0.1); }
+.card_admin:nth-child(2) { background-color: rgba(39, 174, 96, 0.1); }
+.card_admin:nth-child(3) { background-color: rgba(52, 152, 219, 0.1); }
+.card_admin:nth-child(4) { background-color: rgba(241, 196, 15, 0.1); }
+.card_admin:nth-child(5) { background-color: rgba(231, 76, 60, 0.1); }
+
+/* ------------------ RESPONSIVE ------------------ */
+
+@media (max-width: 768px) {
+    .card_admin {
+        width: 100%;
+    }
+}
+
+/* ------------------ STYLE SPECIFIQUE ERROR CARD ------------------ */
+
 .error-card {
     background-color: rgba(231, 76, 60, 0.1); /* Couleur de fond de la carte */
     border: 2px solid rgba(231, 76, 60, 0.5); /* Bordure pour accentuer le rouge */
@@ -90,15 +228,15 @@
 .card-head-error {
     padding: 1rem;
     text-align: center;
-    background-color: rgba(231, 76, 60, 0.3); /* Fond léger pour l'entête */
-    color: rgba(231, 76, 60, 1); /* Couleur texte rouge vif */
+    background-color: rgba(231, 76, 60, 0.3);
+    color: rgba(231, 76, 60, 1);
 }
 
 /* Card Body */
 .card-body-error {
     padding: 1.5rem;
     text-align: center;
-    flex-grow: 1; /* Assure que le body prend l'espace disponible sans dépasser */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,111 +244,47 @@
 
 /* Icônes de la bombe */
 .error-icon {
-    font-size: 3rem; /* Taille de l'icône */
-    color: rgba(231, 76, 60, 1); /* Rouge vif pour les icônes */
-    margin-bottom: 20px; /* Espacement sous l'icône */
+    font-size: 3rem;
+    color: rgba(231, 76, 60, 1);
+    margin-bottom: 20px;
 }
 
 /* Card Footer */
 .card-footer-error {
     text-align: center;
     padding: 1rem;
-    background-color: rgba(231, 76, 60, 0.3); /* Fond léger pour le pied de la carte */
+    background-color: rgba(231, 76, 60, 0.3);
 }
 
 /* Hover de la carte */
 .error-card:hover {
-    background-color: rgba(169, 169, 169, 0.3); /* Carte devient gris au survol */
-    border-color: rgba(169, 169, 169, 0.5); /* Bordure gris au survol */
+    background-color: rgba(169, 169, 169, 0.3);
+    border-color: rgba(169, 169, 169, 0.5);
 }
 
 /* Hover sur les icônes de la bombe */
 .error-card:hover .error-icon i {
-    color: rgba(231, 76, 60, 1); /* Icônes deviennent rouges au survol de la carte */
+    color: rgba(231, 76, 60, 1);
 }
 
 /* Hover sur le bouton */
 .error-card:hover button.secondary_admin {
-    background-color: rgba(231, 76, 60, 1); /* Bouton devient rouge vif au survol */
-    color: #fff; /* Texte du bouton devient blanc */
+    background-color: rgba(231, 76, 60, 1);
+    color: #fff;
 }
 
 /* Inverser les couleurs quand la carte devient rouge */
 .error-card:hover .card-head-error,
 .error-card:hover .card-footer-error {
-    background-color: rgba(231, 76, 60, 1); /* Fond rouge vif pour l'entête et le pied */
-    color: #fff; /* Texte devient blanc au survol */
+    background-color: rgba(231, 76, 60, 1);
+    color: #fff;
 }
 
 /* Icône de la bombe */
 .error-icon {
     text-align: center;
-    font-size: 3rem; /* Taille de l'icône */
-    color: rgba(231, 76, 60, 1); /* Rouge vif pour l'icône */
-    margin-bottom: 20px; /* Espacement sous l'icône */
+    font-size: 3rem;
+    color: rgba(231, 76, 60, 1);
+    margin-bottom: 20px;
 }
 
-/* Bouton de la carte */
-button.secondary_admin {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 30px;
-    width: 160px;
-    cursor: pointer;
-    border: 2px solid #2c3e50;
-    background-color: rgba(44, 62, 80, 0.1);
-    color: #2c3e50;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Centrer le bouton */
-}
-
-button.secondary_admin:hover {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-}
-
-/* Couleurs spécifiques pour les cartes */
-.card_admin:nth-child(1) {
-    background-color: rgba(255, 99, 71, 0.1);
-}
-
-.card_admin:nth-child(2) {
-    background-color: rgba(39, 174, 96, 0.1);
-}
-
-.card_admin:nth-child(3) {
-    background-color: rgba(52, 152, 219, 0.1);
-}
-
-.card_admin:nth-child(4) {
-    background-color: rgba(241, 196, 15, 0.1);
-}
-
-.card_admin:nth-child(5) {
-    background-color: rgba(231, 76, 60, 0.1);
-}
-
-/* Structure de la ligne contenant les cartes (3 cartes en ligne) */
-.row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-/* Chaque carte prendra 30% de la largeur de l'écran */
-.card_admin {
-    width: 30%;
-    min-width: 220px;
-}
-
-/* Responsivité : Si la taille de l'écran est inférieure à 768px (mobile), chaque carte occupe toute la largeur */
-@media (max-width: 768px) {
-    .card_admin {
-        width: 100%;
-    }
-}
