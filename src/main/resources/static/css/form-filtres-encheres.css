@@ -7,7 +7,7 @@
 
 .radio-form {
     display: flex;
-    gap: 40px; /* espace entre les deux colonnes */
+    gap: 40px;
 }
 
 .radio-block {

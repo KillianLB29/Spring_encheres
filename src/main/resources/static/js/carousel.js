@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const nextBtn = carousel.querySelector('.carousel-btn.next');
         const viewport = carousel.querySelector('.carousel-viewport');
         const cardContainer = carousel.querySelector('.card-container');
-        const cards = carousel.querySelectorAll('.card');
+        const cards = carousel.querySelectorAll('.card_mesEncheres');
 
         const cardStyle = getComputedStyle(cards[0]);
         const cardWidth = cards[0].offsetWidth;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         nextBtn.addEventListener('click', function () {
-            if (currentIndex < totalCards - cardsPerView) {
+            if (currentIndex < totalCards - 1) {
                 currentIndex++;
                 updateCarousel();
             }
