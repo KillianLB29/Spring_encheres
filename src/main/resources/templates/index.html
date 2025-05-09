@@ -17,7 +17,7 @@
                 </div>
                 <div class="card-content_index">
                     <h3 class="card-title_index" th:text="${article.nomArticle}">Nom article</h3>
-                    <p><strong>Prix :</strong>
+                    <p><strong>Mise à prix :</strong>
                         <span th:text="${article.miseAPrix} + ' crédits'">10 crédits</span></p>
                     <p><strong>Fin :</strong>
                         <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
