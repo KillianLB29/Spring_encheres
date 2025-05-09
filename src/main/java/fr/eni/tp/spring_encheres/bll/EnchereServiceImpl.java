@@ -40,6 +40,10 @@ public class EnchereServiceImpl implements EnchereService {
             System.out.println("L'utilisateur n'a pas assez de crédit pour enchérir!");
             return false;
         }
+        ArticleVendu article = articleVenduDAO.read(enchere.getArticleVendu().getNoArticle());
+        if(article.getUtilisateur().getNoUtilisateur() == enchere.getUtilisateur().getNoUtilisateur()){
+            return false;
+        }
         else
         {
             //Récupération de l'ancienne meilleur enchère pour récupérer l'utilisateur, lui rendre ses crédits car il n'est dorénavant plus la personne qui paye l'objet
