@@ -26,8 +26,8 @@
 
             <label for="image">Photo de l'article :</label>
             <input type="file" id="image" name="image" accept="image/*" required>
-            <div id="imagePreviewContainer">
-                <img id="imagePreview" src="#" alt="Aperçu de l'image">
+            <div id="imagePreviewContainer" class="image-preview-container">
+                <img id="imagePreview" src="#" alt="Aperçu de l'image" class="image-preview">
             </div>
             <p data-th-if="${mode == 'modif'}">Veuillez sélectionner une image pour votre article même si elle ne change pas</p>
 
@@ -42,6 +42,7 @@
             <input type="date" id="dateFinEncheres" name="dateFinEncheres" th:field="*{dateFinEncheres}"
                    th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
 
+            <div class="retrait-card-article">
             <div class="retrait-card-article">
                 <h3>Retrait</h3>
 

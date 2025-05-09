@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Roboto', sans-serif;
-            background-color: #f5f5f5;
             color: #fff;
             display: flex;
             justify-content: center;
@@ -20,6 +19,7 @@
             flex-direction: column;
             text-align: center;
             overflow: hidden;
+            transition: background-color 0.5s ease;
         }
 
         .container {
@@ -68,10 +68,6 @@
             animation: moveAround 5s infinite linear;
         }
 
-        .icon-appear {
-            animation: appearDisappear 3s ease-in-out infinite;
-        }
-
         @keyframes bounce {
             0% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
@@ -83,44 +79,50 @@
             50% { opacity: 1; }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         @keyframes slideIn {
             0% { transform: translateY(50px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
         }
 
-        @keyframes appearDisappear {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+        @keyframes moveAround {
+            0% { left: 0%; top: 0%; }
+            25% { left: 100%; top: 0%; }
+            50% { left: 100%; top: 100%; }
+            75% { left: 0%; top: 100%; }
+            100% { left: 0%; top: 0%; }
         }
 
-        @keyframes moveAround {
+        /* Jeff Bezos bouncing GIF */
+        #bezos {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            z-index: 5;
+            animation: bezosBounce 10s linear infinite;
+        }
+
+        @keyframes bezosBounce {
             0% {
-                left: 0%;
                 top: 0%;
+                left: 0%;
             }
             25% {
-                left: 100%;
-                top: 0%;
+                top: 80%;
+                left: 70%;
             }
             50% {
+                top: 20%;
                 left: 100%;
-                top: 100%;
             }
             75% {
-                left: 0%;
-                top: 100%;
+                top: 90%;
+                left: 10%;
             }
             100% {
-                left: 0%;
                 top: 0%;
+                left: 0%;
             }
         }
-
     </style>
 </head>
 <body>
@@ -129,33 +131,46 @@
     <h2>Loooser</h2>
     <p class="message">Tu as fait une erreur, mon ami. Mais t'inquiète, ça arrive aux meilleurs !</p>
 
-    <!-- Affichage de l'erreur spécifique -->
- <div class="error-detail">
-      <p><strong>Erreur :</strong> <span id="error-message"></span></p>
-  </div>
+    <div class="error-detail">
+        <p><strong>Erreur :</strong> <span id="error-message"></span></p>
+    </div>
 </div>
 
 <div class="icon-container">
-  <i class="fas fa-robot icon"></i>
-  <i class="fas fa-bomb icon"></i>
-  <i class="fas fa-fire icon"></i>
+    <i class="fas fa-robot icon"></i>
+    <i class="fas fa-bomb icon"></i>
+    <i class="fas fa-fire icon"></i>
 </div>
 
+<!-- Jeff Bezos GIF -->
+<img id="bezos" src="/gif/jeffBezos.gif" alt="Jeff Bezos qui rebondit">
+
 <script>
-  // Animation des icônes en mouvement
-  const icons = document.querySelectorAll('.icon');
+    // Animation des icônes
+    const icons = document.querySelectorAll('.icon');
 
-  icons.forEach((icon, index) => {
-      const randomDuration = Math.random() * (7 - 4) + 4; // Durée aléatoire entre 4 et 7 secondes
-      const randomDelay = Math.random() * 3; // Délai aléatoire avant de commencer l'animation
+    icons.forEach((icon) => {
+        const randomDuration = Math.random() * (7 - 4) + 4;
+        const randomDelay = Math.random() * 3;
+        icon.style.animationDuration = `${randomDuration}s`;
+        icon.style.animationDelay = `${randomDelay}s`;
+    });
 
-      icon.style.animationDuration = `${randomDuration}s`;
-      icon.style.animationDelay = `${randomDelay}s`;
-  });
+    // Changement de background color toutes les 0.5s
+    function randomColor() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r}, ${g}, ${b})`;
+    }
 
-  // Récupérer l'erreur passée par le modèle (via Spring ou un autre mécanisme)
-  const errorMessage = window.location.pathname.split('/').pop(); // Exemple de récupération d'une erreur via l'URL
-  document.getElementById('error-message').textContent = errorMessage || 'Page non trouvée';
+    setInterval(() => {
+        document.body.style.backgroundColor = randomColor();
+    }, 500);
+
+    // Message d'erreur récupéré via URL
+    const errorMessage = window.location.pathname.split('/').pop();
+    document.getElementById('error-message').textContent = errorMessage || 'Page non trouvée';
 </script>
 </body>
 </html>
