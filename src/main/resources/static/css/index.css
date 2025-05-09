@@ -95,8 +95,8 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     margin: 0.3rem;
     height: auto;
-    max-height: 420px;
-    max-width: 280px;
+    max-height: 460px;
+    max-width: 320px;
     width: 100%;
 }
 .card-content_index p, .card-content_index h3 {

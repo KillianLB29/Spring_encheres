@@ -192,7 +192,7 @@
                             <p><strong>Mise à prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_mesEncheres">Voir</a>
                         </div>
                     </div>
                 </div>
