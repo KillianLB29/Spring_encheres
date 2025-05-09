@@ -67,7 +67,7 @@
                             <p><strong>Mise a prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_mesEncheres">Voir</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                             <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_mesEncheres">Voir</a>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                             <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_mesEncheres">Voir</a>
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                             <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_mesEncheres">Voir</a>
                         </div>
                     </div>
                 </div>
@@ -166,9 +166,9 @@
                             <p><strong>Prix :</strong> <span th:text="${article.miseAPrix} + ' crédits'"></span></p>
                             <p><strong>Fin :</strong> <span th:text="${#dates.format(article.dateFinEncheres, 'dd/MM/yyyy')}"></span></p>
                             <p><strong>Vendeur :</strong> <span th:text="${article.utilisateur.pseudo}"></span></p>
-                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn">Voir</a>
-                            <a th:href="@{'/articles/modifier/'+${article.noArticle}}" class="btn">Modifier</a>
-                            <a th:href="@{'/articles/supprimer/'+${article.noArticle}}" class="btn">Annuler la vente</a>
+                            <a th:href="@{'/encheres/' + ${article.noArticle}}" class="btn_mesEncheres">Voir</a>
+                            <a th:href="@{'/articles/modifier/'+${article.noArticle}}" class="btn_mesEncheres">Modifier</a>
+                            <a th:href="@{'/articles/supprimer/'+${article.noArticle}}" class="btn_mesEncheres">Annuler la vente</a>
                         </div>
                     </div>
                 </div>
