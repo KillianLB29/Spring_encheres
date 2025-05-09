@@ -368,6 +368,8 @@ public class EnchereController {
 
         if (g2Opt1 != null) {
             System.out.println("✔ Mes ventes en cours cochée");
+            System.out.println(utilisateurSession);
+            System.out.println(utilisateurSession.getNoUtilisateur());
             venteEnCours=articleVenduService.consulterVentesEnCours(utilisateurSession.getNoUtilisateur(),filtre,categorie);
         }
         if (g2Opt2 != null){

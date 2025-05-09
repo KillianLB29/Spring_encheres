@@ -264,7 +264,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         List<ArticleVendu> articles = articleVenduDAO.findAll();
         articles.forEach(a-> a.setCategorie(categorieDAO.read(a.getCategorie().getIdCategorie())));
 
-        articles.stream().filter(a-> a.getUtilisateur().getNoUtilisateur() == noUtilisateur).collect(Collectors.toList());
+        articles = articles.stream().filter(a-> a.getUtilisateur().getNoUtilisateur()==noUtilisateur).collect(Collectors.toList());
 
         LocalDateTime now = LocalDateTime.now();
         Date nowDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
