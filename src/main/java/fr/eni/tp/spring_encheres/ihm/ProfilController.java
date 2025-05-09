@@ -103,6 +103,7 @@ public class ProfilController {
 
 
         if(bindingResult.hasErrors()) {
+            System.out.println("passage error");
             UtilisateurDTO utilDTO = new UtilisateurDTO();
             utilDTO.setPseudo(utilisateurSession.getPseudo());
             utilDTO.setNom(utilisateurSession.getNom());
@@ -117,9 +118,13 @@ public class ProfilController {
             model.addAttribute("utilisateurDTO", utilisateurDTO);
             return "profil/monProfil"; // Affichage du profil utilisateur
         }
+        else{
+            System.out.println("passage non error");
+            model.addAttribute("utilisateurSession",utilisateurModif );
+            return "redirect:/monProfil"; // Redirection vers le profil après mise à jour
+        }
         // Mise à jour de la session utilisateur
-        model.addAttribute("utilisateurSession", utilisateurModif);
-        return "redirect:/monProfil"; // Redirection vers le profil après mise à jour
+
     }
 
     /**
